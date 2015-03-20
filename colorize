@@ -1,0 +1,14 @@
+#!/bin/bash
+_line() {
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+a="Archdroid"
+for c in Red Pink Purple DeepPurple Indigo Blue LightBlue Cyan Teal KellyGreen Shamrock LightGreen Lime Yellow Amber Orange DeepOrange Brown Grey BlueGrey ; do
+	#_line
+	printf "  Generating %s-%s images...\n" "$a" "$c"
+	#printf '  '
+	cp -r $a-Green $a-$c
+	./svg-edit -o green -n $c -r -Q $a-$c $a-$c ;
+done
+#printf "\n"
