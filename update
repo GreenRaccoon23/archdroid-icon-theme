@@ -206,7 +206,7 @@ echo "Done." ;
 _lecho "Waiting 120 seconds for git to update..." ;
 for i in $(seq 1 120); do
 	printf "\r%d" $i ;
-	sleep $i ;
+	sleep 1 ;
 done ;
 echo "Done." ;
 
