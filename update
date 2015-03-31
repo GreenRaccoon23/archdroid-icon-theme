@@ -89,7 +89,7 @@ _colorise() {
 
 	_specho "${to}..." ;
 
-	svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
+	./svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
 }
 
 b="Archdroid" ;
