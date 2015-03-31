@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#FF9800"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="applications-development.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:bbox-nodes="true"
+     inkscape:zoom="4.916666680926653"
+     inkscape:cx="6.020925446112258"
+     inkscape:cy="24.51692658527615"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     id="path4154"
+     style="fill:#FF9800"
+     d="M 21.38276522082878,27.53980370774264 15.8516856134133,22.00872410032716 21.38276522082878,16.46892039258452 18.91384482824427,14.00000000000001 10.91384482824428,22 l 7.99999999999999,8 2.46892039258451,-2.46019629225736 z M 29.08615017175572,30 l 8,-8 -8,-8 -2.46892039258451,2.46892039258452 L 32.14830938658671,22 26.61722977917121,27.53980370774264 29.08615017175572,30 Z M 8,8 C 5.79,8 4.000000000000001,9.789999999999999 4,12 l 0,20 c 0,2.21 1.790000000000001,4 4,4 l -8,0 0,4 48,0 0,-4 -8,0 c 2.21,0 3.98046875,-1.79 3.98046875,-4 L 44,12 C 44,9.789999999999999 42.21,8 40,8 L 8,8 Z m 0,4 32,0 0,20 -32,0 0,-20 z" />
+</svg>

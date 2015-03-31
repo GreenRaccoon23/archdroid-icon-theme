@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="17.089968mm"
+   height="9.496213mm"
+   viewBox="0 0 60.555004 33.647999"
+   id="svg4191"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="darkcoin-emblem.svg">
+  <defs
+     id="defs4193" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="219.45311"
+     inkscape:cy="-17.710666"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4196">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-449.7225,-701.25249)">
+    <path
+       style="fill:#3397cc"
+       inkscape:connector-curvature="0"
+       id="path2063"
+       d="m 496.3385,701.25249 -23.488,0 -2.927,0 -4.696,0 -0.522,0 -4.388,0 -0.77,0 -0.704,0 10.654,13.723 6.034,7.791 0,-13.125 18.292,0 c 4.398,0 6.133,1.221 6.133,6.035 l 0,4.508 c 0,4.807 -1.734,6.066 -6.133,6.066 l -8.785,0 -6.197,0 -2.015,0 -1.295,0 -0.756,0 -1.144,0 -12.161,-15.672 -11.748,0 18.907,24.322 0.513,0 7.334,0 19.861,0 c 10.313,0 13.94,-3.465 13.94,-11.717 l 0,-10.254 c 0.002,-8.267 -3.626,-11.677 -13.939,-11.677 z" />
+  </g>
+</svg>

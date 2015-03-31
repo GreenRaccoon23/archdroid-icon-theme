@@ -1,26 +1,25 @@
 #!/bin/bash
 _specho() {
 	printf '  ' ;
-	echo "$1"
+	echo "$1" ;
 }
 
 _lecho() {
 	_line
-	echo "$1"
+	echo "$1" ;
 }
 
 _line() {
-	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' = ;
 }
 
 _trim() {
 	top=$(echo "${PWD}") ;
+	root="${top}/${1}" ;
 
-	root="${top}/${1}"
 	cd "${root}" ;
 
 	for dir in $(ls -d */) ; do
-
 		if [[ "$dir" =~ "stock" ]] ; then
 			bak="${dir}io/scalable/bak" ;
 		else
@@ -30,10 +29,17 @@ _trim() {
 		if [ -e "${bak}" ] ; then
 			rm -R "${bak}" ;
 		fi ;
-
 	done ;
 
-	cd "${top}"
+	es="emblems/scalable" ;
+	rejects=(${es}/emblem-greenraccoon23.svg ${es}/emblem-greenraccoon23-transparent.svg) ;
+	for reject in ${rejects[@]} ; do
+		if [ -e "${reject}" ] ; then
+			rm "${reject}" ;
+		fi ;
+	done ;
+
+	cd "${top}" ;
 }
 
 _clean() {
@@ -43,7 +49,6 @@ _clean() {
 	cd "${root}" ;
 
 	for dir in $(ls -d */) ; do
-		
 		if [[ "$dir" =~ "stock" ]] ; then
 			current="${dir}io/scalable/" ;
 		else
@@ -53,16 +58,14 @@ _clean() {
 		_specho "${current}" ;
 		cd "${root}" ;
 		_cleanDir "${current}" ;
-
 	done ;
 
-	cd "${top}"
+	cd "${top}" ;
 }
 
 _cleanDir() {
 	cd "$1"
 	for f in $(ls) ; do
-
 		e=$(echo "${f}" | sed -e 's/\.[a-zA-Z]*$//') ;
 
 		if [ -d "${f}" ] ; then
@@ -70,53 +73,98 @@ _cleanDir() {
 		elif [[ $e == "svg" ]] ; then
 			_cleanFilter "${img}" ;
 		fi ;
-
 	done ;
 }
 
 _cleanFilter() {
-	if [[ $(readlink "${1}") == "" ]] ; then
+	if readlink -q "${1}" >/dev/null ; then
 		_cleanSvg "${1}" ;
-	fi
+	fi ;
 }
 
 _cleanSvg() {
-	svgcleaner-cli "${1}" "${1}"
+	svgcleaner-cli "${1}" "${1}" ;
 }
 
 _copy() {
-	from="${1}-Green" ;
-	color="$2" ;
-	to="${1}-${2}" ;
+	from="${1}" ;
+	to="${2}" ;
 
 	if [ -e ${to} ] ; then
 		rm -R "${to}" ;
 	fi ;
-	cp -R "${from}" "${to}"
+	cp -R "${from}" "${to}" ;
 }
 
-_colorise() {
-	color="${2}" ;
+_coloriseAll() {
 	from="${1}-Green" ;
-	to="${1}-${color}" ;
+	to="${1}-${2}" ;
+
+	_specho "${to}..." ;
+	
+	_copy "${from}" "${to}" ;
+	_colorise "green" "${2}" "${from}" "${to}" ;
+	_colorise "4caf50" "${2}" "${from}" "${to}" ;
+}
+
+_coloriseMost() {
+	from="${1}-Green" ;
+	to="${1}-${2}" ;
 
 	_specho "${to}..." ;
 
-	../svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
+	_copy "${from}" "${to}" ;
+	_colorise "green" "${2}" "${from}" "${to}" ;
+}
+
+_colorise() {
+	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
 }
 
 _crunch() {
-	cd ..
-	if [ -e "src.tar.xz" ] ; then
-		rm src.tar.xz ;
+	d="archdroid-icon-theme"
+	xz="${d}.tar.xz" ;
+	
+	if [ -e "${xz}" ] ; then
+		rm "${xz}" ;
 	fi ;
-	./crunch "src"
+	./crunch "${d}" ;
 }
 
+_pkgbuild() {
+	pkgver=$(_gitVer) ;
+	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD ;
+
+	a="archdroid-icon-theme" ;
+	md=$(_md5 "${a}.tar.xz") ;
+	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD ;
+}
+
+_md5() {
+	md=$(md5sum "$1") ;
+	echo "${md% *}" ;
+}
+
+_gitVer() {
+	( set -o pipefail
+	  git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+	  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
+}
+
+_git() {
+	git add .
+	git commit -m "${1}"
+	git push origin master
+}
+
+d="archdroid-icon-theme"
 b="Archdroid" ;
 toClean="${b}-Green/" ;
+colors=(Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
+colorsSpecial=(Amber DeepOrange Orange Red Yellow) ;
 
-cd "src" ;
+cd "${d}" ;
 
 _lecho "Removing backups..." ;
 _trim "${toClean}" ;
@@ -127,12 +175,29 @@ _clean "${toClean}" ;
 echo "Done." ;
 
 _lecho "Generating color variants..." ;
-for c in Red Pink Purple DeepPurple Indigo Blue LightBlue Cyan Teal KellyGreen Shamrock LightGreen Lime Yellow Amber Orange DeepOrange Brown Grey BlueGrey ; do
-	_copy "${b}" "${c}" ;
-	_colorise "${b}" "${c}" ;
+for c in ${colors[@]} ; do
+	_coloriseAll "${b}" "${c}" ;
+done ;
+for c in ${colorsSpecial[@]} ; do
+	_coloriseMost "${b}" "${c}" ;
 done ;
 echo "Done." ;
 
+cd .. ;
+
 _lecho "Generating archive..." ;
-_crunch
-echo "Done."
+_crunch ;
+echo "Done." ;
+
+_lecho "Updating git repo..." ;
+read -p "==> Enter commit message: " commit
+_git "${commit}" ;
+echo "Done." ;
+
+_lecho "Updating PKGBUILD..." ;
+_pkgbuild ;
+echo "Done." ;
+
+_lecho "Uploading PKGBUILD to git..." ;
+_git "${commit}" ;
+echo "Done." ;
