@@ -7,10 +7,6 @@ _gtkUpdate() {
     done ;
 }
 
-_credit() {
-       
-}
-
 _print() {
     tput bold && tput setaf 2 ;
     printf "==> " ;

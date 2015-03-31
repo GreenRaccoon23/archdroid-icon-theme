@@ -129,6 +129,8 @@ _crunch() {
 		rm "${xz}" ;
 	fi ;
 	./crunch "${d}" ;
+	bak="${d}_$(date +%m-%d-%y).tar.xz"
+	cp "${xz}" "bak/${bak}"
 }
 
 _pkgbuild() {
@@ -173,16 +175,16 @@ _trim "${toClean}" ;
 echo "Done." ;
 
 _lecho "Cleaning svg files..." ;
-#_clean "${toClean}" ;
+_clean "${toClean}" ;
 echo "Done." ;
 
 _lecho "Generating color variants..." ;
-#for c in ${colors[@]} ; do
-	#_coloriseAll "${b}" "${c}" ;
-#done ;
-#for c in ${colorsSpecial[@]} ; do
-	#_coloriseMost "${b}" "${c}" ;
-#done ;
+for c in ${colors[@]} ; do
+	_coloriseAll "${b}" "${c}" ;
+done ;
+for c in ${colorsSpecial[@]} ; do
+	_coloriseMost "${b}" "${c}" ;
+done ;
 echo "Done." ;
 
 cd .. ;
