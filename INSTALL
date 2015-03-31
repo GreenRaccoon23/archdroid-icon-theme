@@ -1,0 +1,22 @@
+_distro() {
+	if [[ "$(ls /bin | grep lsb_release)" == "" ]] ; then
+		echo "Arch" ;
+	fi ;
+	echo "$(lsb_release -si)" ;
+}
+
+install() {
+	for dir in "$(ls)" ; do
+	  	sudo install -dm 755 "/usr/share/icons/${dir}" ;
+	done ;
+  	sudo cp -drf --no-preserve='ownership' . "/usr/share/icons/" ;
+}
+
+distro="$(_distro)"
+if [[ "${distro}" == "Arch" ]] ; then
+	makepkg -sic ;
+else
+	cd "archdroid-icon-theme" ;
+	_install ;
+fi ;
+

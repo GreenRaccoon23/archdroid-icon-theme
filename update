@@ -154,6 +154,7 @@ _copy() {
 		rm -R "${to}" ;
 	fi ;
 	cp -R "${from}" "${to}" ;
+	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme" ;
 }
 
 _coloriseAll() {
@@ -225,6 +226,7 @@ _git() {
 _burp() {
 	mkaurball ;
 	burp *gz ;
+	rm *gz ;
 }
 
 commit="$@"
