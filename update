@@ -138,8 +138,8 @@ _pkgbuild() {
 	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD ;
 
 	a="archdroid-icon-theme" ;
-	repo="https://github.com/GreenRaccoon23/${a}" ;
-	xz="${repo}/raw/master/${a}.tar.xz" ;
+	repo="https://raw.githubusercontent.com/GreenRaccoon23/${a}" ;
+	xz="${repo}/master/${a}.tar.xz" ;
 	md=$(_gitmd5 "${xz}") ;
 	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD ;
 }
