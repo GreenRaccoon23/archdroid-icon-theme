@@ -142,7 +142,7 @@ _pkgbuild() {
 
 _md5() {
 	md=$(md5sum "$1") ;
-	echo "${md% *}" ;
+	echo "${md%  *}" ;
 }
 
 _gitVer() {
