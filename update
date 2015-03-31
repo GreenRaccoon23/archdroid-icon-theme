@@ -158,8 +158,13 @@ _gitVer() {
 
 _git() {
 	git add .
-	git commit -m "${1}"
+	git commit -m "$@"
 	git push origin master
+}
+
+_burp() {
+	mkaurball ;
+	burp *gz ;
 }
 
 commit="$@"
@@ -198,10 +203,21 @@ _lecho "Updating git repo..." ;
 _git "${commit}" ;
 echo "Done." ;
 
+_lecho "Waiting 120 seconds for git to update..." ;
+for i in $(seq 1 120); do
+	printf "%r%d" $i ;
+	sleep $i ;
+done ;
+echo "Done." ;
+
 _lecho "Updating PKGBUILD..." ;
 _pkgbuild ;
 echo "Done." ;
 
 _lecho "Uploading PKGBUILD to git..." ;
 _git "${commit}" ;
+echo "Done." ;
+
+_lecho "Uploading package to aur..." ;
+_burp ;
 echo "Done." ;
