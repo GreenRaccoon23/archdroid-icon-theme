@@ -24,7 +24,7 @@ post_install() {
 
     go=("To enable icons for golang scripts, manually run this command:"
         'sudo echo "text/x-go        go" | sudo tee -a /etc/mime.types')
-    _print ${go[@]}
+    _print "${go[@]}"
 }
 
 post_upgrade() {

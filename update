@@ -162,7 +162,7 @@ _git() {
 	git push origin master
 }
 
-commit="$1"
+commit="$@"
 d="archdroid-icon-theme"
 b="Archdroid" ;
 toClean="${b}-Green/" ;
