@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#CDDC39"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="xfce-edit.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="false"
+     inkscape:snap-page="true"
+     inkscape:zoom="4.916666666666667"
+     inkscape:cx="24"
+     inkscape:cy="24"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-object-midpoints="true" />
+  <path
+     style="fill:#CDDC39"
+     d="M 12 4 C 9.789999999999999 4 8.019531249999998 5.790000000000001 8.01953125 8 L 8 40 C 8 42.21 9.770468750000001 44 11.98046875 44 L 36 44 C 38.21 44 40 42.21 40 40 L 40 16 L 28 4 L 12 4 z M 26 7 L 37 18 L 26 18 L 26 7 z M 29.03515625 22 C 29.26296566797472 22 29.49070508924851 22.08640821424851 29.6640625 22.259765625 L 31.740234375 24.3359375 C 32.08694919650298 24.682652321503 32.08694919650299 25.24703517849701 31.740234375 25.59375 L 30.11328125 27.220703125 L 26.779296875 23.88671875 L 28.40625 22.259765625 C 28.5796074107515 22.08640821424851 28.80734683202528 22 29.03515625 22 z M 25.837890625 24.830078125 L 29.169921875 28.162109375 L 19.333984375 38 L 16 38 L 16 34.666015625 L 25.837890625 24.830078125 z "
+     id="path4180" />
+</svg>

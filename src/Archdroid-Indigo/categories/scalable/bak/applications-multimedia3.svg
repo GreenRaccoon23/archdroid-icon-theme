@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="movie.svg"
+   fill="#3F51B5">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="7.591500246245458"
+     inkscape:cx="11.54167898051487"
+     inkscape:cy="16.91629355803969"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     d="M 8 8 C 5.79 8 4.019531249999999 9.789999999999999 4.01953125 12 L 4 36 C 4 38.21 5.790000000000001 40 8 40 L 40 40 C 42.21 40 44 38.21 44 36 L 44 8 L 36 8 L 40 16 L 34 16 L 30 8 L 26 8 L 30 16 L 24 16 L 20 8 L 16 8 L 20 16 L 14 16 L 10 8 L 8 8 z M 24 19 L 31.19921875 19 L 31.19921875 22.599609375 L 25.80078125 22.599609375 L 25.80078125 32.5 C 25.80078125 34.984 23.78478125000002 37 21.30078125 37 C 18.81678125 37 16.80078125 34.984 16.80078125 32.5 C 16.80078125 30.016 18.81678125 28 21.30078125 28 C 22.31778125000001 28 23.244 28.35096875000001 24 28.91796875 L 24 19 z "
+     id="path4" />
+</svg>

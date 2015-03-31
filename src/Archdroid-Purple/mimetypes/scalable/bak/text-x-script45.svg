@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#9C27B0"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="text-x-script45.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="6.9532167"
+     inkscape:cx="-17.37105"
+     inkscape:cy="31.817948"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true" />
+  <path
+     d="M28 4H12C9.79 4 8.02 5.79 8.02 8L8 40c0 2.21 1.77 4 3.98 4H36c2.21 0 4-1.79 4-4V16L28 4zm4 32H16v-4h16v4zm0-8H16v-4h16v4zm-6-10V7l11 11H26z"
+     id="path4" />
+  <path
+     style="fill:#000000;fill-opacity:1;stroke:#9C27B0;stroke-width:2.4024024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 5.2578125 23.167969 C 3.9304852 23.167969 2.8554688 24.242986 2.8554688 25.570312 L 2.8554688 42.386719 C 2.8554688 43.714046 3.9304852 44.765625 5.2578125 44.765625 L 26.878906 44.765625 C 28.063953 44.765625 29.042901 43.919799 29.240234 42.798828 L 11.603516 42.798828 C 10.276189 42.798828 9.2011719 41.747249 9.2011719 40.419922 L 9.2011719 23.603516 C 9.2011719 23.454357 9.2181559 23.309589 9.2441406 23.167969 L 5.2578125 23.167969 z "
+     id="path4140" />
+  <path
+     inkscape:connector-curvature="0"
+     d="m 26.878607,42.404539 -21.6216217,0 0,-16.852853 21.6216217,0 0,16.852853 z"
+     id="path4-5"
+     style="fill:none;stroke:none" />
+  <g
+     id="g4208"
+     style="stroke:none"
+     transform="matrix(0.93955196,0,0,0.93955196,0.97126682,2.0531843)">
+    <g
+       id="g4213"
+       style="stroke:none">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 26.878607,23.167302 -21.6216207,0 c -1.327328,0 -2.402403,1.075075 -2.402403,2.402402 l 0,16.816817 c 0,1.327327 1.075075,2.378378 2.402403,2.378378 l 21.6216207,0 c 1.327327,0 2.402402,-1.057057 2.402402,-2.378378 l 0,-16.816817 c 0,-1.327327 -1.075075,-2.402402 -2.402402,-2.402402 z"
+         id="path4140-5"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.4024024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.01201153px;line-height:100%;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#9C27B0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="6.5346184"
+         y="35.394367"
+         id="text4144"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan4146"
+           x="6.5346184"
+           y="35.394367"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.01201153px;line-height:100%;font-family:Inconsolata;-inkscape-font-specification:'Inconsolata, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#9C27B0;fill-opacity:1;stroke:none">&gt;_</tspan></text>
+    </g>
+  </g>
+</svg>

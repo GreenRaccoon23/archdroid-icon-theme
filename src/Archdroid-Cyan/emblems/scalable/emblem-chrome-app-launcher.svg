@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#00BCD4"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="apps1.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="4.916666666666667"
+     inkscape:cx="24"
+     inkscape:cy="24"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     d="m 8,16 8,0 0,-8 -8,0 0,8 z"
+     id="path4154"
+     style="fill:#d50f25;fill-opacity:1" />
+  <path
+     d="m 20,40 8,0 0,-8 -8,0 0,8 z"
+     id="path4152"
+     style="fill:#eeb211;fill-opacity:1" />
+  <path
+     d="m 8,40 8,0 0,-8 -8,0 0,8 z"
+     id="path4150"
+     style="fill:#009925;fill-opacity:1" />
+  <path
+     d="m 8,28 8,0 0,-8 -8,0 0,8 z"
+     id="path4148"
+     style="fill:#009925;fill-opacity:1" />
+  <path
+     d="m 20,28 8,0 0,-8 -8,0 0,8 z"
+     id="path4146"
+     style="fill:#3369e8;fill-opacity:1" />
+  <path
+     d="m 32,8 0,8 8,0 0,-8 -8,0 z"
+     id="path4144"
+     style="fill:#d50f25;fill-opacity:1" />
+  <path
+     d="m 20,16 8,0 0,-8 -8,0 0,8 z"
+     id="path4142"
+     style="fill:#d50f25;fill-opacity:1" />
+  <path
+     d="m 32,28 8,0 0,-8 -8,0 0,8 z"
+     id="path4140"
+     style="fill:#eeb211;fill-opacity:1" />
+  <path
+     d="m 32,40 8,0 0,-8 -8,0 0,8 z"
+     id="path4"
+     style="fill:#eeb211;fill-opacity:1" />
+</svg>

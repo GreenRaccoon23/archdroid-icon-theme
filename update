@@ -1,0 +1,118 @@
+#!/bin/bash
+_specho() {
+	printf '  ' ;
+	echo "$1"
+}
+
+_lecho() {
+	_line
+	echo "$1"
+}
+
+_line() {
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+_trim() {
+	bak="${1}/scalable/bak" ;
+	bak2="${1}/io/scalable/bak" ;
+
+	if [ -e "${bak}" ] ; then
+		rm "${bak}" ;
+	elif [ -e "${bak2}" ] ; then
+		rm "${bak2}" ;
+	fi
+}
+
+_clean() {
+	top=$(echo "${PWD}") ;
+
+	root="${top}/${1}"
+	cd "${root}" ;
+
+	for dir in $(ls -d */) ; do
+		
+		current="${dir}scalable/" ;
+		if [[ "$dir" =~ "stock" ]] ; then
+			current="${dir}io/scalable/" ;
+		fi ;
+
+		_specho "${current}" ;
+		cd "${root}" ;
+		_cleanDir "${current}" ;
+
+	done ;
+
+	cd "${top}"
+}
+
+_cleanDir() {
+	cd "$1"
+	for f in $(ls) ; do
+
+		e=$(echo "${f}" | sed -e 's/\.[a-zA-Z]*$//') ;
+
+		if [ -d "${f}" ] ; then
+			_cleanDir "${f}" ;
+		elif [[ $e == "svg" ]] ; then
+			_cleanFilter "${img}" ;
+		fi ;
+
+	done ;
+}
+
+_cleanFilter() {
+	if [[ $(readlink "${1}") == "" ]] ; then
+		_cleanSvg "${1}" ;
+	fi
+}
+
+_cleanSvg() {
+	svgcleaner-cli "${1}" "${1}"
+}
+
+_copy() {
+	from="${1}-Green" ;
+	color="$2" ;
+	to="${1}-${2}" ;
+
+	if [ -e ${to} ] ; then
+		rm -R "${to}" ;
+	fi ;
+	cp -R "${from}" "${to}"
+}
+
+_colorise() {
+	color="${2}" ;
+	from="${1}-Green" ;
+	to="${1}-${color}" ;
+
+	_specho "${to}..." ;
+
+	svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
+}
+
+b="Archdroid" ;
+toClean="${b}-Green/" ;
+
+cd "src" ;
+
+_lecho "Removing backups..." ;
+_trim "${toClean}" ;
+echo "Done." ;
+
+_lecho "Cleaning svg files..." ;
+_clean "${toClean}" ;
+echo "Done." ;
+
+_lecho "Generating color variants..." ;
+for c in Red Pink Purple DeepPurple Indigo Blue LightBlue Cyan Teal KellyGreen Shamrock LightGreen Lime Yellow Amber Orange DeepOrange Brown Grey BlueGrey ; do
+	_copy "${b}" "${c}" ;
+	_colorise "${b}" "${c}" ;
+done ;
+echo "Done." ;
+
+_lecho "Generating archive..." ;
+	cd ..
+	./crunch "src"
+echo "Done."

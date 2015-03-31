@@ -1,0 +1,14 @@
+#!/bin/bash
+for x in $(ls *.svg | sed -e 's/\.[a-zA-Z]*$//') ; do
+	if [ "$(echo ${x} | sed -re 's/emblem\(.*\)//')" != "${x}.svg" ] ; then
+		mv "${x}.svg" "emblem-${x}.svg"
+		x="emblem-${x}"
+	fi
+	e="${x}.icon"
+	q=$(grep "DisplayName\[af\]" "${e}")
+	if [ -z "${q}" ] ; then
+		rm "${e}"
+		X="${x^}"
+		printf "\n[Icon Data]\n\nDisplayName=%s\nDisplayName[en_CA]=%s\nDisplayName[en_GB]=%s\n" "${X}" "${X}" "${X}" | tee -a ${e} &> /dev/null
+	fi
+done
