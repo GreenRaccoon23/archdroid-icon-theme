@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="applications-cardgames.svg"
-   style="fill:#4CAF50">
+   style="fill:#9E9E9E">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -65,7 +65,7 @@
     <g
        transform="matrix(0.275,0,0,0.275,8.399999999999998,23.30374999999999)"
        id="g4300"
-       style="fill:#4CAF50">
+       style="fill:#9E9E9E">
       <path
          inkscape:connector-curvature="0"
          d="M 24,42.7 21.1,40.07 C 10.8,30.72 4,24.55 4,17 4,10.83 8.83,6 15,6 18.48,6 21.82,7.62 24,10.17 26.18,7.62 29.52,6 33,6 c 6.17,0 11,4.83 11,11 0,7.55 -6.8,13.72 -17.1,23.07 L 24,42.7 Z"
@@ -76,16 +76,16 @@
        id="text4303"
        y="22.332031"
        x="7.3583984"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#9E9E9E;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:7.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Heavy';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:7.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Heavy';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#9E9E9E;fill-opacity:1"
          y="22.332031"
          x="7.3583984"
          id="tspan4305"
          sodipodi:role="line">A</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#9E9E9E;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="22.601318"
        y="43"
        id="text4312"
@@ -94,9 +94,9 @@
          id="tspan4314"
          x="22.601318"
          y="43"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:7.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Heavy';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1">A</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:7.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Heavy';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#9E9E9E;fill-opacity:1">A</tspan></text>
     <g
-       style="fill:#4CAF50"
+       style="fill:#9E9E9E"
        id="g4317"
        transform="matrix(0.118927001953125,0,0,0.118927001953125,4.5242919921875,22.61846923828125)">
       <path
@@ -107,7 +107,7 @@
     <g
        transform="matrix(0.118927001953125,0,0,0.118927001953125,19.7672119140625,31.58978576660156)"
        id="g4321"
-       style="fill:#4CAF50">
+       style="fill:#9E9E9E">
       <path
          inkscape:connector-curvature="0"
          d="M 24,42.7 21.1,40.07 C 10.8,30.72 4,24.55 4,17 4,10.83 8.83,6 15,6 18.48,6 21.82,7.62 24,10.17 26.18,7.62 29.52,6 33,6 c 6.17,0 11,4.83 11,11 0,7.55 -6.8,13.72 -17.1,23.07 L 24,42.7 Z"

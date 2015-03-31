@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gnome-panel-notification-area.svg"
-   fill="#4CAF50">
+   fill="#673AB7">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -54,7 +54,7 @@
      inkscape:bbox-paths="true"
      inkscape:snap-page="true" />
   <path
-     style="opacity:1;fill:#4CAF50;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#673AB7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 0 16 L 0 32 L 48 32 L 48 16 L 0 16 z M 33 19 L 41 19 C 41.55250000000001 19 42 19.4475 42 20 L 42 26 C 42 26.55249999999999 41.55250000000001 27 41 27 L 34 27 L 32 29 L 32 20 C 32 19.4475 32.44749999999999 19 33 19 z "
      id="path4246" />
 </svg>

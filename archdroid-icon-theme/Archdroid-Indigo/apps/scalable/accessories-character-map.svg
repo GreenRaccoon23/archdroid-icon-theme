@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="accessories-charater-map.svg"
-   style="fill:#4CAF50">
+   style="fill:#3F51B5">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -57,7 +57,7 @@
      fit-margin-bottom="0" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#3F51B5;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="24.036621"
      y="33.014893"
      id="text4135"
@@ -66,12 +66,12 @@
        id="tspan4137"
        x="24.036621"
        y="33.014893"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1">á</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#3F51B5;fill-opacity:1">á</tspan></text>
   <g
-     style="fill:#4CAF50"
+     style="fill:#3F51B5"
      id="g4157" />
   <path
-     style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:medium;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Medium';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#4CAF50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:medium;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Medium';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#3F51B5;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      d="M 10,6 C 7.79,6 6.000000000000001,7.79 6,10 l 0,28 c 0,2.21 1.790000000000001,4 4,4 l 28,0 c 2.21,0 4,-1.79 4,-4 L 42,10 C 42,7.79 40.21,6 38,6 L 10,6 Z m 0,4 28,0 0,28 -28,0 0,-28 z"
      id="path4153"
      inkscape:connector-curvature="0" />

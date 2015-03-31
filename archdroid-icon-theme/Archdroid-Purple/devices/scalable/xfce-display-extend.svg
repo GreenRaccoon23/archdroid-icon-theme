@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="xfce-display-extend.svg"
-   fill="#4CAF50">
+   fill="#9C27B0">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -61,7 +61,7 @@
      showguides="false" />
   <path
      id="path4144"
-     style="opacity:1;fill:#4CAF50;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#9C27B0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 2.728515625,25 C 1.217606489062291,25 3.108624468950438e-14,26.00349999999998 0,27.25 l 0,13.5 C 0,41.99649999999999 1.217606489062291,43 2.728515625,43 L 27.2734375,43 C 28.78434663593771,43 30,41.99649999999999 30,40.75 l 0,-13.5 C 30,26.00349999999998 28.78434663593771,25 27.2734375,25 L 2.728515625,25 Z M 4,29 26,29 26,39 4,39 4,29 Z M 20.728515625,5 C 19.21760648906229,5 18.00000000000001,6.00349999999999 18,7.25 l 0,13.5 C 18,21.99649999999999 19.21760648906229,23 20.728515625,23 L 45.2734375,23 C 46.7843466359377,23 48,21.99649999999999 48,20.75 L 48,7.25 C 48,6.003499999999982 46.7843466359377,5 45.2734375,5 L 20.728515625,5 Z M 22,9 44,9 44,19 22,19 22,9 Z"
      inkscape:connector-curvature="0" />
 </svg>

@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   fill="#4CAF50"
+   fill="#3F51B5"
    width="48"
    height="48"
    viewBox="0 0 48 48"
@@ -59,7 +59,7 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     style="opacity:1;fill:#4CAF50;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#3F51B5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 8 10 C 5.784000000000001 10 4 11.784 4 14 L 4 34 C 4.000000000000001 36.216 5.784 38 8 38 L 13 38 L 13 41 L 13 45.71484375 C 13 46.42712945485115 13.98041859149932 47 15.19921875 47 L 32.80078125 47 C 34.01958140850066 47.00000000000001 35 46.42712945485114 35 45.71484375 L 35 39.28515625 L 35 38 L 40 38 C 42.216 38 44 36.216 44 34 L 44 14 C 44 11.784 42.216 10 40 10 L 8 10 z M 24 14 L 32 14 L 32 18 L 26 18 L 26 29 C 26 31.76 23.75999999999999 34 21 34 C 18.24 34 16 31.76 16 29 C 16 26.24000000000001 18.24 24 21 24 C 22.12999999999999 24 23.15999999999999 24.38953125 24 25.01953125 L 24 14 z M 15 39 L 18 39 L 18 45 L 15 45 L 15 39 z M 20 39 L 23 39 L 23 45 L 20 45 L 20 39 z M 25 39 L 28 39 L 28 45 L 25 45 L 25 39 z M 30 39 L 33 39 L 33 45 L 30 45 L 30 39 z "
      id="rect4162" />
 </svg>

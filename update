@@ -103,8 +103,8 @@ _coloriseAll() {
 	_specho "${to}..." ;
 	
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${2}" "${from}" "${to}" ;
-	_colorise "4caf50" "${2}" "${from}" "${to}" ;
+	_colorise "green" "${2}" "${to}" "${to}" ;
+	_colorise "#4caf50" "${2}" "${to}" "${to}" ;
 }
 
 _coloriseMost() {
@@ -114,11 +114,11 @@ _coloriseMost() {
 	_specho "${to}..." ;
 
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${2}" "${from}" "${to}" ;
+	_colorise "green" "${2}" "${to}" "${to}" ;
 }
 
 _colorise() {
-	svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
+	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
 }
 
 _crunch() {

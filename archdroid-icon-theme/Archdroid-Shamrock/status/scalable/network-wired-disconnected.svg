@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   fill="#4CAF50"
+   fill="#00E676"
    width="48"
    height="48"
    viewBox="0 0 48 48"
@@ -54,7 +54,7 @@
      d="M 18 6 L 15.439453125 8.552734375 L 20.8671875 13.98046875 L 26 13.98046875 L 18 6 z M 12.609375 11.37890625 L 10 13.98046875 L 15.2109375 13.98046875 L 12.609375 11.37890625 z M 16 14.76953125 L 16 28 L 20 28 L 20 18.76953125 L 16 14.76953125 z M 28 20 L 28 21.11328125 L 32 25.11328125 L 32 20 L 28 20 z M 28 26.76953125 L 28 34.01953125 L 22 34.01953125 L 30 42 L 36.623046875 35.392578125 L 35.25 34.01953125 L 32 34.01953125 L 32 30.76953125 L 28 26.76953125 z "
      id="path4" />
   <rect
-     style="opacity:1;fill:#4CAF50;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#00E676;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect4138"
      width="44"
      height="4"

@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   fill="#4CAF50"
+   fill="#9C27B0"
    width="48"
    height="48"
    viewBox="0 0 48 48"
@@ -57,7 +57,7 @@
      d="M 10 0 C 7.79 0 6 1.79 6 4 L 6 32 C 6 34.21 7.79 36 10 36 L 38 36 C 40.21 36 42 34.21 42 32 L 42 8 L 34 0 L 10 0 z M 10 4 L 30 4 L 30 12 L 10 12 L 10 4 z M 24 20 C 27.31 20 30 22.69 30 26 C 30 29.31 27.31 32 24 32 C 20.69 32 18 29.31 18 26 C 18 22.69 20.69 20 24 20 z M 12 40 C 9.79 40 8 41.79 8 44 C 8 46.21 9.79 48 12 48 C 14.21 48 16 46.21 16 44 C 16 41.79 14.21 40 12 40 z M 24 40 C 21.79 40 20 41.79 20 44 C 20 46.21 21.79 48 24 48 C 26.21 48 28 46.21 28 44 C 28 41.79 26.21 40 24 40 z M 36 40 C 33.79 40 32 41.79 32 44 C 32 46.21 33.79 48 36 48 C 38.21 48 40 46.21 40 44 C 40 41.79 38.21 40 36 40 z "
      id="path4" />
   <g
-     style="fill:#4CAF50"
+     style="fill:#9C27B0"
      id="g4148"
      transform="translate(0,20)" />
 </svg>

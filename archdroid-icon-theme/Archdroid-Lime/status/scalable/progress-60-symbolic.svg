@@ -56,7 +56,7 @@
      transform="translate(0,-1004.3622)"
      style="opacity:1">
     <path
-       style="opacity:1;fill:#4CAF50;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#CDDC39;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 23.70703125 6.001953125 A 18 18 0 0 0 9.71875 13.04296875 A 18 18 0 0 0 9.255859375 34.32421875 A 18 18 0 0 0 29.412109375 41.166015625 A 18 18 0 0 0 42 24 L 38 24 A 14 14 0 0 1 24 38 A 14 14 0 0 1 10 24 A 14 14 0 0 1 24 10 A 14 14 0 0 1 28.783203125 10.861328125 L 30.15625 7.0859375 A 18 18 0 0 0 23.70703125 6.001953125 z "
        transform="translate(0,1004.3622)"
        id="ellipse4145" />

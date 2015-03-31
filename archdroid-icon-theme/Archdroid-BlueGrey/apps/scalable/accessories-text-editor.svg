@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="accessories-text-editor.svg"
-   style="fill:#4CAF50">
+   style="fill:#607D8B">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -61,13 +61,13 @@
      id="path4"
      inkscape:connector-curvature="0" />
   <g
-     style="fill:#4CAF50;fill-opacity:1"
+     style="fill:#607D8B;fill-opacity:1"
      id="g4148"
      transform="translate(-1.995000000000004,6)">
     <path
        id="path4140"
        d="m 9.999999999999996,34.5 0,7.5 L 17.5,42 39.63,19.87 32.12999999999998,12.37 9.999999999999996,34.5 Z M 45.41,14.09 c 0.78,-0.78 0.78,-2.05 0,-2.83 L 40.74,6.59 C 39.96,5.81 38.69,5.81 37.91,6.59 l -3.66,3.66 7.5,7.5 3.66,-3.66 z"
        inkscape:connector-curvature="0"
-       style="fill:#4CAF50;fill-opacity:1" />
+       style="fill:#607D8B;fill-opacity:1" />
   </g>
 </svg>

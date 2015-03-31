@@ -14,7 +14,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="text-x-script.svg"
-   style="fill:#4CAF50">
+   style="fill:#3F51B5">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -58,15 +58,15 @@
      d="M 28,4 12,4 c -2.210000000000001,0 -3.98,1.79 -3.98,4 L 8,40 c 0,2.21 1.77,4 3.98,4 L 36,44 c 2.21,0 4,-1.79 4,-4 L 40,16 28,4 Z"
      id="path4151" />
   <path
-     style="fill:#4CAF50;fill-opacity:1"
+     style="fill:#3F51B5;fill-opacity:1"
      d="m 32,36 -16,0 0,-4 16,0 0,4 z"
      id="path4149" />
   <path
-     style="fill:#4CAF50;fill-opacity:1"
+     style="fill:#3F51B5;fill-opacity:1"
      d="m 32,28 -16,0 0,-4 16,0 0,4 z"
      id="path4147" />
   <path
-     style="fill:#4CAF50;fill-opacity:1"
+     style="fill:#3F51B5;fill-opacity:1"
      d="M 26,18 26,7 37,18 26,18 Z"
      id="path4-1" />
 </svg>
