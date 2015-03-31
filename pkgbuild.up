@@ -1,0 +1,48 @@
+#!/bin/bash
+_lecho() {
+	_line
+	echo "$1" ;
+}
+
+_line() {
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' = ;
+}
+
+_pkgbuild() {
+	pkgver=$(_gitVer) ;
+	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD ;
+
+	a="archdroid-icon-theme" ;
+	repo="https://raw.githubusercontent.com/GreenRaccoon23/${a}" ;
+	xz="${repo}/master/${a}.tar.xz" ;
+	md=$(_gitmd5 "${xz}") ;
+	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD ;
+}
+
+_gitmd5() {
+	md=$(curl "${1}" | md5sum) ;
+	echo "${md%  *}" ;
+}
+
+_gitVer() {
+	( set -o pipefail
+	  git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+	  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
+}
+
+_git() {
+	git add .
+	git commit -m "${1}"
+	git push origin master
+}
+
+commit="$@"
+
+_lecho "Updating PKGBUILD..." ;
+_pkgbuild ;
+echo "Done." ;
+
+_lecho "Uploading PKGBUILD to git..." ;
+_git "${commit}" ;
+echo "Done." ;
