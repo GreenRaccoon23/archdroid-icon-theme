@@ -118,7 +118,7 @@ _coloriseMost() {
 }
 
 _colorise() {
-	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
+	svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
 }
 
 _crunch() {

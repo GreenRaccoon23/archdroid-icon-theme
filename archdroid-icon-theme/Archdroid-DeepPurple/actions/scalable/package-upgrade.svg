@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   fill="##673AB7"
+   fill="#673AB7"
    width="48"
    height="48"
    viewBox="0 0 48 48"
@@ -53,7 +53,7 @@
      inkscape:bbox-paths="true"
      inkscape:snap-bbox-edge-midpoints="true" />
   <path
-     style="fill:##673AB7;fill-opacity:1"
+     style="fill:#673AB7;fill-opacity:1"
      d="M 10 6 C 7.79 6 6.000000000000001 7.790000000000001 6 10 L 6 38 C 6 40.21 7.790000000000001 42 10 42 L 38 42 C 40.21 42 42 40.21 42 38 L 42 10 C 42 7.79 40.21 6.000000000000001 38 6 L 10 6 z M 24 12 L 38 26 L 29.091796875 26 L 29.091796875 31.091796875 L 18.908203125 31.091796875 L 18.908203125 26 L 10 26 L 24 12 z "
      id="path4164" />
 </svg>
