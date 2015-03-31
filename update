@@ -1,16 +1,76 @@
 #!/bin/bash
+_green() {
+	tput setaf 2 ;
+}
+
+_white() {
+	tput setaf 7 ;
+}
+
+_bold() {
+	if [[ $1 != "" ]] ; then
+		$1 ;
+	fi ;
+	tput bold ;
+}
+
+_tset() {
+	tput sgr 0 ;
+}
+
+_gecho() {
+	_bold _green
+	for line ; do
+		echo "${line}" ;
+	done ;
+}
+
+_line() {
+	if [[ $@ != "" ]] ; then
+		$@ ;
+	fi ;
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' = ;
+}
+
+_glecho() {
+	_line _bold _white ;
+	_green ;
+	echo "$1" ;
+	_tset ;
+}
+
 _specho() {
 	printf '  ' ;
 	echo "$1" ;
 }
 
-_lecho() {
-	_line
-	echo "$1" ;
-}
-
-_line() {
-	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' = ;
+_gr23() {
+	raccoon=(
+	'         ///////                             //////' 
+	'       /////   ///                         //     /// ' 
+	'      ///   ##### //                      //  #####  //' 
+	'     //  ########## //                    /    ######  /' 
+	'    ///  ########### /    //////////////////////  ####  /' 
+	'    ///  #########    ////////////////////////////  #   //' 
+	'     ///    #  //////////////////////////////////////  //' 
+	'            /////////////////////////////////////////' 
+	'          /////////////////////////////////////////////' 
+	'        //////////////////////  /////////////  |||     /' 
+	'      /////////////////     ||||   ////////  ||||||||||' 
+	'     ////////////////  |||||||||||  //////  ||   ||||||||' 
+	'    //////////////   |||||||   ||||  //////  || ||||||||||' 
+	'   ////////////// ||||||||||  |||||  ///////  ||||||||||||' 
+	'  ////////////   |||||||||||||||||  ///////////  |||||||||' 
+	' ////////////  ||||||||||||||||||  ////////////// ||||||||' 
+	'    ////////  ||||||||||||||||||| ////////////////  |||||' 
+	'    /////// |||||||||||||||||||  ////////    $$$  // ||' 
+	'       ///  ||||||||||||||||||  //////// $$$$$$$  ///' 
+	'           ||||||||||||||||||  ///////////       ///' 
+	'              ||||||||||||||  ////////////////////' 
+	'                      ||||||  ///////////////////' 
+	'                                     ////////'
+	) ;
+	_gecho "${raccoon[@]}" ;
 }
 
 _trim() {
@@ -174,17 +234,19 @@ toClean="${b}-Green/" ;
 colors=(Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
 colorsSpecial=(Amber DeepOrange Orange Red Yellow) ;
 
+_gr23 ;
+
 cd "${d}" ;
 
-_lecho "Removing backups..." ;
+_glecho "Removing backups..." ;
 _trim "${toClean}" ;
 echo "Done." ;
 
-_lecho "Cleaning svg files..." ;
+_glecho "Cleaning svg files..." ;
 _clean "${toClean}" ;
 echo "Done." ;
 
-_lecho "Generating color variants..." ;
+_glecho "Generating color variants..." ;
 for c in ${colors[@]} ; do
 	_coloriseAll "${b}" "${c}" ;
 done ;
@@ -195,29 +257,29 @@ echo "Done." ;
 
 cd .. ;
 
-_lecho "Generating archive..." ;
+_glecho "Generating archive..." ;
 _crunch ;
 echo "Done." ;
 
-_lecho "Updating git repo..." ;
+_glecho "Updating git repo..." ;
 _git "${commit}" ;
 echo "Done." ;
 
-_lecho "Waiting 120 seconds for git to update..." ;
+_glecho "Waiting 120 seconds for git to update..." ;
 for i in $(seq 1 120); do
 	printf "\r%d" $i ;
 	sleep 1 ;
 done ;
 echo "Done." ;
 
-_lecho "Updating PKGBUILD..." ;
+_glecho "Updating PKGBUILD..." ;
 _pkgbuild ;
 echo "Done." ;
 
-_lecho "Uploading PKGBUILD to git..." ;
+_glecho "Uploading PKGBUILD to git..." ;
 _git "${commit}" ;
 echo "Done." ;
 
-_lecho "Uploading package to aur..." ;
+_glecho "Uploading package to aur..." ;
 _burp ;
 echo "Done." ;

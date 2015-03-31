@@ -16,12 +16,12 @@ _isTar() {
 }
 
 _tarMe() {
-	echo "tar -cf ${1} ${2}"
+	echo "  tar -cf ${1} ${2}"
 	tar -cf "${1}" "${2}"
 }
 
 _xzMe() {
-	echo "xz -zv -T 0 -e9 ${1}"
+	echo "  xz -zv -T 0 -e9 ${1}"
 	xz -zv -T 0 -e9 "${1}"
 }
 
