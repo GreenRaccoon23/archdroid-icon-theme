@@ -136,12 +136,14 @@ _pkgbuild() {
 	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD ;
 
 	a="archdroid-icon-theme" ;
-	md=$(_md5 "${a}.tar.xz") ;
+	repo="https://github.com/GreenRaccoon23/${a}" ;
+	xz="${repo}/raw/master/${a}.tar.xz" ;
+	md=$(_gitmd5 "${xz}") ;
 	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD ;
 }
 
-_md5() {
-	md=$(md5sum "$1") ;
+_gitmd5() {
+	md=$(curl "${1}" | md5sum) ;
 	echo "${md%  *}" ;
 }
 
@@ -171,16 +173,16 @@ _trim "${toClean}" ;
 echo "Done." ;
 
 _lecho "Cleaning svg files..." ;
-_clean "${toClean}" ;
+#_clean "${toClean}" ;
 echo "Done." ;
 
 _lecho "Generating color variants..." ;
-for c in ${colors[@]} ; do
-	_coloriseAll "${b}" "${c}" ;
-done ;
-for c in ${colorsSpecial[@]} ; do
-	_coloriseMost "${b}" "${c}" ;
-done ;
+#for c in ${colors[@]} ; do
+	#_coloriseAll "${b}" "${c}" ;
+#done ;
+#for c in ${colorsSpecial[@]} ; do
+	#_coloriseMost "${b}" "${c}" ;
+#done ;
 echo "Done." ;
 
 cd .. ;
