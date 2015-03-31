@@ -162,6 +162,7 @@ _git() {
 	git push origin master
 }
 
+commit="$1"
 d="archdroid-icon-theme"
 b="Archdroid" ;
 toClean="${b}-Green/" ;
@@ -194,7 +195,6 @@ _crunch ;
 echo "Done." ;
 
 _lecho "Updating git repo..." ;
-read -p "==> Enter commit message: " commit
 _git "${commit}" ;
 echo "Done." ;
 
