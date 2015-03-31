@@ -14,14 +14,26 @@ _line() {
 }
 
 _trim() {
-	bak="${1}/scalable/bak" ;
-	bak2="${1}/io/scalable/bak" ;
+	top=$(echo "${PWD}") ;
 
-	if [ -e "${bak}" ] ; then
-		rm "${bak}" ;
-	elif [ -e "${bak2}" ] ; then
-		rm "${bak2}" ;
-	fi
+	root="${top}/${1}"
+	cd "${root}" ;
+
+	for dir in $(ls -d */) ; do
+
+		if [[ "$dir" =~ "stock" ]] ; then
+			bak="${dir}io/scalable/bak" ;
+		else
+			bak="${dir}scalable/bak" ;
+		fi ;
+
+		if [ -e "${bak}" ] ; then
+			rm -R "${bak}" ;
+		fi ;
+
+	done ;
+
+	cd "${top}"
 }
 
 _clean() {
@@ -32,9 +44,10 @@ _clean() {
 
 	for dir in $(ls -d */) ; do
 		
-		current="${dir}scalable/" ;
 		if [[ "$dir" =~ "stock" ]] ; then
 			current="${dir}io/scalable/" ;
+		else
+			current="${dir}scalable/" ;
 		fi ;
 
 		_specho "${current}" ;
@@ -89,7 +102,15 @@ _colorise() {
 
 	_specho "${to}..." ;
 
-	./svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
+	../svg-edit -o green -n "${color}" -r -Q "${from}" "${to}" ;
+}
+
+_crunch() {
+	cd ..
+	if [ -e "src.tar.xz" ] ; then
+		rm src.tar.xz ;
+	fi ;
+	./crunch "src"
 }
 
 b="Archdroid" ;
@@ -113,6 +134,5 @@ done ;
 echo "Done." ;
 
 _lecho "Generating archive..." ;
-	cd ..
-	./crunch "src"
+_crunch
 echo "Done."
