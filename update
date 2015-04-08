@@ -208,7 +208,7 @@ _crunch() {
 
 _pause() {
 	for i in $(seq 1 "$1") ; do
-		printf "\r%d/%d" "$i" "$1" ;
+		printf "  \r%d/%d" "$i" "$1" ;
 		sleep 1 ;
 	done ;
 	printf "\n" ;
