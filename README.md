@@ -7,6 +7,8 @@ Google's material design icons are totally [open-source to edit and distribute n
 ##Screenshots:  
 Archdroid-Amber  
 ![Archdroid-Amber](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_Amber.png)  
+Archdroid-ArchBlue  
+![Archdroid-ArchBlue](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_ArchBlue.png)  
 Archdroid-Blue  
 ![Archdroid-Blue](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_Blue.png)  
 Archdroid-BlueGrey  

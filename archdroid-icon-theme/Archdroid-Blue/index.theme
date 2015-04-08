@@ -62,8 +62,12 @@ Type=Scalable
 MinSize=16
 MaxSize=512
 
-[status/scalable]to 
-Siz ContexType=ScalableMinSize slightly=MaxSize=512
+[status/scalable]
+Size=128
+Context=Status
+Type=Scalable
+MinSize=16
+MaxSize=512
 
 [stock/scalable]
 Size=128

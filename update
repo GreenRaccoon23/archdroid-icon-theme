@@ -112,17 +112,12 @@ _clean() {
 	top=$(echo "${PWD}") ;
 
 	root="${top}/${1}" ;
-	cd "${root}" ;
+	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io) ;
 
-	for dir in $(ls -d */) ; do
-		if [[ "$dir" =~ "stock" ]] ; then
-			current="${dir}io/scalable/" ;
-		else
-			current="${dir}scalable/" ;
-		fi ;
-
-		_specho "${current}" ;
+	for dir in "${subdirs[@]}" ; do
 		cd "${root}" ;
+		current="${dir}/scalable/" ;
+		_specho "${current}" ;
 		_cleanDir "${current}" ;
 	done ;
 
@@ -132,7 +127,7 @@ _clean() {
 _cleanDir() {
 	cd "$1" ;
 	for f in $(ls) ; do
-		e=$(echo "${f}" | sed -e 's/\.[a-zA-Z]*$//') ;
+		e="${f#*.}"
 
 		if [ -d "${f}" ] ; then
 			_cleanDir "${f}" ;
@@ -195,15 +190,32 @@ _colorise() {
 }
 
 _crunch() {
-	d="archdroid-icon-theme"
-	xz="${d}.tar.xz" ;
+	f="${1}" ;
+	xz="${f}.tar.xz" ;
 	
 	if [ -e "${xz}" ] ; then
 		rm "${xz}" ;
 	fi ;
-	./crunch "${d}" ;
-	bak="${d}_$(date +%m-%d-%y).tar.xz"
-	cp "${xz}" "bak/${bak}"
+	./crunch "${f}" ;
+	_bak "${xz}" "bak/"
+}
+
+_bak() {
+	f="${1}" ;
+	d="$(_dir "${2}")" ;
+
+
+	a="${f%%.*}" ;
+	bak="${a}_$(date +%m-%d-%y).tar.xz" ;
+
+	cp -f "${f}" "${d}${bak}" ;
+}
+
+_dir() {
+	if [[ "${1%/*}" == "${1}" ]] ; then
+		echo "${1}/" ;
+	fi ;
+	echo "${1}" ;
 }
 
 _pause() {
@@ -250,9 +262,14 @@ _burp() {
 }
 
 commit="$@" ;
+if [[ "${commit}" == "" ]] ; then
+	read -p "Enter commit message: " commit ;
+fi ;
+
 d="archdroid-icon-theme" ;
-b="Archdroid" ;
-toClean="${b}-Green/" ;
+a="Archdroid" ;
+default="${a}-Green/" ;
+
 colors=(ArchBlue Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
 colorsSpecial=(Amber DeepOrange Orange Red Yellow) ;
 
@@ -261,26 +278,26 @@ _gr23 ;
 cd "${d}" ;
 
 _glecho "Removing backups..." ;
-_trim "${toClean}" ;
+_trim "${default}" ;
 echo "Done." ;
 
 _glecho "Cleaning svg files..." ;
-_clean "${toClean}" ;
+_clean "${default}" ;
 echo "Done." ;
 
 _glecho "Generating color variants..." ;
 for c in ${colors[@]} ; do
-	_coloriseAll "${b}" "${c}" ;
+	_coloriseAll "${a}" "${c}" ;
 done ;
 for c in ${colorsSpecial[@]} ; do
-	_coloriseMost "${b}" "${c}" ;
+	_coloriseMost "${a}" "${c}" ;
 done ;
 echo "Done." ;
 
 cd .. ;
 
 _glecho "Generating archive..." ;
-_crunch ;
+_crunch "archdroid-icon-theme" ;
 echo "Done." ;
 
 _glecho "Updating git repo..." ;
