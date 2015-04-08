@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Archdroid-DeepOrange
 Inherits=ubuntu-mono-dark,gnome,hicolor,gnome-colors-wise
-Comment=Port of Google's material design icons for Android Lollipop 5.0 to Linux (and influenced by Ubuntu Mono and Mint-X).
+Comment=Port of Android Lollipop's material design icons to Linux (influenced slightly by Ubuntu Mono and Mint-X).
 Directories=actions/scalable,animations/scalable,apps/scalable,categories/scalable,devices/scalable,emblems/scalable,mimetypes/scalable,places/scalable,status/scalable,stock/scalable
 
 Example=directory-x-normal
@@ -62,12 +62,8 @@ Type=Scalable
 MinSize=16
 MaxSize=512
 
-[status/scalable]
-Size=128
-Context=Status
-Type=Scalable
-MinSize=16
-MaxSize=512
+[status/scalable]to 
+Siz ContexType=ScalableMinSize slightly=MaxSize=512
 
 [stock/scalable]
 Size=128

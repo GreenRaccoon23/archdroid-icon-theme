@@ -166,22 +166,28 @@ _copy() {
 _coloriseAll() {
 	from="${1}-Green" ;
 	to="${1}-${2}" ;
+	if [[ "$2" == "ArchBlue" ]] ; then
+		color="#1793D1" ;
+	else
+		color="$2" ;
+	fi ;
 
 	_specho "${to}..." ;
 	
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${2}" "${to}" "${to}" ;
-	_colorise "#4caf50" "${2}" "${to}" "${to}" ;
+	_colorise "green" "${color}" "${to}" "${to}" ;
+	_colorise "#4caf50" "${color}" "${to}" "${to}" ;
 }
 
 _coloriseMost() {
 	from="${1}-Green" ;
 	to="${1}-${2}" ;
+	color="$2" ;
 
 	_specho "${to}..." ;
 
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${2}" "${to}" "${to}" ;
+	_colorise "green" "${color}" "${to}" "${to}" ;
 }
 
 _colorise() {
@@ -198,6 +204,14 @@ _crunch() {
 	./crunch "${d}" ;
 	bak="${d}_$(date +%m-%d-%y).tar.xz"
 	cp "${xz}" "bak/${bak}"
+}
+
+_pause() {
+	for i in $(seq 1 "$1") ; do
+		printf "\r%d/%d" "$i" "$1" ;
+		sleep 1 ;
+	done ;
+	printf "\n" ;
 }
 
 _pkgbuild() {
@@ -239,7 +253,7 @@ commit="$@" ;
 d="archdroid-icon-theme" ;
 b="Archdroid" ;
 toClean="${b}-Green/" ;
-colors=(Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
+colors=(ArchBlue Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
 colorsSpecial=(Amber DeepOrange Orange Red Yellow) ;
 
 _gr23 ;
@@ -274,10 +288,7 @@ _git "${commit}" ;
 echo "Done." ;
 
 _glecho "Waiting 120 seconds for git to update..." ;
-for i in $(seq 1 120) ; do
-	printf "\r%d" $i ;
-	sleep 1 ;
-done ;
+_pause 120 ;
 echo "Done." ;
 
 _glecho "Updating PKGBUILD..." ;
