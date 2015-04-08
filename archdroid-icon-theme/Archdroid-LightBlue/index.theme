@@ -29,7 +29,7 @@ MaxSize=512
 
 [categories/scalable]
 Size=128
-Context=Actions
+Context=Categories
 Type=Scalable
 MinSize=16
 MaxSize=512

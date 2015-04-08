@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:title />
       </cc:Work>
     </rdf:RDF>
@@ -46,10 +46,10 @@
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
-     inkscape:snap-bbox-midpoints="true"
-     inkscape:zoom="11.02408854166667"
-     inkscape:cx="-20.74405710673937"
-     inkscape:cy="11.90735809428717"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:zoom="6.179518388275627"
+     inkscape:cx="24.15193604702382"
+     inkscape:cy="3.87710070408643"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -57,9 +57,15 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-nodes="false"
+     inkscape:snap-page="true" />
   <path
-     d="M 0,0 0,10 4,10 4,4 10,4 10,0 0,0 Z m 28,0 0,4 6,0 0,6 4,0 L 38,0 28,0 Z M 10,7 C 8.342499999999999,7 7.015625,8.342499999999999 7.015625,10 L 7,34 c 0,1.6575 1.326874999999999,3 2.984375,3 L 28,37 c 1.6575,0 3,-1.3425 3,-3 L 31,16 22,7 10,7 Z m 10.5,2.25 8.25,8.25 -8.25,0 0,-8.25 z M 13,22 l 12,0 0,3 -12,0 0,-3 z m 0,6 12,0 0,3 -12,0 0,-3 z m -13,6 0,10 10,0 0,-4 -6,0 0,-6 -4,0 z m 34,0 0,6 -6,0 0,4 10,0 0,-10 -4,0 z"
-     id="path4"
-     inkscape:connector-curvature="0" />
+     id="path4274"
+     style="opacity:1;fill:#00C853;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 37.99999999999997,34 0,10 L 28,44 l 0,-4 5.99999999999997,0 0,-6 4,0 z m 0,-24 0,-10 L 28,0 l 0,4 5.99999999999997,0 0,6 4,0 z M 0,10 0,0 l 9.999999999999969,0 0,4 L 4,4 4,10 0,10 Z m 0,24 0,10 9.999999999999969,0 0,-4 L 4,40 4,34 0,34 Z M 12,8 C 9.783999999999998,8 8,9.783999999999998 8,12 l 0,20 c 0,2.216 1.783999999999997,4 4,4 l 14,0 c 2.216,0 4,-1.784 4,-4 L 30,16 22,8 12,8 Z m 8,3 7,7 -7,0 0,-7 z m -7,11 12,0 0,3 -12,0 0,-3 z m 0,6 12,0 0,3 -12,0 0,-3 z" />
 </svg>

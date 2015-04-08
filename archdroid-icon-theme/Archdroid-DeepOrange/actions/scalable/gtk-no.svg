@@ -7,14 +7,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="40"
-   height="40"
-   viewBox="0 0 40 40"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="gtk-no.svg"
-   style="fill:#FF5722">
+   style="fill:#4caf50">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -46,15 +46,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="4.916666666666668"
-     inkscape:cx="19.99999999999999"
+     inkscape:zoom="6.549153645833335"
+     inkscape:cx="-2.903722849048163"
      inkscape:cy="19.99999999999999"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <path
-     d="m 20,0 c -11.05,0 -20,8.949999999999999 -20,20 0,11.05 8.949999999999999,20 20,20 11.05,0 20,-8.95 20,-20 0,-11.05 -8.95,-20 -20,-20 z M 30,27.17 27.17,30 20,22.83 12.83,30 10,27.17 17.17,20 10,12.83 12.83,10 20,17.17 27.17,10 30,12.83 22.83,20 30,27.17 Z"
+     d="M 24,4 C 12.95,4 4,12.95 4,24 4,35.05 12.95,44 24,44 35.05,44 44,35.05 44,24 44,12.95 35.05,4 24,4 Z M 34,31.17 31.17,34 24,26.83 16.83,34 14,31.17 21.17,24 14,16.83 16.83,14 24,21.17 31.17,14 34,16.83 26.83,24 34,31.17 Z"
      id="path4"
      inkscape:connector-curvature="0" />
 </svg>

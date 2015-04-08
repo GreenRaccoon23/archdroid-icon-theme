@@ -8,13 +8,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="48"
-   height="42"
-   viewBox="0 0 40 42"
+   height="48"
+   viewBox="0 0 40 48"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="internet-radio-new.svg"
-   style="fill:#FFC107">
+   style="fill:#4caf50">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -46,15 +46,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="4.916666666666668"
-     inkscape:cx="19.99999999999999"
+     inkscape:zoom="6.549153645833335"
+     inkscape:cx="-2.903722849048163"
      inkscape:cy="19.99999999999999"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <path
-     d="M 2.47,10.3 C 1.02,10.87 0,12.33 0,14 l 0,24 c 0,2.21 1.79,4 4,4 l 32,0 c 2.21,0 4,-1.79 4,-4 l 0,-24 c 0,-2.21 -1.79,-4 -4,-4 L 12.61,10 29.14,3.33 27.76,0 2.47,10.3 Z M 10,38 c -3.31,0 -6,-2.69 -6,-6 0,-3.31 2.69,-6 6,-6 3.31,0 6,2.69 6,6 0,3.31 -2.69,6 -6,6 z m 26,-16 -4,0 0,-4 -4,0 0,4 -24,0 0,-8 32,0 0,8 z"
+     d="M 2.47,13.3 C 1.02,13.87 0,15.33 0,17 l 0,24 c 0,2.21 1.79,4 4,4 l 32,0 c 2.21,0 4,-1.79 4,-4 l 0,-24 c 0,-2.21 -1.79,-4 -4,-4 L 12.61,13 29.14,6.33 27.76,3 2.47,13.3 Z M 10,41 c -3.31,0 -6,-2.69 -6,-6 0,-3.31 2.69,-6 6,-6 3.31,0 6,2.69 6,6 0,3.31 -2.69,6 -6,6 z m 26,-16 -4,0 0,-4 -4,0 0,4 -24,0 0,-8 32,0 0,8 z"
      id="path4"
      inkscape:connector-curvature="0" />
 </svg>

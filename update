@@ -23,6 +23,7 @@ _gecho() {
 	for line ; do
 		echo "${line}" ;
 	done ;
+	_tset ;
 }
 
 _line() {
@@ -85,10 +86,14 @@ _trim() {
 		else
 			bak="${dir}scalable/bak" ;
 		fi ;
+		drejects=("${bak}" "${dir}scaled") ;
 
-		if [ -e "${bak}" ] ; then
-			rm -R "${bak}" ;
-		fi ;
+		for dreject in ${drejects[@]} ; do
+			if [ -e "${dreject}" ] ; then
+				rm -R "${dreject}" ;
+				echo "    Removed ${dreject}" ;
+			fi ;
+		done ;
 	done ;
 
 	es="emblems/scalable" ;
@@ -96,6 +101,7 @@ _trim() {
 	for reject in ${rejects[@]} ; do
 		if [ -e "${reject}" ] ; then
 			rm "${reject}" ;
+			echo "    Removed ${reject}" ;
 		fi ;
 	done ;
 
@@ -105,7 +111,7 @@ _trim() {
 _clean() {
 	top=$(echo "${PWD}") ;
 
-	root="${top}/${1}"
+	root="${top}/${1}" ;
 	cd "${root}" ;
 
 	for dir in $(ls -d */) ; do
@@ -124,7 +130,7 @@ _clean() {
 }
 
 _cleanDir() {
-	cd "$1"
+	cd "$1" ;
 	for f in $(ls) ; do
 		e=$(echo "${f}" | sed -e 's/\.[a-zA-Z]*$//') ;
 
@@ -229,8 +235,8 @@ _burp() {
 	rm *gz ;
 }
 
-commit="$@"
-d="archdroid-icon-theme"
+commit="$@" ;
+d="archdroid-icon-theme" ;
 b="Archdroid" ;
 toClean="${b}-Green/" ;
 colors=(Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
@@ -268,7 +274,7 @@ _git "${commit}" ;
 echo "Done." ;
 
 _glecho "Waiting 120 seconds for git to update..." ;
-for i in $(seq 1 120); do
+for i in $(seq 1 120) ; do
 	printf "\r%d" $i ;
 	sleep 1 ;
 done ;

@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="40"
-   height="40"
-   viewBox="0 0 40 40"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -46,15 +46,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="4.916666666666668"
-     inkscape:cx="19.99999999999999"
-     inkscape:cy="19.99999999999999"
+     inkscape:zoom="6.549153645833334"
+     inkscape:cx="20"
+     inkscape:cy="20"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <path
-     d="m 20,0 c -11.05,0 -20,8.949999999999999 -20,20 0,11.05 8.949999999999999,20 20,20 11.05,0 20,-8.95 20,-20 0,-11.05 -8.95,-20 -20,-20 z M 4,20 C 4,11.16 11.16,4 20,4 c 3.7,0 7.09,1.27 9.8,3.37 L 7.37,29.8 C 5.27,27.09 4,23.7 4,20 Z m 16,16 c -3.7,0 -7.09,-1.27 -9.8,-3.37 L 32.63,10.2 C 34.73,12.91 36,16.3 36,20 36,28.84000000000001 28.84000000000001,36 20,36 Z"
+     d="M 24,4 C 12.95,4 4,12.95 4,24 4,35.05 12.95,44 24,44 35.05,44 44,35.05 44,24 44,12.95 35.05,4 24,4 Z M 8,24 C 8,15.16 15.16,8 24,8 c 3.7,0 7.09,1.27 9.8,3.369999999999999 L 11.37,33.8 C 9.269999999999999,31.09 8,27.7 8,24 Z m 16,16 c -3.7,0 -7.09,-1.27 -9.8,-3.37 L 36.63,14.2 C 38.73,16.91 40,20.3 40,24 40,32.84000000000001 32.84000000000001,40 24,40 Z"
      id="path4"
      inkscape:connector-curvature="0" />
 </svg>
