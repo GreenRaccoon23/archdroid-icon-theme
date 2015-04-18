@@ -158,7 +158,7 @@ _copy() {
 	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme" ;
 }
 
-_coloriseAll() {
+_colorizeAll() {
 	from="${1}-Green" ;
 	to="${1}-${2}" ;
 	if [[ "$2" == "ArchBlue" ]] ; then
@@ -170,11 +170,11 @@ _coloriseAll() {
 	_specho "${to}..." ;
 	
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${color}" "${to}" "${to}" ;
-	_colorise "#4caf50" "${color}" "${to}" "${to}" ;
+	_colorize "green" "${color}" "${to}" "${to}" ;
+	_colorize "#4caf50" "${color}" "${to}" "${to}" ;
 }
 
-_coloriseMost() {
+_colorizeMost() {
 	from="${1}-Green" ;
 	to="${1}-${2}" ;
 	color="$2" ;
@@ -182,14 +182,14 @@ _coloriseMost() {
 	_specho "${to}..." ;
 
 	_copy "${from}" "${to}" ;
-	_colorise "green" "${color}" "${to}" "${to}" ;
+	_colorize "green" "${color}" "${to}" "${to}" ;
 }
 
-_colorise() {
+_colorize() {
 	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
 }
 
-_crunch() {
+_crush() {
 	f="${1}" ;
 	xz="${f}.tar.xz" ;
 	
@@ -287,17 +287,17 @@ echo "Done." ;
 
 _glecho "Generating color variants..." ;
 for c in ${colors[@]} ; do
-	_coloriseAll "${a}" "${c}" ;
+	_colorizeAll "${a}" "${c}" ;
 done ;
 for c in ${colorsSpecial[@]} ; do
-	_coloriseMost "${a}" "${c}" ;
+	_colorizeMost "${a}" "${c}" ;
 done ;
 echo "Done." ;
 
 cd .. ;
 
 _glecho "Generating archive..." ;
-_crunch "archdroid-icon-theme" ;
+_crush "archdroid-icon-theme" ;
 echo "Done." ;
 
 _glecho "Updating git repo..." ;

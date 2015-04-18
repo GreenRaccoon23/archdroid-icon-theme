@@ -16,8 +16,13 @@ source=("https://github.com/GreenRaccoon23/${pkgname}/raw/master/${pkgname}.tar.
 md5sums=("63603d4436040d6a6fc9d3c5874c13f3")
 
 package() {
-	cd ${pkgname}
-  	install -dm 755 "$pkgdir"/usr/share/icons
-  	cp -drf --no-preserve='ownership' . "$pkgdir"/usr/share/icons/
+	_pkgz="${pkgname}.tar.xz" ;
+	msg2 "Extracting ${_pkgz}..." ;
+	bsdtar -xf ${_pkgz} -C "$pkgdir/" ;
+	
+	msg2 "Installing ${pkgname}..." ;
+	cd ${pkgname} ;
+  	install -dm 755 "${pkgdir}"/usr/share/icons
+  	cp -drf --no-preserve='ownership' . "${pkgdir}"/usr/share/icons/
 }
 
