@@ -1,3 +1,20 @@
-The sources of this package are the official Arch Linux logos and the official GNOME, Mint-X, Ubuntu-Mono-Dark, and Humanity icon themes. The Arch Linux logos are permitted for non-commercial use. GNOME, Mint-X, Ubuntu-Mono-Dark, and Humanity icon themes are open source.
+The main source of this package is Google's base material design icon set. The Arch Linux logos come from Arch Linux's official site. Manually designed icons have been inspired by these sources as well as the Ubuntu-Mono, Mint-X, and Numix icon themes. All sources are permitted for non-commercial use.  
+
+Slight modification of the Arch Linux logos is permitted (https://wiki.archlinux.org/index.php/DeveloperWiki:TrademarkPolicy). All other sources permit modification (see links below).  
 
 Feel free to modify and distribute this package as long as you respect the sources' conditions. :)
+
+Google's base material design icon set:  
+https://github.com/google/material-design-icons  
+
+Arch Linux's official logos:  
+https://www.archlinux.org/art/  
+
+Ubuntu's Ubuntu Mono Icon Package:  
+http://packages.ubuntu.com/vivid/ubuntu-mono  
+
+Linux Mint's Mint-X Icons:  
+https://github.com/linuxmint/mint-x-icons  
+
+Numix Project's Numix Icons:  
+https://github.com/numixproject/numix-icon-theme  
