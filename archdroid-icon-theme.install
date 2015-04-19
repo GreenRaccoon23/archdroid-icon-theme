@@ -17,13 +17,13 @@ _white() {
 
 _msg() {
 	_green "==> ";
-	_white $@;
+	_white "$@";
 	tput sgr 0;
 }
 
 _msg2() {
 	_blue "  -> ";
-	_white $@;
+	_white "$@";
 	tput sgr 0;
 }
 
