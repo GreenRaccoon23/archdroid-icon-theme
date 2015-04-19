@@ -1,15 +1,15 @@
 _green() {
 	tput bold && tput setaf 2;
-	_printf "%s" "${1}";
+	printf "%s" "${1}";
 }
 
 _blue() {
 	tput bold && tput setaf 4;
-	_printf "%s" "${1}";
+	printf "%s" "${1}";
 }
 
 _white() {
-	tput bold && setaf 7;
+	tput bold && tput setaf 7;
 	for line ; do
 		echo "${line}" ;
 	done ;
