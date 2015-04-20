@@ -78,7 +78,7 @@ _trim() {
 	#top=$(echo "${PWD}");
 	#root="${top}/${1}";
 
-	pushd "${1}";
+	pushd "${1}" >/dev/null >/dev/null;
 
 	for dir in $(ls -d */); do
 		if [[ "$dir" =~ "stock" ]]; then
@@ -105,30 +105,30 @@ _trim() {
 		fi;
 	done;
 
-	popd;
+	popd >/dev/null;
 }
 
 _clean() {
 	#top=$(echo "${PWD}");
 
 	#root="${top}/${1}";
-	#pushd "${1}";
+	#pushd "${1}" >/dev/null >/dev/null;
 	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io);
 
 	for dir in "${subdirs[@]}"; do
-		pushd "${1}";
+		pushd "${1}" >/dev/null >/dev/null;
 		current="${dir}/scalable/";
 		_specho "${current}";
 		_cleanDir "${current}";
-		popd;
+		popd >/dev/null;
 	done;
 
-	#popd;
+	#popd >/dev/null;
 	#cd "${top}";
 }
 
 _cleanDir() {
-	pushd "$1";
+	pushd "$1" >/dev/null >/dev/null;
 	for f in $(ls); do
 		e="${f#*.}"
 
@@ -138,7 +138,7 @@ _cleanDir() {
 			_cleanFilter "${img}";
 		fi;
 	done;
-	popd;
+	popd >/dev/null;
 }
 
 _cleanFilter() {
@@ -281,7 +281,7 @@ colorsSpecial=(Amber DeepOrange Orange Red Yellow);
 
 _gr23;
 
-pushd "${d}";
+pushd "${d}" >/dev/null >/dev/null;
 
 _glecho "Removing backups...";
 _trim "${default}";
@@ -300,7 +300,7 @@ for c in ${colorsSpecial[@]}; do
 done;
 echo "Done.";
 
-popd;
+popd >/dev/null;
 
 _glecho "Generating archive...";
 _crush "archdroid-icon-theme";
@@ -315,9 +315,8 @@ _pause 120;
 echo "Done.";
 
 _glecho "Updating PKGBUILD...";
-pushd "aur";
+pushd "aur" >/dev/null;
 _pkgbuild;
-popd;
 echo "Done.";
 
 _glecho "Uploading PKGBUILD to git...";
@@ -327,3 +326,4 @@ echo "Done.";
 _glecho "Uploading package to aur...";
 _burp;
 echo "Done.";
+popd >/dev/null;
