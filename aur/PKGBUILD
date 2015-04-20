@@ -1,7 +1,7 @@
 # Maintainer: GreenRaccoon23 <GreenRaccoon a t gmail d o t com>
 
 pkgname=archdroid-icon-theme
-pkgver=r57.6ed542f
+pkgver=r59.d7e586f
 pkgrel=1
 pkgdesc="Port of Android 5.0 Lollipop's material design icons to Arch."
 arch=('any')
@@ -13,7 +13,7 @@ conflicts=("${pkgname}")
 #options=('!strip')
 install="${pkgname}.install"
 source=("https://github.com/GreenRaccoon23/${pkgname}/raw/master/${pkgname}.tar.xz")
-md5sums=("42216a28631ffb5fcd9a73bb9173e0ba")
+md5sums=("e5d09cf6c2a6b43e209dcb79834cdc9e")
 
 package() {
 	msg2 "Installing ${pkgname}..." ;
