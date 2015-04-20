@@ -1,3 +1,5 @@
+    git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git
+
 Port of [Google's material design icons for Android Lollipop 5.0](https://github.com/google/material-design-icons "Material Design Icons") to Linux. The 21 different colors come from the [material design color palette](http://www.google.com/design/spec/style/color.html#color-color-palette "Material Design Color Palette")  
 
 Some of these icons (i.e., the ones that did not have an equivalent in the material design icon set) have been created manually (through [Inkscape](https://www.archlinux.org/packages/extra/x86_64/inkscape/ "Inkscape for Arch Linux")). These missing icons were influenced in part by [Ubuntu Mono](http://packages.ubuntu.com/vivid/ubuntu-mono "Ubuntu Mono Icon Package"), [Mint-X](https://github.com/linuxmint/mint-x-icons "Linux Mint Icons") and [Numix](https://github.com/numixproject/numix-icon-theme "Numix Icons").  
