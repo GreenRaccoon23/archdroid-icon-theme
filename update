@@ -261,7 +261,7 @@ _burp() {
 	rm *gz;
 }
 
-root="${PWD}";
+topdir="${PWD}";
 
 commit="$@";
 if [[ "${commit}" == "" ]]; then
@@ -277,7 +277,7 @@ colorsSpecial=(Amber DeepOrange Orange Red Yellow);
 
 _gr23;
 
-cd "${d}";
+pushd "${d}" >/dev/null;
 
 _glecho "Removing backups...";
 _trim "${default}";
@@ -296,7 +296,7 @@ for c in ${colorsSpecial[@]}; do
 done;
 echo "Done.";
 
-cd ..;
+popd >/dev/null;
 
 _glecho "Generating archive...";
 _crush "archdroid-icon-theme";
@@ -311,9 +311,9 @@ _pause 120;
 echo "Done.";
 
 _glecho "Updating PKGBUILD...";
-cd "${root}/aur";
+pushd "aur" >/dev/null;
 _pkgbuild;
-cd ..;
+popd >/dev/null;
 echo "Done.";
 
 _glecho "Uploading PKGBUILD to git...";
