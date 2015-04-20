@@ -1,48 +1,48 @@
 #!/bin/bash
 _green() {
-	tput setaf 2 ;
+	tput setaf 2;
 }
 
 _white() {
-	tput setaf 7 ;
+	tput setaf 7;
 }
 
 _bold() {
-	if [[ $1 != "" ]] ; then
-		$1 ;
-	fi ;
-	tput bold ;
+	if [[ $1 != "" ]]; then
+		$1;
+	fi;
+	tput bold;
 }
 
 _tset() {
-	tput sgr 0 ;
+	tput sgr 0;
 }
 
 _gecho() {
 	_bold _green
-	for line ; do
-		echo "${line}" ;
-	done ;
-	_tset ;
+	for line; do
+		echo "${line}";
+	done;
+	_tset;
 }
 
 _line() {
-	if [[ $@ != "" ]] ; then
-		$@ ;
-	fi ;
-	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' = ;
+	if [[ $@ != "" ]]; then
+		$@;
+	fi;
+	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =;
 }
 
 _glecho() {
-	_line _bold _white ;
-	_green ;
-	echo "$1" ;
-	_tset ;
+	_line _bold _white;
+	_green;
+	echo "$1";
+	_tset;
 }
 
 _specho() {
-	printf '  ' ;
-	echo "$1" ;
+	printf '  ';
+	echo "$1";
 }
 
 _gr23() {
@@ -70,176 +70,176 @@ _gr23() {
 	'              ||||||||||||||  ////////////////////' 
 	'                      ||||||  ///////////////////' 
 	'                                     ////////'
-	) ;
-	_gecho "${raccoon[@]}" ;
+	);
+	_gecho "${raccoon[@]}";
 }
 
 _trim() {
-	top=$(echo "${PWD}") ;
-	root="${top}/${1}" ;
+	top=$(echo "${PWD}");
+	root="${top}/${1}";
 
-	cd "${root}" ;
+	cd "${root}";
 
-	for dir in $(ls -d */) ; do
-		if [[ "$dir" =~ "stock" ]] ; then
-			bak="${dir}io/scalable/bak" ;
+	for dir in $(ls -d */); do
+		if [[ "$dir" =~ "stock" ]]; then
+			bak="${dir}io/scalable/bak";
 		else
-			bak="${dir}scalable/bak" ;
-		fi ;
-		drejects=("${bak}" "${dir}scaled") ;
+			bak="${dir}scalable/bak";
+		fi;
+		drejects=("${bak}" "${dir}scaled");
 
-		for dreject in ${drejects[@]} ; do
-			if [ -e "${dreject}" ] ; then
-				rm -R "${dreject}" ;
-				echo "    Removed ${dreject}" ;
-			fi ;
-		done ;
-	done ;
+		for dreject in ${drejects[@]}; do
+			if [ -e "${dreject}" ]; then
+				rm -R "${dreject}";
+				echo "    Removed ${dreject}";
+			fi;
+		done;
+	done;
 
-	es="emblems/scalable" ;
-	rejects=(${es}/emblem-greenraccoon23.svg ${es}/emblem-greenraccoon23-transparent.svg) ;
-	for reject in ${rejects[@]} ; do
-		if [ -e "${reject}" ] ; then
-			rm "${reject}" ;
-			echo "    Removed ${reject}" ;
-		fi ;
-	done ;
+	es="emblems/scalable";
+	rejects=(${es}/emblem-greenraccoon23.svg ${es}/emblem-greenraccoon23-transparent.svg);
+	for reject in ${rejects[@]}; do
+		if [ -e "${reject}" ]; then
+			rm "${reject}";
+			echo "    Removed ${reject}";
+		fi;
+	done;
 
-	cd "${top}" ;
+	cd "${top}";
 }
 
 _clean() {
-	top=$(echo "${PWD}") ;
+	top=$(echo "${PWD}");
 
-	root="${top}/${1}" ;
-	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io) ;
+	root="${top}/${1}";
+	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io);
 
-	for dir in "${subdirs[@]}" ; do
-		cd "${root}" ;
-		current="${dir}/scalable/" ;
-		_specho "${current}" ;
-		_cleanDir "${current}" ;
-	done ;
+	for dir in "${subdirs[@]}"; do
+		cd "${root}";
+		current="${dir}/scalable/";
+		_specho "${current}";
+		_cleanDir "${current}";
+	done;
 
-	cd "${top}" ;
+	cd "${top}";
 }
 
 _cleanDir() {
-	cd "$1" ;
-	for f in $(ls) ; do
+	cd "$1";
+	for f in $(ls); do
 		e="${f#*.}"
 
-		if [ -d "${f}" ] ; then
-			_cleanDir "${f}" ;
-		elif [[ $e == "svg" ]] ; then
-			_cleanFilter "${img}" ;
-		fi ;
-	done ;
+		if [ -d "${f}" ]; then
+			_cleanDir "${f}";
+		elif [[ $e == "svg" ]]; then
+			_cleanFilter "${img}";
+		fi;
+	done;
 }
 
 _cleanFilter() {
-	if readlink -q "${1}" >/dev/null ; then
-		_cleanSvg "${1}" ;
-	fi ;
+	if readlink -q "${1}" >/dev/null; then
+		_cleanSvg "${1}";
+	fi;
 }
 
 _cleanSvg() {
-	svgcleaner-cli "${1}" "${1}" ;
+	svgcleaner-cli "${1}" "${1}";
 }
 
 _copy() {
-	from="${1}" ;
-	to="${2}" ;
+	from="${1}";
+	to="${2}";
 
-	if [ -e ${to} ] ; then
-		rm -R "${to}" ;
-	fi ;
-	cp -R "${from}" "${to}" ;
-	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme" ;
+	if [ -e ${to} ]; then
+		rm -R "${to}";
+	fi;
+	cp -R "${from}" "${to}";
+	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme";
 }
 
 _colorizeAll() {
-	from="${1}-Green" ;
-	to="${1}-${2}" ;
-	if [[ "$2" == "ArchBlue" ]] ; then
-		color="#1793D1" ;
+	from="${1}-Green";
+	to="${1}-${2}";
+	if [[ "$2" == "ArchBlue" ]]; then
+		color="#1793D1";
 	else
-		color="$2" ;
-	fi ;
+		color="$2";
+	fi;
 
-	_specho "${to}..." ;
+	_specho "${to}...";
 	
-	_copy "${from}" "${to}" ;
-	_colorize "green" "${color}" "${to}" "${to}" ;
-	_colorize "#4caf50" "${color}" "${to}" "${to}" ;
+	_copy "${from}" "${to}";
+	_colorize "green" "${color}" "${to}" "${to}";
+	_colorize "#4caf50" "${color}" "${to}" "${to}";
 }
 
 _colorizeMost() {
-	from="${1}-Green" ;
-	to="${1}-${2}" ;
-	color="$2" ;
+	from="${1}-Green";
+	to="${1}-${2}";
+	color="$2";
 
-	_specho "${to}..." ;
+	_specho "${to}...";
 
-	_copy "${from}" "${to}" ;
-	_colorize "green" "${color}" "${to}" "${to}" ;
+	_copy "${from}" "${to}";
+	_colorize "green" "${color}" "${to}" "${to}";
 }
 
 _colorize() {
-	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}" ;
+	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}";
 }
 
 _crush() {
-	f="${1}" ;
-	xz="${f}.tar.xz" ;
+	f="${1}";
+	xz="${f}.tar.xz";
 	
-	if [ -e "${xz}" ] ; then
-		rm "${xz}" ;
-	fi ;
-	./crunch "${f}" ;
+	if [ -e "${xz}" ]; then
+		rm "${xz}";
+	fi;
+	./crunch "${f}";
 	_bak "${xz}" "bak/"
 }
 
 _bak() {
-	f="${1}" ;
-	d="$(_dir "${2}")" ;
+	f="${1}";
+	d="$(_dir "${2}")";
 
 
-	a="${f%%.*}" ;
-	bak="${a}_$(date +%m-%d-%y).tar.xz" ;
+	a="${f%%.*}";
+	bak="${a}_$(date +%m-%d-%y).tar.xz";
 
-	cp -f "${f}" "${d}${bak}" ;
+	cp -f "${f}" "${d}${bak}";
 }
 
 _dir() {
-	if [[ "${1%/*}" == "${1}" ]] ; then
-		echo "${1}/" ;
-	fi ;
-	echo "${1}" ;
+	if [[ "${1%/*}" == "${1}" ]]; then
+		echo "${1}/";
+	fi;
+	echo "${1}";
 }
 
 _pause() {
-	for i in $(seq 1 "$1") ; do
-		printf "\r  %d/%d" "$i" "$1" ;
-		sleep 1 ;
-	done ;
-	printf "\n" ;
+	for i in $(seq 1 "$1"); do
+		printf "\r  %d/%d" "$i" "$1";
+		sleep 1;
+	done;
+	printf "\n";
 }
 
 _pkgbuild() {
-	pkgver=$(_gitVer) ;
-	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD ;
+	pkgver=$(_gitVer);
+	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
-	a="archdroid-icon-theme" ;
-	repo="https://raw.githubusercontent.com/GreenRaccoon23/${a}" ;
-	xz="${repo}/master/${a}.tar.xz" ;
-	md=$(_gitmd5 "${xz}") ;
-	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD ;
+	a="archdroid-icon-theme";
+	repo="https://raw.githubusercontent.com/GreenRaccoon23/${a}";
+	xz="${repo}/master/${a}.tar.xz";
+	md=$(_gitmd5 "${xz}");
+	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
 
 _gitmd5() {
-	md=$(curl "${1}" | md5sum) ;
-	echo "${md%  *}" ;
+	md=$(curl "${1}" | md5sum);
+	echo "${md%  *}";
 }
 
 _gitVer() {
@@ -256,66 +256,70 @@ _git() {
 }
 
 _burp() {
-	mkaurball ;
-	burp *gz ;
-	rm *gz ;
+	mkaurball;
+	burp *gz;
+	rm *gz;
 }
 
-commit="$@" ;
-if [[ "${commit}" == "" ]] ; then
-	read -p "Enter commit message: " commit ;
-fi ;
+root="${PWD}";
 
-d="archdroid-icon-theme" ;
-a="Archdroid" ;
-default="${a}-Green/" ;
+commit="$@";
+if [[ "${commit}" == "" ]]; then
+	read -p "Enter commit message: " commit;
+fi;
 
-colors=(ArchBlue Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal) ;
-colorsSpecial=(Amber DeepOrange Orange Red Yellow) ;
+d="archdroid-icon-theme";
+a="Archdroid";
+default="${a}-Green/";
 
-_gr23 ;
+colors=(ArchBlue Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal);
+colorsSpecial=(Amber DeepOrange Orange Red Yellow);
 
-cd "${d}" ;
+_gr23;
 
-_glecho "Removing backups..." ;
-_trim "${default}" ;
-echo "Done." ;
+cd "${d}";
 
-_glecho "Cleaning svg files..." ;
-_clean "${default}" ;
-echo "Done." ;
+_glecho "Removing backups...";
+_trim "${default}";
+echo "Done.";
 
-_glecho "Generating color variants..." ;
-for c in ${colors[@]} ; do
-	_colorizeAll "${a}" "${c}" ;
-done ;
-for c in ${colorsSpecial[@]} ; do
-	_colorizeMost "${a}" "${c}" ;
-done ;
-echo "Done." ;
+_glecho "Cleaning svg files...";
+_clean "${default}";
+echo "Done.";
 
-cd .. ;
+_glecho "Generating color variants...";
+for c in ${colors[@]}; do
+	_colorizeAll "${a}" "${c}";
+done;
+for c in ${colorsSpecial[@]}; do
+	_colorizeMost "${a}" "${c}";
+done;
+echo "Done.";
 
-_glecho "Generating archive..." ;
-_crush "archdroid-icon-theme" ;
-echo "Done." ;
+cd ..;
 
-_glecho "Updating git repo..." ;
-_git "${commit}" ;
-echo "Done." ;
+_glecho "Generating archive...";
+_crush "archdroid-icon-theme";
+echo "Done.";
 
-_glecho "Waiting 120 seconds for git to update..." ;
-_pause 120 ;
-echo "Done." ;
+_glecho "Updating git repo...";
+_git "${commit}";
+echo "Done.";
 
-_glecho "Updating PKGBUILD..." ;
-_pkgbuild ;
-echo "Done." ;
+_glecho "Waiting 120 seconds for git to update...";
+_pause 120;
+echo "Done.";
 
-_glecho "Uploading PKGBUILD to git..." ;
-_git "${commit}" ;
-echo "Done." ;
+_glecho "Updating PKGBUILD...";
+cd "${root}/aur";
+_pkgbuild;
+cd ..;
+echo "Done.";
 
-_glecho "Uploading package to aur..." ;
-_burp ;
-echo "Done." ;
+_glecho "Uploading PKGBUILD to git...";
+_git "${commit}";
+echo "Done.";
+
+_glecho "Uploading package to aur...";
+_burp;
+echo "Done.";
