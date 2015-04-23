@@ -15,6 +15,21 @@ install="${pkgname}.install"
 source=("https://github.com/GreenRaccoon23/${pkgname}/raw/master/${pkgname}.tar.xz")
 md5sums=("8b68c6b330af0ad8320230d2fd1f0856")
 
+_error2() {
+	for e; do
+		echo "    ${e}";
+	done;
+}
+
+prepare() {
+	if ! fc-list | grep Roboto >/dev/null; then
+		error "Required font 'Roboto' is not installed."
+		error "Please install a font package which includes 'Roboto', such as:"
+		_error2 ttf-roboto ttf-roboto-font ttf-google-fonts-git ttf-google-fonts-hg otf-google-fonts-hg;
+		return 1;
+	fi;
+}
+
 package() {
 	msg2 "Installing ${pkgname}..." ;
 	cd ${pkgname} ;
