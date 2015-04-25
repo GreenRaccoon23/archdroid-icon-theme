@@ -350,5 +350,5 @@ done;
 echo "Done.";
 
 _glecho "Uploading package to aur...";
-#_burp;
+_burp;
 echo "Done.";
