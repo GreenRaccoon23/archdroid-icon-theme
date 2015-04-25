@@ -75,10 +75,7 @@ _gr23() {
 }
 
 _trim() {
-	#top=$(echo "${PWD}");
-	#root="${top}/${1}";
-
-	pushd "${1}" >/dev/null >/dev/null;
+	pushd "${1}" >/dev/null;
 
 	for dir in $(ls -d */); do
 		if [[ "$dir" =~ "stock" ]]; then
@@ -97,7 +94,11 @@ _trim() {
 	done;
 
 	es="emblems/scalable";
-	rejects=(${es}/emblem-greenraccoon23.svg ${es}/emblem-greenraccoon23-transparent.svg);
+	rejects=( 
+		     index.theme.bak 
+		     ${es}/emblem-greenraccoon23.svg 
+		     ${es}/emblem-greenraccoon23-transparent.svg 
+		    );
 	for reject in ${rejects[@]}; do
 		if [ -e "${reject}" ]; then
 			rm "${reject}";
@@ -109,46 +110,57 @@ _trim() {
 }
 
 _clean() {
-	#top=$(echo "${PWD}");
+	pushd "${1}" >/dev/null;
 
-	#root="${top}/${1}";
-	#pushd "${1}" >/dev/null >/dev/null;
 	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io);
 
 	for dir in "${subdirs[@]}"; do
-		pushd "${1}" >/dev/null >/dev/null;
 		current="${dir}/scalable/";
-		_specho "${current}";
+		printf "  %s" "${current}";
+		nCleaned=0;
 		_cleanDir "${current}";
-		popd >/dev/null;
+		echo;
 	done;
 
-	#popd >/dev/null;
-	#cd "${top}";
+	popd >/dev/null;
 }
 
 _cleanDir() {
-	pushd "$1" >/dev/null >/dev/null;
+	pushd "$1" >/dev/null;
 	for f in $(ls); do
 		e="${f#*.}"
 
 		if [ -d "${f}" ]; then
 			_cleanDir "${f}";
 		elif [[ $e == "svg" ]]; then
-			_cleanFilter "${img}";
+			_cleanFilter "${f}";
 		fi;
 	done;
 	popd >/dev/null;
 }
 
 _cleanFilter() {
-	if readlink -q "${1}" >/dev/null; then
-		_cleanSvg "${1}";
+	if ! readlink -q "${1}" >/dev/null; then
+		return
 	fi;
+	_cleanSvg "${1}";
+	_cleanProgress;
 }
 
 _cleanSvg() {
-	svgcleaner-cli "${1}" "${1}";
+	svgcleaner-cli "${1}" "${1}" &>/dev/null;
+}
+
+_cleanProgress() {
+	((nCleaned+=1));
+	spaces=$((30-${#current}));
+	w="$(_printSp $spaces)";
+
+	printf "\r  %s%s%d" "${current}" "${w}" "${nCleaned}";
+}
+
+_printSp() {
+	for (( i=1; i<=$1; i++)) ; do printf " " ; done
 }
 
 _copy() {
@@ -241,6 +253,11 @@ _pkgbuild() {
 	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
 
+_pkgbuildGit() {
+	pkgver=$(_gitVer);
+	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+}
+
 _gitmd5() {
 	md=$(curl "${1}" | md5sum);
 	echo "${md%  *}";
@@ -281,7 +298,7 @@ colorsSpecial=(Amber DeepOrange Orange Red Yellow);
 
 _gr23;
 
-pushd "${d}" >/dev/null >/dev/null;
+pushd "${d}" >/dev/null;
 
 _glecho "Removing backups...";
 _trim "${default}";
@@ -317,13 +334,21 @@ echo "Done.";
 _glecho "Updating PKGBUILD...";
 pushd "aur" >/dev/null;
 _pkgbuild;
+popd >/dev/null;
+
+pushd "aur-git" >/dev/null;
+_pkgbuildGit;
+popd >/dev/null;
 echo "Done.";
 
 _glecho "Uploading PKGBUILD to git...";
-_git "${commit}";
+for d in "aur" "aur-git"; do
+	pushd "${d}" >/dev/null;
+	_git "${commit}";
+	popd >/dev/null;
+done;
 echo "Done.";
 
 _glecho "Uploading package to aur...";
-_burp;
+#_burp;
 echo "Done.";
-popd >/dev/null;
