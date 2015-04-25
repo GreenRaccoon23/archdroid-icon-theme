@@ -320,15 +320,15 @@ echo "Done.";
 popd >/dev/null;
 
 _glecho "Generating archive...";
-#_crush "archdroid-icon-theme";
+_crush "archdroid-icon-theme";
 echo "Done.";
 
 _glecho "Updating git repo...";
-#_git "${commit}";
+_git "${commit}";
 echo "Done.";
 
 _glecho "Waiting 120 seconds for git to update...";
-#_pause 120;
+_pause 120;
 echo "Done.";
 
 _glecho "Updating PKGBUILD...";
