@@ -1,1 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m6 11.06l14.712-2 .006 14.191-14.705.084zm14.705 13.822l.011 14.203-14.705-2.02v-12.277m16.478-15.993l19.507-2.847v17.12l-19.507.155zm19.512 16.222l-.005 17.04-19.507-2.753-.027-14.321" fill="#00adef"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   height="48"
+   width="48"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="emblem-windows1.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="851"
+     inkscape:window-height="480"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="3.4151278640625"
+     inkscape:cx="0.07777923091699179"
+     inkscape:cy="43.99999999999999"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <path
+     style="fill:#00adef"
+     d="m 6,11.057123 14.712059,-2.00363 0.0064,14.190972 -14.705051,0.08374 z M 20.70505,24.879541 20.71647,39.08288 6.011419,37.061152 6.010595,24.784269 Z m 1.783446,-16.088158 19.506969,-2.847016 0,17.119613 -19.506969,0.154863 z M 42,25.013111 41.995424,42.055633 22.488455,39.302446 22.461123,24.981202 Z"
+     id="path4"
+     inkscape:connector-curvature="0" />
+</svg>

@@ -1,4 +1,30 @@
 #!/bin/bash
+_c() {
+	declare -A colors;
+	colors=( ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7" );
+
+	for name in "${!colors[@]}"; do
+		if [[ "${name}" == "${1}" ]]; then
+			col="${colors["$name"]}";
+		fi;
+	done;
+
+	if [ -n "${col}" ]; then
+		tput setaf "${col}";
+	fi;
+}
+
+_C() {
+	if [ -n "${1}" ] ; then
+		_c "${1}";
+	fi;
+	tput bold;
+}
+
+_cOff() {
+	tput sgr 0
+}
+
 _green() {
 	tput setaf 2;
 }
@@ -74,19 +100,76 @@ _gr23() {
 	_gecho "${raccoon[@]}";
 }
 
-_trim() {
+_gprint() {
+	_C green;
+
+	if [ -n "$2" ]; then
+		printf "$1" ${@:2};
+	else
+		printf "$@";
+	fi;
+
+	#if [ -z $2 ]; then
+	#	printf $1;
+	#	_cOff;
+	#	return;
+	#fi;
+
+	#a=( $@ );
+	#len="${#a[@]}";
+	#slc=${a[@]:0:$len-1};
+	#z=${a[$len-1]};
+
+	#for s in ${slc[@]}; do
+	#	echo "${s}";
+	#done;
+	#printf "${z}";
+	
+	_cOff;
+}
+
+_yN() {
+	if [ -n "$@" ]; then
+		_gprint "$@";
+	fi;
+
+	read -p " [y/N]: " q
+	case $q in
+		y|Y)
+			echo 1;
+			;;
+		*)
+			echo 0;
+			;;
+	esac
+}
+
+_Yn() {
+	if [ -n "$1" ]; then
+		_gprint "$@";
+	fi;
+
+	read -p " [Y/n]: " q
+	case $q in
+		n|N)
+			echo 1;
+			;;
+		*)
+			echo 0;
+			;;
+	esac
+}
+
+_TrimIt() {
 	pushd "${1}" >/dev/null;
 
-	for dir in $(ls -d */); do
-		if [[ "$dir" =~ "stock" ]]; then
-			bak="${dir}io/scalable/bak";
-		else
-			bak="${dir}scalable/bak";
-		fi;
-		drejects=("${bak}" "${dir}scaled");
+	drs=( actions animations apps categories devices emblems mimetypes places status stock/io )
+	for dir in ${drs[@]}; do
+		bak="${dir}/scalable/bak";
+		drejects=("${bak}" "${dir}/scaled");
 
 		for dreject in ${drejects[@]}; do
-			if [ -e "${dreject}" ]; then
+			if [ -d "${dreject}" ]; then
 				rm -R "${dreject}";
 				echo "    Removed ${dreject}";
 			fi;
@@ -95,6 +178,7 @@ _trim() {
 
 	es="emblems/scalable";
 	rejects=( 
+			 scale
 		     index.theme.bak 
 		     ${es}/emblem-greenraccoon23.svg 
 		     ${es}/emblem-greenraccoon23-transparent.svg 
@@ -109,7 +193,7 @@ _trim() {
 	popd >/dev/null;
 }
 
-_clean() {
+_CleanIt() {
 	pushd "${1}" >/dev/null;
 
 	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io);
@@ -120,6 +204,21 @@ _clean() {
 		nCleaned=0;
 		_cleanDir "${current}";
 		echo;
+	done;
+
+	stubborn=( 
+		      actions/scalable/media-eject.svg 
+		      actions/scalable/selection-end-symbolic.svg 
+		      actions/scalable/selection-start-symbolic.svg 
+		      animations/scalable/process-working.svg
+		      apps/scalable/accessories-calculator.svg 
+		      apps/scalable/utilities-system-monitor.svg
+		      categories/scalable/preferences-system-directory.svg
+		      mimetypes/scalable/text-x-sql.svg
+		      places/scalable/folder-go.svg
+		     );
+	for weird in "${stubborn[@]}"; do
+		../../svg-edit -Q -o "#4caf50" -n green "${weird}";
 	done;
 
 	popd >/dev/null;
@@ -174,6 +273,26 @@ _copy() {
 	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme";
 }
 
+_ColIt() {
+	normal=( 
+		    ArchBlue Blue BlueGrey Brown 
+			Cyan DeepPurple Grey Indigo 
+			KellyGreen LightBlue LightGreen Lime 
+			Pink Purple Shamrock Teal 
+		   );
+	special=( 
+			 Amber DeepOrange Orange 
+			 Red Yellow 
+			);
+
+	for c in ${normal[@]}; do
+		_colorizeAll "${a}" "${c}";
+	done;
+	for c in ${special[@]}; do
+		_colorizeMost "${a}" "${c}";
+	done;
+}
+
 _colorizeAll() {
 	from="${1}-Green";
 	to="${1}-${2}";
@@ -205,7 +324,7 @@ _colorize() {
 	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}";
 }
 
-_crush() {
+_CrushIt() {
 	f="${1}";
 	xz="${f}.tar.xz";
 	
@@ -234,6 +353,13 @@ _dir() {
 	echo "${1}";
 }
 
+
+_git() {
+	git add .
+	git commit -m "$@"
+	git push origin master
+}
+
 _pause() {
 	for i in $(seq 1 "$1"); do
 		printf "\r  %d/%d" "$i" "$1";
@@ -242,7 +368,17 @@ _pause() {
 	printf "\n";
 }
 
-_pkgbuild() {
+_PkgbuildIt() {
+	pushd "aur" >/dev/null;
+	_pkgbuild;
+	popd >/dev/null;
+
+	pushd "aur-git" >/dev/null;
+	_pkgbuildGit;
+	popd >/dev/null;
+}
+
+_pkgbuildAur() {
 	pkgver=$(_gitVer);
 	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
@@ -270,85 +406,83 @@ _gitVer() {
 	)
 }
 
-_git() {
-	git add .
-	git commit -m "$@"
-	git push origin master
+_BurpIt() {
+	for d in "aur" "aur-git"; do
+		pushd "${d}" >/dev/null;
+		_burp;
+		popd >/dev/null;
+	done;
 }
 
 _burp() {
 	mkaurball;
 	burp *gz;
 	rm *gz;
+	rm *xz >/dev/null;
 }
 
-topdir="${PWD}";
+_Local() {
+	pushd "${d}" >/dev/null;
 
-commit="$@";
-if [[ "${commit}" == "" ]]; then
-	read -p "Enter commit message: " commit;
-fi;
+	_glecho "Removing backups...";
+	_TrimIt "${default}";
+	echo "Done.";
+
+	_glecho "Cleaning svg files...";
+	_CleanIt "${default}";
+	echo "Done.";
+
+	_glecho "Generating color variants...";
+	_ColIt;
+	echo "Done.";
+
+	popd >/dev/null;
+
+	_glecho "Generating archive...";
+	_CrushIt "archdroid-icon-theme";
+	echo "Done.";
+}
+
+_Upload() {
+	commit="$@";
+	if [[ "${commit}" == "" ]]; then
+		read -p "Enter commit message: " commit;
+	fi;
+
+	_glecho "Updating git repo...";
+	_git "${commit}";
+	echo "Done.";
+
+	_glecho "Waiting 120 seconds for git to update...";
+	_pause 120;
+	echo "Done.";
+
+	_glecho "Updating PKGBUILD...";
+	_PkgbuildIt;
+	echo "Done.";
+
+	_glecho "Uploading PKGBUILD to git...";
+	_git "${commit}";
+	echo "Done.";
+
+	_glecho "Uploading package to aur...";
+	_BurpIt;
+	echo "Done.";
+}
 
 d="archdroid-icon-theme";
 a="Archdroid";
 default="${a}-Green/";
 
-colors=(ArchBlue Blue BlueGrey Brown Cyan DeepPurple Grey Indigo KellyGreen LightBlue LightGreen Lime Pink Purple Shamrock Teal);
-colorsSpecial=(Amber DeepOrange Orange Red Yellow);
-
 _gr23;
 
-pushd "${d}" >/dev/null;
+_gprint "Update local files?";
+if [[ $(_Yn) == 0 ]]; then
+	_Local;
+fi;
 
-_glecho "Removing backups...";
-_trim "${default}";
-echo "Done.";
+_gprint "Upload package to repos?";
+if [[ $(_Yn) == 0 ]]; then
+	_Upload $@;
+fi;
 
-_glecho "Cleaning svg files...";
-_clean "${default}";
-echo "Done.";
-
-_glecho "Generating color variants...";
-for c in ${colors[@]}; do
-	_colorizeAll "${a}" "${c}";
-done;
-for c in ${colorsSpecial[@]}; do
-	_colorizeMost "${a}" "${c}";
-done;
-echo "Done.";
-
-popd >/dev/null;
-
-_glecho "Generating archive...";
-_crush "archdroid-icon-theme";
-echo "Done.";
-
-_glecho "Updating git repo...";
-_git "${commit}";
-echo "Done.";
-
-_glecho "Waiting 120 seconds for git to update...";
-_pause 120;
-echo "Done.";
-
-_glecho "Updating PKGBUILD...";
-pushd "aur" >/dev/null;
-_pkgbuild;
-popd >/dev/null;
-
-pushd "aur-git" >/dev/null;
-_pkgbuildGit;
-popd >/dev/null;
-echo "Done.";
-
-_glecho "Uploading PKGBUILD to git...";
-	_git "${commit}";
-echo "Done.";
-
-_glecho "Uploading package to aur...";
-for d in "aur" "aur-git"; do
-	pushd "${d}" >/dev/null;
-	_burp;
-	popd >/dev/null;
-done;
-echo "Done.";

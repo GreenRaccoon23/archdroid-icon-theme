@@ -1,1 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#FF5722" viewBox="0 0 48 48"><path d="m27.2 20.8h12.8v-12.8h-12.8v12.8m0 19.2h12.8v-12.8h-12.8v12.8m-19.2 0h12.8v-12.8h-12.8v12.8m0-19.2h12.8v-12.8h-12.8v12.8z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#FF5722"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="view-list-icons.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true"
+     inkscape:zoom="5.368001304915685"
+     inkscape:cx="-6.235430081675268"
+     inkscape:cy="19.84559161544208"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     id="path4144"
+     d="m 27.2,20.79999999999999 12.8,0 0,-12.8 -12.8,0 0,12.8 z M 27.2,40 40,40 l 0,-12.80000000000001 -12.8,0 L 27.2,40 Z M 8,40 l 12.8,0 0,-12.80000000000001 -12.8,0 L 8,40 Z m 0,-19.20000000000001 12.8,0 0,-12.8 -12.8,0 0,12.8 z"
+     inkscape:connector-curvature="0" />
+</svg>
