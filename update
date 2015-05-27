@@ -370,7 +370,7 @@ _pause() {
 
 _PkgbuildIt() {
 	pushd "aur" >/dev/null;
-	_pkgbuild;
+	_pkgbuildAur;
 	popd >/dev/null;
 
 	pushd "aur-git" >/dev/null;
