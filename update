@@ -416,7 +416,7 @@ _BurpIt() {
 
 _burp() {
 	mkaurball;
-	burp *gz;
+	burp -c x11 *gz;
 	rm *gz;
 	rm *xz >/dev/null;
 }
