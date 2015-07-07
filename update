@@ -1,488 +1,583 @@
 #!/bin/bash
 _c() {
-	declare -A colors;
-	colors=( ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7" );
+    # Set console color.
+    if (($# == 0)); then
+        tput sgr0;
+        return;
+    fi;
+    
+    local -A Codes=( 
+        ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" 
+        ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7" 
+        ["bk"]="0" ["r"]="1" ["g"]="2" ["y"]="3" 
+        ["bu"]="4" ["m"]="5" ["c"]="6" ["w"]="7" 
+    );
 
-	for name in "${!colors[@]}"; do
-		if [[ "${name}" == "${1}" ]]; then
-			col="${colors["$name"]}";
-		fi;
-	done;
+    local k c;
+    for k in "${!Codes[@]}"; do
+        if [[ "${k}" != "${1}" ]]; then
+            continue;
+        fi;
+        c="${Codes["$k"]}";
+    done;
 
-	if [ -n "${col}" ]; then
-		tput setaf "${col}";
-	fi;
+    if [ ! "${c}" ]; then
+        return;
+    fi;
+    tput setaf "${c}";
 }
 
 _C() {
-	if [ -n "${1}" ] ; then
-		_c "${1}";
-	fi;
-	tput bold;
+    # Set bold console color.
+    tput bold;
+
+    if (($# == 0)); then
+        return;
+    fi;
+    _c "${1}";
 }
 
-_cOff() {
-	tput sgr 0
-}
-
-_green() {
-	tput setaf 2;
-}
-
-_white() {
-	tput setaf 7;
-}
-
-_bold() {
-	if [[ $1 != "" ]]; then
-		$1;
-	fi;
-	tput bold;
-}
-
-_tset() {
-	tput sgr 0;
+_u() {
+    # Reset console color to normal.
+    tput sgr0;
 }
 
 _gecho() {
-	_bold _green
-	for line; do
-		echo "${line}";
-	done;
-	_tset;
+    # `echo` in bold green.
+    _C green
+    for line; do
+        echo "${line}";
+    done;
+    _u;
 }
 
 _line() {
-	if [[ $@ != "" ]]; then
-		$@;
-	fi;
-	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =;
+    if (($# > 0)); then
+        $@;
+    fi;
+
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =;
 }
 
 _glecho() {
-	_line _bold _white;
-	_green;
-	echo "$1";
-	_tset;
+    _line _C white;
+
+    _C green;
+    echo "$1";
+
+    _u;
 }
 
 _specho() {
-	printf '  ';
-	echo "$1";
+    printf '  ';
+    echo "$1";
 }
 
 _gr23() {
-	raccoon=(
-	'         ///////                             //////' 
-	'       /////   ///                         //     /// ' 
-	'      ///   ##### //                      //  #####  //' 
-	'     //  ########## //                    /    ######  /' 
-	'    ///  ########### /    //////////////////////  ####  /' 
-	'    ///  #########    ////////////////////////////  #   //' 
-	'     ///    #  //////////////////////////////////////  //' 
-	'            /////////////////////////////////////////' 
-	'          /////////////////////////////////////////////' 
-	'        //////////////////////  /////////////  |||     /' 
-	'      /////////////////     ||||   ////////  ||||||||||' 
-	'     ////////////////  |||||||||||  //////  ||   ||||||||' 
-	'    //////////////   |||||||   ||||  //////  || ||||||||||' 
-	'   ////////////// ||||||||||  |||||  ///////  ||||||||||||' 
-	'  ////////////   |||||||||||||||||  ///////////  |||||||||' 
-	' ////////////  ||||||||||||||||||  ////////////// ||||||||' 
-	'    ////////  ||||||||||||||||||| ////////////////  |||||' 
-	'    /////// |||||||||||||||||||  ////////    $$$  // ||' 
-	'       ///  ||||||||||||||||||  //////// $$$$$$$  ///' 
-	'           ||||||||||||||||||  ///////////       ///' 
-	'              ||||||||||||||  ////////////////////' 
-	'                      ||||||  ///////////////////' 
-	'                                     ////////'
-	);
-	_gecho "${raccoon[@]}";
+    # Print green raccoon ASCII image.
+    local -ar raccoon=( 
+        '         ///////                             //////' 
+        '       /////   ///                         //     /// ' 
+        '      ///   ##### //                      //  #####  //' 
+        '     //  ########## //                    /    ######  /' 
+        '    ///  ########### /    //////////////////////  ####  /' 
+        '    ///  #########    ////////////////////////////  #   //' 
+        '     ///    #  //////////////////////////////////////  //' 
+        '            /////////////////////////////////////////' 
+        '          /////////////////////////////////////////////' 
+        '        //////////////////////  /////////////  |||     /' 
+        '      /////////////////     ||||   ////////  ||||||||||' 
+        '     ////////////////  |||||||||||  //////  ||   ||||||||' 
+        '    //////////////   |||||||   ||||  //////  || ||||||||||' 
+        '   ////////////// ||||||||||  |||||  ///////  ||||||||||||' 
+        '  ////////////   |||||||||||||||||  ///////////  |||||||||' 
+        ' ////////////  ||||||||||||||||||  ////////////// ||||||||' 
+        '    ////////  ||||||||||||||||||| ////////////////  |||||' 
+        '    /////// |||||||||||||||||||  ////////    $$$  // ||' 
+        '       ///  ||||||||||||||||||  //////// $$$$$$$  ///' 
+        '           ||||||||||||||||||  ///////////       ///' 
+        '              ||||||||||||||  ////////////////////' 
+        '                      ||||||  ///////////////////' 
+        '                                     ////////' 
+    );
+
+    _gecho "${raccoon[@]}";
 }
 
 _gprint() {
-	_C green;
-
-	if [ -n "$2" ]; then
-		printf "$1" ${@:2};
-	else
-		printf "$@";
-	fi;
-
-	#if [ -z $2 ]; then
-	#	printf $1;
-	#	_cOff;
-	#	return;
-	#fi;
-
-	#a=( $@ );
-	#len="${#a[@]}";
-	#slc=${a[@]:0:$len-1};
-	#z=${a[$len-1]};
-
-	#for s in ${slc[@]}; do
-	#	echo "${s}";
-	#done;
-	#printf "${z}";
-	
-	_cOff;
+    # `printf` in bold green.
+    _C green
+    local -r m="$@";
+    printf "%s" "${m}";
+    _u;
 }
 
 _yN() {
-	if [ -n "$@" ]; then
-		_gprint "$@";
-	fi;
+    local ans;
+    read -p "[y/N]: " ans;
 
-	read -p " [y/N]: " q
-	case $q in
-		y|Y)
-			echo 1;
-			;;
-		*)
-			echo 0;
-			;;
-	esac
+    case "${ans}" in
+            y|Y)
+                    echo 1;
+                    ;;
+            *)
+                    echo 0;
+                    ;;
+    esac;
 }
 
 _Yn() {
-	if [ -n "$1" ]; then
-		_gprint "$@";
-	fi;
+    local ans;
+    read -p "[Y/n]: " ans;
 
-	read -p " [Y/n]: " q
-	case $q in
-		n|N)
-			echo 1;
-			;;
-		*)
-			echo 0;
-			;;
-	esac
+    case "${ans}" in
+            n|N)
+                    echo 1;
+                    ;;
+            *)
+                    echo 0;
+                    ;;
+    esac;
+}
+
+_trSfx() {
+    # Trim the suffix of a string.
+    # _trSfx <string> <suffix-to-remove>
+    local s z;
+    s="${1}";
+    z="${2}";
+
+    hasSfx=$(echo "${s}" | grep "${z}$");
+
+    if [ -z "${hasSfx}" ] ; then
+        echo "${s}";
+    fi;
+    echo "${s%${z}*}";
+}
+
+_trPfx() {
+    # Trim the prefix of a string.
+    # _trPfx <string> <prefix-to-remove>
+    local s a;
+    s="${1}";
+    a="${2}";
+
+    echo "${s##*${a}}";
 }
 
 _TrimIt() {
-	pushd "${1}" >/dev/null;
+    pushd "${1}" >/dev/null;
 
-	drs=( actions animations apps categories devices emblems mimetypes places status stock/io )
-	for dir in ${drs[@]}; do
-		bak="${dir}/scalable/bak";
-		drejects=("${bak}" "${dir}/scaled");
+    _trimDirs;
+    _trimFiles;
 
-		for dreject in ${drejects[@]}; do
-			if [ -d "${dreject}" ]; then
-				rm -R "${dreject}";
-				echo "    Removed ${dreject}";
-			fi;
-		done;
-	done;
+    popd >/dev/null;
+}
 
-	es="emblems/scalable";
-	rejects=( 
-			 scale
-		     index.theme.bak 
-		     ${es}/emblem-greenraccoon23.svg 
-		     ${es}/emblem-greenraccoon23-transparent.svg 
-		    );
-	for reject in ${rejects[@]}; do
-		if [ -e "${reject}" ]; then
-			rm "${reject}";
-			echo "    Removed ${reject}";
-		fi;
-	done;
+_trimDirs() {
+    local -a Trash;
+    local d t;
+    Trash=( 
+        "/scalable/bak" 
+        "/scaled" 
+    );
 
-	popd >/dev/null;
+    for d in ${SUBDIRS[@]}; do
+        pushd "${d}" >/dev/null;
+
+        _rmD ${Trash[@]};
+
+        popd >/dev/null;
+    done;
+}
+
+_trimFiles() {
+    local e;
+    local -a Trash;
+    e="emblems/scalable";
+    Trash=( 
+        "scale" 
+        "index.theme.bak" 
+        "${e}/emblem-greenraccoon23.svg" 
+        "${e}/emblem-greenraccoon23-transparent.svg" 
+    );
+
+    _rmF ${Trash[@]};
+}
+
+_rmD() {
+    for d; do
+
+        if ! [ -d "${d}" ]; then
+            continue;
+        fi;
+        
+        rm -R "${d}";
+        echo "    Removed ${d}";
+        
+    done;
+}
+
+_rmF() {
+    for f; do
+
+        if ! [ -e "${f}" ]; then
+            continue;
+        fi;
+        
+        rm "${f}";
+        echo "    Removed ${f}";
+        
+    done;
 }
 
 _CleanIt() {
-	pushd "${1}" >/dev/null;
+    declare -i nCleaned;
+    local d dir;
 
-	subdirs=(actions animations apps categories devices emblems mimetypes places status stock/io);
+    pushd "${1}" >/dev/null;
 
-	for dir in "${subdirs[@]}"; do
-		current="${dir}/scalable/";
-		printf "  %s" "${current}";
-		nCleaned=0;
-		_cleanDir "${current}";
-		echo;
-	done;
+    for d in "${SUBDIRS[@]}"; do
+        dir="${d}/scalable/";
+        nCleaned=0;
 
-	stubborn=( 
-		      actions/scalable/media-eject.svg 
-		      actions/scalable/selection-end-symbolic.svg 
-		      actions/scalable/selection-start-symbolic.svg 
-		      animations/scalable/process-working.svg
-		      apps/scalable/accessories-calculator.svg 
-		      apps/scalable/utilities-system-monitor.svg
-		      categories/scalable/preferences-system-directory.svg
-		      mimetypes/scalable/text-x-sql.svg
-		      places/scalable/folder-go.svg
-		     );
-	for weird in "${stubborn[@]}"; do
-		../../svg-edit -Q -o "#4caf50" -n green "${weird}";
-	done;
+        printf "  %s" "${dir}";
+      
+        _cleanDir "${dir}";
 
-	popd >/dev/null;
+        printf "\n";
+    done;
+
+    _recolor;
+
+    popd >/dev/null;
 }
 
 _cleanDir() {
-	pushd "$1" >/dev/null;
-	for f in $(ls); do
-		e="${f#*.}"
+    local f e;
+    
+    pushd "$1" >/dev/null;
 
-		if [ -d "${f}" ]; then
-			_cleanDir "${f}";
-		elif [[ $e == "svg" ]]; then
-			_cleanFilter "${f}";
-		fi;
-	done;
-	popd >/dev/null;
+    for f in $(ls); do
+        e="${f#*.}"
+
+        if [ -d "${f}" ]; then
+            _cleanDir "${f}";
+        elif [[ "${e}" == "svg" ]]; then
+            _cleanFilter "${f}";
+        fi;
+    done;
+
+    popd >/dev/null;
 }
 
 _cleanFilter() {
-	if ! readlink -q "${1}" >/dev/null; then
-		return
-	fi;
-	_cleanSvg "${1}";
-	_cleanProgress;
+    if ! readlink -q "${1}" >/dev/null; then
+            return
+    fi;
+    _cleanSvg "${1}";
+    _cleanProgress;
+}
+
+_recolor() {
+    local -ar REDOS=( 
+        actions/scalable/media-eject.svg 
+        actions/scalable/selection-end-symbolic.svg 
+        actions/scalable/selection-start-symbolic.svg 
+        animations/scalable/process-working.svg 
+        apps/scalable/accessories-calculator.svg 
+        apps/scalable/utilities-system-monitor.svg 
+        categories/scalable/preferences-system-directory.svg 
+        mimetypes/scalable/text-x-sql.svg 
+        places/scalable/folder-go.svg 
+    );
+    local r;
+
+    for r in "${REDOS[@]}"; do
+            ../../svg-edit -Q -o "#4caf50" -n green "${r}";
+    done;
 }
 
 _cleanSvg() {
-	svgcleaner-cli "${1}" "${1}" &>/dev/null;
+    svgcleaner-cli "${1}" "${1}" &>/dev/null;
 }
 
 _cleanProgress() {
-	((nCleaned+=1));
-	spaces=$((30-${#current}));
-	w="$(_printSp $spaces)";
+    local -i i;
+    local w;
+    local d;
+    
+    d="$(_trPfx "${PWD}" "${DEFAULT_THEME}/")";
 
-	printf "\r  %s%s%d" "${current}" "${w}" "${nCleaned}";
+    i=$((30-${#d}));
+    w="$(_spaces $i)";
+
+    ((nCleaned+=1));
+    printf "\r  %s%s%d" "${d}" "${w}" "${nCleaned}";
 }
 
-_printSp() {
-	for (( i=1; i<=$1; i++)) ; do printf " " ; done
-}
-
-_copy() {
-	from="${1}";
-	to="${2}";
-
-	if [ -e ${to} ]; then
-		rm -R "${to}";
-	fi;
-	cp -R "${from}" "${to}";
-	sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme";
+_spaces() {
+    local -i i;
+    for ((i=1;i<=${1};i++)) ; do printf " " ; done
 }
 
 _ColIt() {
-	normal=( 
-		    ArchBlue Blue BlueGrey Brown 
-			Cyan DeepPurple Grey Indigo 
-			KellyGreen LightBlue LightGreen Lime 
-			Pink Purple Shamrock Teal 
-		   );
-	special=( 
-			 Amber DeepOrange Orange 
-			 Red Yellow 
-			);
+    local -a Normal=( 
+        ArchBlue Blue BlueGrey Brown 
+        Cyan DeepPurple Grey Indigo 
+        KellyGreen LightBlue LightGreen Lime 
+        Pink Purple Shamrock Teal 
+    );
+    local -a Special=( 
+        Amber DeepOrange Orange 
+        Red Yellow 
+    );
+    local t;
 
-	for c in ${normal[@]}; do
-		_colorizeAll "${a}" "${c}";
-	done;
-	for c in ${special[@]}; do
-		_colorizeMost "${a}" "${c}";
-	done;
+    for t in ${Normal[@]}; do
+        _colorizeAll "${A}" "${t}";
+    done;
+
+    for t in ${Special[@]}; do
+        _colorizeMost "${A}" "${t}";
+    done;
 }
 
 _colorizeAll() {
-	from="${1}-Green";
-	to="${1}-${2}";
-	if [[ "$2" == "ArchBlue" ]]; then
-		color="#1793D1";
-	else
-		color="$2";
-	fi;
+    local from to color;
+    from="${DEFAULT_THEME}";
+    to="${A}-${1}";
+    if [[ "$1" == "ArchBlue" ]]; then
+            color="#1793D1";
+    else
+            color="$1";
+    fi;
 
-	_specho "${to}...";
-	
-	_copy "${from}" "${to}";
-	_colorize "green" "${color}" "${to}" "${to}";
-	_colorize "#4caf50" "${color}" "${to}" "${to}";
+    _specho "${to}...";
+    
+    _copy "${from}" "${to}";
+    _colorize "green" "${color}" "${to}" "${to}";
+    _colorize "#4caf50" "${color}" "${to}" "${to}";
 }
 
 _colorizeMost() {
-	from="${1}-Green";
-	to="${1}-${2}";
-	color="$2";
+    local from to color;
+    from="${DEFAULT_THEME}";
+    to="${A}-${1}";
+    color="$1";
 
-	_specho "${to}...";
+    _specho "${to}...";
 
-	_copy "${from}" "${to}";
-	_colorize "green" "${color}" "${to}" "${to}";
+    _copy "${from}" "${to}";
+    _colorize "green" "${color}" "${to}" "${to}";
+}
+
+_copy() {
+    from="${1}";
+    to="${2}";
+
+    if [ -e ${to} ]; then
+            rm -R "${to}";
+    fi;
+
+    cp -R "${from}" "${to}";
+    sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme";
 }
 
 _colorize() {
-	../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}";
+    ../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}";
 }
 
 _CrushIt() {
-	f="${1}";
-	xz="${f}.tar.xz";
-	
-	if [ -e "${xz}" ]; then
-		rm "${xz}";
-	fi;
-	./crunch "${f}";
-	_bak "${xz}" "bak/"
+    local f xz;
+    f="${1}";
+    xz="${f}.tar.xz";
+    
+    if [ -e "${xz}" ]; then
+            rm "${xz}";
+    fi;
+    ./crunch "${f}";
+    _bak "${xz}" "bak/"
 }
 
 _bak() {
-	f="${1}";
-	d="$(_dir "${2}")";
+    local file dest a bak;
+    file="${1}";
+    dest="$(_dir "${2}")";
 
 
-	a="${f%%.*}";
-	bak="${a}_$(date +%m-%d-%y).tar.xz";
+    a="${file%%.*}";
+    bak="${a}_$(date +%m-%d-%y).tar.xz";
 
-	cp -f "${f}" "${d}${bak}";
+    cp -f "${file}" "${dest}${bak}";
 }
 
 _dir() {
-	if [[ "${1%/*}" == "${1}" ]]; then
-		echo "${1}/";
-	fi;
-	echo "${1}";
+    if [[ "${1%/*}" == "${1}" ]]; then
+            echo "${1}/";
+    fi;
+    echo "${1}";
 }
 
 
 _git() {
-	git add .
-	git commit -m "$@"
-	git push origin master
+    git add .
+    git commit -m "$@"
+    git push origin master
 }
 
 _pause() {
-	for i in $(seq 1 "$1"); do
-		printf "\r  %d/%d" "$i" "$1";
-		sleep 1;
-	done;
-	printf "\n";
+    for i in $(seq 1 "$1"); do
+            printf "\r  %d/%d" "$i" "$1";
+            sleep 1;
+    done;
+    printf "\n";
 }
 
 _PkgbuildIt() {
-	pushd "aur" >/dev/null;
-	_pkgbuildAur;
-	popd >/dev/null;
+    pushd "aur/archdroid-icon-theme" >/dev/null;
+    _pkgbuildAur;
+    popd >/dev/null;
 
-	pushd "aur-git" >/dev/null;
-	_pkgbuildGit;
-	popd >/dev/null;
+    pushd "aur-git/archdroid-icon-theme-git" >/dev/null;
+    _pkgbuildGit;
+    popd >/dev/null;
 }
 
 _pkgbuildAur() {
-	pkgver=$(_gitVer);
-	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    pkgver=$(_gitVer);
+    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
-	a="archdroid-icon-theme";
-	repo="https://raw.githubusercontent.com/GreenRaccoon23/${a}";
-	xz="${repo}/master/${a}.tar.xz";
-	md=$(_gitmd5 "${xz}");
-	sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
+    a="archdroid-icon-theme";
+    repo="https://raw.githubusercontent.com/GreenRaccoon23/${A}";
+    xz="${repo}/master/${A}.tar.xz";
+    md=$(_gitmd5 "${xz}");
+    sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
 
 _pkgbuildGit() {
-	pkgver=$(_gitVer);
-	sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    pkgver=$(_gitVer);
+    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 }
 
 _gitmd5() {
-	md=$(curl "${1}" | md5sum);
-	echo "${md%  *}";
+    md=$(curl "${1}" | md5sum);
+    echo "${md%  *}";
 }
 
 _gitVer() {
-	( set -o pipefail
-	  git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-	  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-	)
+    ( set -o pipefail
+      git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+      printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+_PushIt() {
+    local -a Aurs;
+    local d;
+    Aurs=( 
+        "aur/archdroid-icon-theme" 
+        "aur-git/archdroid-icon-theme-git" 
+    );
+
+    for d in "${Aurs[@]}"; do
+            pushd "${d}" >/dev/null;
+            aur4 "$@";
+            popd >/dev/null;
+    done;
 }
 
 _BurpIt() {
-	for d in "aur" "aur-git"; do
-		pushd "${d}" >/dev/null;
-		_burp;
-		popd >/dev/null;
-	done;
+    local -a Aurs;
+    local d;
+    Aurs=( 
+        "aur/archdroid-icon-theme" 
+        "aur-git/archdroid-icon-theme-git" 
+    );
+
+    for d in "${Aurs[@]}"; do
+            pushd "${d}" >/dev/null;
+            _burp;
+            popd >/dev/null;
+    done;
 }
 
 _burp() {
-	mkaurball;
-	burp -c x11 *gz;
-	rm *gz;
-	rm *xz >/dev/null;
+    mkaurball;
+    burp -c x11 *gz;
+    rm *gz;
 }
 
 _Local() {
-	pushd "${d}" >/dev/null;
+    #pushd "${d}" >/dev/null;
 
-	_glecho "Removing backups...";
-	_TrimIt "${default}";
-	echo "Done.";
+    _glecho "Removing backups...";
+    _TrimIt "${DEFAULT_THEME}";
+    echo "Done.";
 
-	_glecho "Cleaning svg files...";
-	_CleanIt "${default}";
-	echo "Done.";
+    _glecho "Cleaning svg files...";
+    _CleanIt "${DEFAULT_THEME}";
+    echo "Done.";
 
-	_glecho "Generating color variants...";
-	_ColIt;
-	echo "Done.";
+    _glecho "Generating color variants...";
+    _ColIt;
+    echo "Done.";
 
-	popd >/dev/null;
+    #popd >/dev/null;
 
-	_glecho "Generating archive...";
-	_CrushIt "archdroid-icon-theme";
-	echo "Done.";
+    _glecho "Generating archive...";
+    _CrushIt "archdroid-icon-theme";
+    echo "Done.";
 }
 
 _Upload() {
-	commit="$@";
-	if [[ "${commit}" == "" ]]; then
-		read -p "Enter commit message: " commit;
-	fi;
+    local commit;
+    commit="$@";
+    if [[ "${commit}" == "" ]]; then
+            read -p "Enter commit message: " commit;
+    fi;
 
-	_glecho "Updating git repo...";
-	_git "${commit}";
-	echo "Done.";
+    _glecho "Updating git repo...";
+    _git "${commit}";
+    echo "Done.";
 
-	_glecho "Waiting 120 seconds for git to update...";
-	_pause 120;
-	echo "Done.";
+    _glecho "Waiting 120 seconds for git to update...";
+    _pause 120;
+    echo "Done.";
 
-	_glecho "Updating PKGBUILD...";
-	_PkgbuildIt;
-	echo "Done.";
+    _glecho "Updating PKGBUILD...";
+    _PkgbuildIt;
+    echo "Done.";
 
-	_glecho "Uploading PKGBUILD to git...";
-	_git "${commit}";
-	echo "Done.";
+    _glecho "Uploading PKGBUILD to git...";
+    _git "${commit}";
+    echo "Done.";
 
-	_glecho "Uploading package to aur...";
-	_BurpIt;
-	echo "Done.";
+    _glecho "Uploading package to aur...";
+    #_BurpIt;
+    _PushIt "${commit}";
+    echo "Done.";
 }
 
 d="archdroid-icon-theme";
-a="Archdroid";
-default="${a}-Green/";
+A="Archdroid";
+DEFAULT_THEME="${A}-Green/";
+declare -ar SUBDIRS=( 
+    actions animations apps categories 
+    devices emblems mimetypes places 
+    status stock/io 
+);
+
 
 _gr23;
 
-_gprint "Update local files?";
+_gprint "Update local files? ";
 if [[ $(_Yn) == 0 ]]; then
-	_Local;
+    _Local;
 fi;
 
-_gprint "Upload package to repos?";
+_gprint "Upload package to repos? ";
 if [[ $(_Yn) == 0 ]]; then
-	_Upload $@;
+    _Upload $@;
 fi;
 

@@ -1,22 +1,95 @@
+#!/bin/bash
+
+_testDistro() {
+    if [[ "$(_distro)" == "Arch" ]]; then
+        makepkg -sic;
+        exit 0;
+    fi;
+}
+
 _distro() {
-	if [[ "$(ls /bin | grep lsb_release)" == "" ]] ; then
-		echo "Arch" ;
-	fi ;
-	echo "$(lsb_release -si)" ;
+    if [[ "$(ls /bin | grep lsb_release)" == "" ]] ; then
+        echo "Arch" ;
+    fi ;
+    echo "$(lsb_release -si)" ;
 }
 
-install() {
-	for dir in "$(ls)" ; do
-	  	sudo install -dm 755 "/usr/share/icons/${dir}" ;
-	done ;
-  	sudo cp -drf --no-preserve='ownership' . "/usr/share/icons/" ;
+_verifyDownload() {
+    local pkg src;
+
+    pkg="archdroid-icon-theme";
+    src="https://raw.githubusercontent.com/GreenRaccoon23/${pkg}/master/${pkg}.tar.xz"
+
+    if [ -d "${pkg}" ]; then
+        pushd "${pkg}" >/dev/null;
+    fi;
+
+    if ls -d Archdroid* >& /dev/null; then
+        return;
+    fi;
+    
+    _download;
+    TEMP_DL=0;
+
+    _verifyDownload;
 }
 
-distro="$(_distro)"
-if [[ "${distro}" == "Arch" ]] ; then
-	makepkg -sic ;
-else
-	cd "archdroid-icon-theme" ;
-	_install ;
-fi ;
+_download() {
+    wget "${SRC}";
+    xz -dv "${PKG}.tar.xz";
+    tar -xf "${PKG}.tar";
+    rm "${PKG}.tar";
+}
 
+_install() {
+    local -a Themes;
+    local dest curr t;
+
+    Themes=( $(ls) );
+    dest="/usr/share/icons";
+    curr="${PWD}";
+
+    for t in ${Themes[@]}; do
+        if ! [ -d "${t}" ]; then
+            continue;
+        fi;
+        sudo install -dm 755 "${dest}/${t}";
+    done ;
+
+    sudo cp -drf --no-preserve='ownership' . "${dest}/";
+
+    pushd "${dest}" >/dev/null;
+    for t in ${Themes[@]}; do
+        echo "${t}";
+        sudo gtk-update-icon-cache -f "${t}";
+    done;
+    popd >/dev/null;
+}
+
+_cleanUp() {
+	cd "${ROOT}";
+	dirs -c;
+
+	if ! [ "${TEMP_DL}" ]; then
+		return;
+	fi;
+
+	if ! [ -d "${THEME_DIR}" ]; then
+		return;
+	fi;
+	rm -R "${THEME_DIR}";
+}
+
+_testDistro;
+
+declare -r ROOT="${PWD}";
+declare -r PKG="archdroid-icon-theme";
+declare -r SRC="https://raw.githubusercontent.com/GreenRaccoon23/${PKG}/master/${PKG}.tar.xz"
+
+declare TEMP_DL;
+_verifyDownload;
+
+declare -r THEME_DIR="${PWD}";
+_install;
+
+_cleanUp;
