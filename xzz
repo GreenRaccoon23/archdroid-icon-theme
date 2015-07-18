@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# `xzz <file-or-directory>`
+
+# 0=true
+# 1=false
+
+_chkHelp() {
+    case "${1}" in        
+        -[hH] | --[hH] | -[hH][eE][lL][pP] | --[hH][eE][lL][pP])
+            _help;
+            ;;
+        *)
+            return
+            ;;
+    esac;
+}
+
+_help() {
+    local -a Usage=( 
+        "Usage:"
+        "  xzz <file/directory>..."
+    );
+    local m;
+    for m in "${Usage[@]}"; do
+        echo "${m}";
+    done;
+    exit;
+}
+
+_tar() {
+    _bakTar "${1}";
+
+    echo "tar -cf ${1}.tar ${1}";
+    tar -cf "${1}.tar" "${1}";
+}
+
+_bakTar() {
+    local t="${1}.tar";
+
+    if ! [ -e "${t}" ]; then
+        return;
+    fi;
+
+    BAK="${t}.bak";
+
+    cp "${t}" "${BAK}";
+}
+
+_yN() {
+    case "${1}" in
+        [yY] | [yY][eE][sS] )
+            echo 1;
+            ;;
+        *)
+            echo 0;
+            ;;
+    esac;
+}
+
+_xz() {
+    local cmd="xz -zv -T 0 -e9 \"${1}\"";
+    
+    echo "${cmd}";
+    if ! eval "${cmd}"; then
+        exit 1;
+    fi;
+
+    if ! xz -t "${1}.xz"; then
+       rm "${1}.xz";
+        _xz "${1}";
+    fi;
+}
+
+_chkHelp "${1}";
+
+declare BAK;
+for file; do
+    BAK="";
+
+    if [[ "${file}" == "${file%\.tar*}" ]]; then
+        _tar "${file}" ;
+        file="${file}.tar";
+    fi;
+
+    _xz "${file}";
+
+    if ! [ "${BAK}" ]; then
+        continue;
+    fi;
+    mv "${BAK}" "${file}";
+done;

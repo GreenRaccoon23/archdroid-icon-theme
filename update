@@ -1,6 +1,7 @@
 #!/bin/bash
+
+# Set console color.
 _c() {
-    # Set console color.
     if (($# == 0)); then
         tput sgr0;
         return;
@@ -27,8 +28,8 @@ _c() {
     tput setaf "${c}";
 }
 
+# Set bold console color.
 _C() {
-    # Set bold console color.
     tput bold;
 
     if (($# == 0)); then
@@ -37,13 +38,13 @@ _C() {
     _c "${1}";
 }
 
+# Reset console color to normal.
 _u() {
-    # Reset console color to normal.
     tput sgr0;
 }
 
+# Print any number of messages in bold green.
 _gecho() {
-    # `echo` in bold green.
     _C green
     for line; do
         echo "${line}";
@@ -51,30 +52,52 @@ _gecho() {
     _u;
 }
 
+# Print a message in bold green WITHOUT appending a new line.
+_gprint() {
+    _C green
+    printf "%s" "$*";
+    _u;
+}
+
+# Print a line break.
+# Optionally, run a command first in order to colorize it.
 _line() {
     if (($# > 0)); then
-        $@;
+        eval "$@";
     fi;
 
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =;
+    
+    if (($# > 0)); then
+        _u;
+    fi;
 }
 
+# Print a bold white line break,
+#   followed by any number of messages in bold green.
 _glecho() {
     _line _C white;
 
     _C green;
-    echo "$1";
+    local m;
+    for m; do
+        echo "${m}";
+    done;
 
     _u;
 }
 
+# Print any number of messages, indenting each by two spaces.
 _specho() {
-    printf '  ';
-    echo "$1";
+    local m;
+    for m; do
+        printf '  ';
+        echo "${m}";
+    done;
 }
 
+# Print green raccoon ASCII image.
 _gr23() {
-    # Print green raccoon ASCII image.
     local -ar raccoon=( 
         '         ///////                             //////' 
         '       /////   ///                         //     /// ' 
@@ -104,367 +127,326 @@ _gr23() {
     _gecho "${raccoon[@]}";
 }
 
-_gprint() {
-    # `printf` in bold green.
-    _C green
-    local -r m="$@";
-    printf "%s" "${m}";
-    _u;
+# Run a command silently.
+_q() {
+    eval "$@" >/dev/null;
 }
 
+# Run a command and exit if it fails.
+_Run() {
+    if ! eval "$@"; then
+        exit 1;
+    fi;
+}
+
+# Ask user to answer a "yes or no" question.
+# Analyse the user's answer, with NO as the default.
 _yN() {
     local ans;
-    read -p "[y/N]: " ans;
+    read -p " [y/N]: " ans;
 
     case "${ans}" in
-            y|Y)
-                    echo 1;
+            [yY] | [yY][eE][sS])
+                    return 1;
                     ;;
             *)
-                    echo 0;
+                    return 0;
                     ;;
     esac;
 }
 
+# Ask user to answer a "yes or no" question.
+# Analyse the user's answer, with YES as the default.
 _Yn() {
     local ans;
-    read -p "[Y/n]: " ans;
+    read -p " [Y/n]: " ans;
 
     case "${ans}" in
-            n|N)
-                    echo 1;
+            [nN] | [nN][oO])
+                    return 1;
                     ;;
             *)
-                    echo 0;
+                    return 0;
                     ;;
     esac;
 }
 
+# Trim the suffix of a string.
 _trSfx() {
-    # Trim the suffix of a string.
-    # _trSfx <string> <suffix-to-remove>
-    local s z;
-    s="${1}";
-    z="${2}";
-
-    hasSfx=$(echo "${s}" | grep "${z}$");
-
-    if [ -z "${hasSfx}" ] ; then
-        echo "${s}";
-    fi;
-    echo "${s%${z}*}";
+    echo "${1%${2}*}";
 }
 
+# Trim the prefix of a string.
 _trPfx() {
-    # Trim the prefix of a string.
-    # _trPfx <string> <prefix-to-remove>
-    local s a;
-    s="${1}";
-    a="${2}";
-
-    echo "${s##*${a}}";
+    echo "${1#*${2}}";
 }
 
-_TrimIt() {
-    pushd "${1}" >/dev/null;
-
+# Remove all unnecessary and backup files from the base theme.
+_TrimBase() {
     _trimDirs;
     _trimFiles;
-
-    popd >/dev/null;
 }
 
+# Remove backup directories from the base theme.
 _trimDirs() {
-    local -a Trash;
-    local d t;
-    Trash=( 
-        "/scalable/bak" 
-        "/scaled" 
+    local -ar Trash=( 
+        "scalable/bak" 
+        "scaled" 
     );
 
-    for d in ${SUBDIRS[@]}; do
-        pushd "${d}" >/dev/null;
+    local dir;
+    for dir in "${SUBDIRS[@]}"; do
+        _q pushd "${dir}";
 
-        _rmD ${Trash[@]};
+        _rm "${Trash[@]}";
 
-        popd >/dev/null;
+        _q popd;
     done;
 }
 
+# Remove unnecessary/backup files from the base theme.
 _trimFiles() {
-    local e;
-    local -a Trash;
-    e="emblems/scalable";
-    Trash=( 
+    local -r e="emblems/scalable";
+    local -ar Trash=( 
         "scale" 
         "index.theme.bak" 
         "${e}/emblem-greenraccoon23.svg" 
         "${e}/emblem-greenraccoon23-transparent.svg" 
     );
 
-    _rmF ${Trash[@]};
+    _rm "${Trash[@]}";
 }
 
-_rmD() {
-    for d; do
+# Remove files and/or directories.
+_rm() {
+    local file;
+    for file; do
 
-        if ! [ -d "${d}" ]; then
+        if [ -d "${file}" ]; then
+            rm -R "${file}";
+            echo "    Removed ${file}";
             continue;
+
+        elif [ -e "${file}" ]; then
+            rm "${file}";
+            echo "    Removed ${file}";
+            continue;
+
+        else
+            continue;
+
         fi;
         
-        rm -R "${d}";
-        echo "    Removed ${d}";
-        
     done;
 }
 
-_rmF() {
-    for f; do
-
-        if ! [ -e "${f}" ]; then
-            continue;
-        fi;
-        
-        rm "${f}";
-        echo "    Removed ${f}";
-        
-    done;
-}
-
-_CleanIt() {
-    declare -i nCleaned;
-    local d dir;
-
-    pushd "${1}" >/dev/null;
-
-    for d in "${SUBDIRS[@]}"; do
-        dir="${d}/scalable/";
-        nCleaned=0;
-
-        printf "  %s" "${dir}";
-      
-        _cleanDir "${dir}";
-
-        printf "\n";
-    done;
-
+# Run `svg-cleaner` on all of the icons in the base theme.
+_CleanBase() {
+     find . -type f -name "*.svg" -exec svgcleaner-cli {} {} &>/dev/null \;; 
     _recolor;
-
-    popd >/dev/null;
 }
 
-_cleanDir() {
-    local f e;
-    
-    pushd "$1" >/dev/null;
-
-    for f in $(ls); do
-        e="${f#*.}"
-
-        if [ -d "${f}" ]; then
-            _cleanDir "${f}";
-        elif [[ "${e}" == "svg" ]]; then
-            _cleanFilter "${f}";
-        fi;
-    done;
-
-    popd >/dev/null;
-}
-
-_cleanFilter() {
-    if ! readlink -q "${1}" >/dev/null; then
-            return
-    fi;
-    _cleanSvg "${1}";
-    _cleanProgress;
-}
-
+# Re-colorize certain icons:
+#   those which lose their color after being cleaned by `svg-cleaner`.
 _recolor() {
     local -ar REDOS=( 
-        actions/scalable/media-eject.svg 
-        actions/scalable/selection-end-symbolic.svg 
-        actions/scalable/selection-start-symbolic.svg 
-        animations/scalable/process-working.svg 
-        apps/scalable/accessories-calculator.svg 
-        apps/scalable/utilities-system-monitor.svg 
-        categories/scalable/preferences-system-directory.svg 
-        mimetypes/scalable/text-x-sql.svg 
-        places/scalable/folder-go.svg 
+        "actions/scalable/media-eject.svg" 
+        "actions/scalable/selection-end-symbolic.svg" 
+        "actions/scalable/selection-start-symbolic.svg" 
+        "animations/scalable/process-working.svg" 
+        "apps/scalable/accessories-calculator.svg" 
+        "apps/scalable/utilities-system-monitor.svg" 
+        "categories/scalable/preferences-system-directory.svg" 
+        "mimetypes/scalable/text-x-sql.svg" 
+        "places/scalable/folder-go.svg" 
     );
-    local r;
 
+    local r;
     for r in "${REDOS[@]}"; do
-            ../../svg-edit -Q -o "#4caf50" -n green "${r}";
+        ../../svg-edit -Q -o "#4caf50" -n green "${r}";
     done;
 }
 
-_cleanSvg() {
-    svgcleaner-cli "${1}" "${1}" &>/dev/null;
-}
-
-_cleanProgress() {
-    local -i i;
-    local w;
-    local d;
-    
-    d="$(_trPfx "${PWD}" "${DEFAULT_THEME}/")";
-
-    i=$((30-${#d}));
-    w="$(_spaces $i)";
-
-    ((nCleaned+=1));
-    printf "\r  %s%s%d" "${d}" "${w}" "${nCleaned}";
-}
-
-_spaces() {
-    local -i i;
-    for ((i=1;i<=${1};i++)) ; do printf " " ; done
-}
-
-_ColIt() {
-    local -a Normal=( 
+# Colorize all of the icon themes.
+_ColorizeThemes() {
+    # Mark the themes for which the color of every icon needs to be changed.
+    local -ar Normal=( 
         ArchBlue Blue BlueGrey Brown 
         Cyan DeepPurple Grey Indigo 
         KellyGreen LightBlue LightGreen Lime 
         Pink Purple Shamrock Teal 
     );
-    local -a Special=( 
+
+    # Mark the themes which need some icons to remain green.
+    local -ar Special=( 
         Amber DeepOrange Orange 
         Red Yellow 
     );
-    local t;
 
-    for t in ${Normal[@]}; do
-        _colorizeAll "${A}" "${t}";
+    local theme;
+
+    for theme in "${Normal[@]}"; do
+        _colorizeAll "${theme}";
     done;
 
-    for t in ${Special[@]}; do
-        _colorizeMost "${A}" "${t}";
+    for theme in "${Special[@]}"; do
+        _colorizeMost "${theme}";
     done;
 }
 
+# Colorize every icon in the theme.
 _colorizeAll() {
-    local from to color;
-    from="${DEFAULT_THEME}";
-    to="${A}-${1}";
-    if [[ "$1" == "ArchBlue" ]]; then
-            color="#1793D1";
-    else
-            color="$1";
+    local color="${1}";
+    local theme="${A}-${1}";
+    if [[ "${1}" == "ArchBlue" ]]; then
+        color="#1793D1";
     fi;
 
-    _specho "${to}...";
+    _specho "${theme}...";
     
-    _copy "${from}" "${to}";
-    _colorize "green" "${color}" "${to}" "${to}";
-    _colorize "#4caf50" "${color}" "${to}" "${to}";
+    _copyTheme "${DEFAULT_THEME}" "${theme}";
+    _colorize "green" "${color}" "${theme}" "${theme}";
+    _colorize "#4caf50" "${color}" "${theme}" "${theme}";
 }
 
+# Colorize all but a select few icons in the theme.
 _colorizeMost() {
-    local from to color;
-    from="${DEFAULT_THEME}";
-    to="${A}-${1}";
-    color="$1";
+    local color="$1";
+    local theme="${A}-${1}";
 
-    _specho "${to}...";
+    _specho "${theme}...";
 
-    _copy "${from}" "${to}";
-    _colorize "green" "${color}" "${to}" "${to}";
+    _copyTheme "${DEFAULT_THEME}" "${theme}";
+    _colorize "green" "${color}" "${theme}" "${theme}";
 }
 
-_copy() {
-    from="${1}";
-    to="${2}";
+# Create a copy of theme $1, naming the copy as $2.
+# Then, update the new theme's name within its "index.theme" file.
+_copyTheme() {
+    local orig="${1}";
+    local copy="${2}";
 
-    if [ -e ${to} ]; then
-            rm -R "${to}";
+    if [ -e "${copy}" ]; then
+        rm -R "${copy}";
     fi;
 
-    cp -R "${from}" "${to}";
-    sed -i "s/Name=.*/Name=${to}/" "${to}/index.theme";
+    cp -R "${orig}" "${copy}";
+
+    sed -i "s/Name=.*/Name=${copy}/" "${copy}/index.theme";
 }
 
+# Run the `svg-edit` binary
+#   to colorize all svg images under the specified directory.
+# Change color $1 to color $2,
+#   for all svg images under directory $3,
+#   and place the edited images in directory $4.
 _colorize() {
-    ../svg-edit -r -Q -o "${1}" -n "${2}" "${3}" "${4}";
+    local oldColor="${1}";
+    local newColor="${2}";
+    local oldDir="${3}";
+    local newDir="${4}";
+
+    ../svg-edit -r -Q -o "${oldColor}" -n "${newColor}" "${oldDir}" "${newDir}";
 }
 
-_CrushIt() {
-    local f xz;
-    f="${1}";
-    xz="${f}.tar.xz";
+# Make a highly compressed xz archive of the icon theme.
+#   The xz archive is 10-15% the size of the uncompressed files.
+_Package() {
+    local xz="${DIR}.tar.xz";
     
     if [ -e "${xz}" ]; then
-            rm "${xz}";
+        rm "${xz}";
     fi;
-    ./crunch "${f}";
-    _bak "${xz}" "bak/"
+    _Run ./xzz "${DIR}";
+    _Run _Archive "${xz}" "bak/"
 }
 
-_bak() {
-    local file dest a bak;
-    file="${1}";
-    dest="$(_dir "${2}")";
+# Make a copy of the compressed package
+#   and place the new copy into the folder of archived packages.
+_Archive() {
+    local file="${1}";
+    local dest="${2}";
+    dest="$(_fmtDir "${2}")";
 
+    local name="${file%%.*}";
+    local ext="${file#*.}";
 
-    a="${file%%.*}";
-    bak="${a}_$(date +%m-%d-%y).tar.xz";
+    local bak;
+    bak="${name}_$(date +%m-%d-%y).${ext}";
 
     cp -f "${file}" "${dest}${bak}";
 }
 
-_dir() {
+# Append a trailing '/' to a string [directory]
+#   if it does not already have one.
+_fmtDir() {
     if [[ "${1%/*}" == "${1}" ]]; then
             echo "${1}/";
     fi;
     echo "${1}";
 }
 
-
+# Update git repo.
 _git() {
-    git add .
-    git commit -m "$@"
-    git push origin master
+    git add .;
+    git commit -m "$*";
+    git push origin master;
 }
 
+# Pause for a specified number of seconds.
 _pause() {
-    for i in $(seq 1 "$1"); do
-            printf "\r  %d/%d" "$i" "$1";
+    local -i seconds="${1}";
+
+    local -i i;
+    for i in $(seq 1 "${seconds}"); do
+            printf "\r  %d/%d" "${i}" "${seconds}";
             sleep 1;
     done;
     printf "\n";
 }
 
-_PkgbuildIt() {
-    pushd "aur/archdroid-icon-theme" >/dev/null;
-    _pkgbuildAur;
-    popd >/dev/null;
+# Update the AUR PKGBUILD files
+#   for the regular and '-git' variants of this package.
+_PkgbuildUpdate() {
+    local -r pkgver=$(_gitVer);
 
-    pushd "aur-git/archdroid-icon-theme-git" >/dev/null;
-    _pkgbuildGit;
-    popd >/dev/null;
+    _q pushd "aur/${DIR}";
+    _pkgbuildAur "${pkgver}";
+    _q popd;
+
+    _q pushd "aur-git/${DIR}-git";
+    _pkgbuildGit "${pkgver}";
+    _q popd;
 }
 
+# Update the PKGBUILD for the regular AUR version of this package
+#   (update both the 'pkgver' and 'md5sums' in the PKGBUILD).
 _pkgbuildAur() {
-    pkgver=$(_gitVer);
+    # Update pkgver.
+    local -r pkgver="${1}";
     sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
-    a="archdroid-icon-theme";
-    repo="https://raw.githubusercontent.com/GreenRaccoon23/${A}";
-    xz="${repo}/master/${A}.tar.xz";
-    md=$(_gitmd5 "${xz}");
+    # Update md5sums.
+    local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${DIR}";
+    local -r xz="${repo}/master/${DIR}.tar.xz";
+    local -r md=$(_gitmd5 "${xz}");
     sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
 
+# Update the PKGBUILD for the '-git' variant of this package in the AUR
+#   (update the 'pkgver' only in the PKGBUILD).
 _pkgbuildGit() {
-    pkgver=$(_gitVer);
+    local -r pkgver="${1}";
     sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 }
 
+# Fetch the md5sums of an online file.
 _gitmd5() {
     md=$(curl "${1}" | md5sum);
     echo "${md%  *}";
 }
 
+# Return the git version of a locally cloned git repo.
 _gitVer() {
     ( set -o pipefail
       git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
@@ -472,73 +454,64 @@ _gitVer() {
     )
 }
 
-_PushIt() {
-    local -a Aurs;
-    local d;
-    Aurs=( 
+# Upload the package to the AUR (BOTH AUR 3 and AUR 4).
+_AurUpdate() {
+    local -ar Aurs=( 
         "aur/archdroid-icon-theme" 
         "aur-git/archdroid-icon-theme-git" 
     );
 
-    for d in "${Aurs[@]}"; do
-            pushd "${d}" >/dev/null;
-            aur4 "$@";
-            popd >/dev/null;
+    local dir;
+    for dir in "${Aurs[@]}"; do
+        _q pushd "${dir}";
+        ../aur4 "$@";
+        _aur3;
+        _q popd;
     done;
 }
 
-_BurpIt() {
-    local -a Aurs;
-    local d;
-    Aurs=( 
-        "aur/archdroid-icon-theme" 
-        "aur-git/archdroid-icon-theme-git" 
-    );
-
-    for d in "${Aurs[@]}"; do
-            pushd "${d}" >/dev/null;
-            _burp;
-            popd >/dev/null;
-    done;
-}
-
-_burp() {
+# Upload the package to the AUR (AUR 3 only, NOT AUR 4).
+_aur3() {
     mkaurball;
-    burp -c x11 *gz;
-    rm *gz;
+    burp -c x11 ./*gz;
+    rm ./*gz;
 }
 
+# Update package locally.
 _Local() {
-    #pushd "${d}" >/dev/null;
+    _q pushd "${DIR}";
+
+    _q pushd "${DEFAULT_THEME}";
 
     _glecho "Removing backups...";
-    _TrimIt "${DEFAULT_THEME}";
+    _Run _TrimBase;
     echo "Done.";
 
     _glecho "Cleaning svg files...";
-    _CleanIt "${DEFAULT_THEME}";
+    _Run _CleanBase;
     echo "Done.";
+
+    _q popd;
 
     _glecho "Generating color variants...";
-    _ColIt;
+    _Run _ColorizeThemes;
     echo "Done.";
-
-    #popd >/dev/null;
+    
+    _q popd;
 
     _glecho "Generating archive...";
-    _CrushIt "archdroid-icon-theme";
+    _Run _Package "archdroid-icon-theme";
     echo "Done.";
 }
 
+# Update and upload the package to both git and the AUR.
 _Upload() {
-    local commit;
-    commit="$@";
-    if [[ "${commit}" == "" ]]; then
-            read -p "Enter commit message: " commit;
+    if ! [ "${COMMIT}" ]; then
+        read -p "Enter commit message: " COMMIT;
     fi;
 
     _glecho "Updating git repo...";
-    _git "${commit}";
+    _Run _git "${COMMIT}";
     echo "Done.";
 
     _glecho "Waiting 120 seconds for git to update...";
@@ -546,38 +519,38 @@ _Upload() {
     echo "Done.";
 
     _glecho "Updating PKGBUILD...";
-    _PkgbuildIt;
+    _Run _PkgbuildUpdate;
     echo "Done.";
 
     _glecho "Uploading PKGBUILD to git...";
-    _git "${commit}";
+    _Run _git "${COMMIT}";
     echo "Done.";
 
     _glecho "Uploading package to aur...";
-    #_BurpIt;
-    _PushIt "${commit}";
+    _Run _AurUpdate "${COMMIT}";
     echo "Done.";
 }
 
-d="archdroid-icon-theme";
-A="Archdroid";
-DEFAULT_THEME="${A}-Green/";
+declare COMMIT="$*";
+
+declare -r DIR="archdroid-icon-theme";
+declare -r A="Archdroid";
+declare -r DEFAULT_THEME="${A}-Green/";
 declare -ar SUBDIRS=( 
     actions animations apps categories 
     devices emblems mimetypes places 
     status stock/io 
 );
 
-
 _gr23;
 
-_gprint "Update local files? ";
-if [[ $(_Yn) == 0 ]]; then
+_gprint "Update local files?";
+if _q _Yn; then
     _Local;
 fi;
 
-_gprint "Upload package to repos? ";
-if [[ $(_Yn) == 0 ]]; then
-    _Upload $@;
+_gprint "Upload package to online repos?";
+if _q _Yn; then
+    _Upload;
 fi;
 

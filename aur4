@@ -1,0 +1,270 @@
+#!/bin/bash
+
+# Usage:
+# aur4 <commit-message>
+# Example:
+# aur4 "Initial import"
+
+# Note: MUST run this script under the cloned (or soon to be cloned) directory of the package's aur4 repository.
+
+# If user requested help, print it.
+_chkHelp() {
+    case "${1}" in        
+        -[hH] | --[hH] | -[hH][eE][lL][pP] | --[hH][eE][lL][pP])
+            _help 0;
+            ;;
+        *)
+            return
+            ;;
+    esac;
+}
+
+# Print help and exit.
+_help() {
+    local path="$0";
+    local script=${path%/*};
+    local -a Usage=( 
+        "Usage:"
+        "  ${script} <commit-message>"
+        "Note:"
+        "  This ${script} command needs to run under the cloned (or soon to be cloned) directory of the package's aur4 repository."
+    );
+
+    local m;
+    for m in "${Usage[@]}"; do
+        echo "${m}";
+    done;
+
+    if [ "${1}" ]; then
+        exit "${1}";
+    fi;
+    exit 1;
+}
+
+# Set font color in Terminal.
+_c() {
+    if (($# == 0)); then
+        tput sgr0;
+        return;
+    fi;
+    
+    local -Ar Codes=(
+        ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" 
+        ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7" 
+        ["bk"]="0" ["r"]="1" ["g"]="2" ["y"]="3" 
+        ["bu"]="4" ["m"]="5" ["c"]="6" ["w"]="7" 
+    );
+
+    local k c;
+    for k in "${!Codes[@]}"; do
+        if [[ "${k}" != "${1}" ]]; then
+            continue;
+        fi;
+        c="${Codes["$k"]}";
+    done;
+
+    if [ ! "${c}" ]; then
+        return;
+    fi;
+    tput setaf "${c}";
+}
+
+# Set bold font color in Terminal.
+# Optionally set a new font color as well.
+_C() {
+    tput bold;
+
+    if (($#<1)); then
+        return;
+    fi;
+    _c "${1}";
+}
+
+# Reset font color in Terminal to normal.
+_u() {
+    tput sgr0;
+}
+
+# Print messages in bold green.
+_gecho() {
+    _C green
+    for line; do
+        echo "${line}";
+    done;
+    _u;
+}
+
+# Print a message in bold green, WITHOUT appending a newline.
+_gprint() {
+    _C green
+    printf "%s" "$*";
+    _u;
+}
+
+# Run a command silently.
+_q() {
+    eval "$@" >/dev/null;
+}
+
+# Exit with error 1 if the previous command returned an error.
+_err() {
+    if [[ $? != 0 ]]; then
+        exit 1;
+    fi;
+}
+
+# Obtain user input (command variant of `read -p`).
+_inp() {
+    _u;
+
+    local ans;
+    read -p "" ans;
+    
+    printf "\r";
+    echo "${ans}";
+}
+
+# Rerun script if no arguments were passed.
+_VrfyArgs() {
+    if ((${#ARGS} > 0)); then
+        return;
+    fi;
+
+    local msg;
+    for msg; do
+        _gprint "${msg}";
+        ARGS+=( "$(_inp)" );
+    done;
+
+    if ((${#ARGS} == 0)) ; then
+        ARGS+=( "$(_inp)" );
+    fi;
+
+    $0 "${ARGS[@]}";
+    exit;
+}
+
+# Install any missing package dependencies.
+_VrfyDeps() {
+    if ! _q command -v "yaourt"; then
+        echo "Install yaourt first.";
+        exit 1;
+    fi;
+
+    local -Ar Deps=( 
+        ['git']='git'
+        ['mksrcinfo']='pkgbuild-introspection'
+        ['wget']='wget' 
+    );
+
+    local cmd;
+    for cmd in "${!Deps[@]}"; do
+        if _q command -v "${cmd}"; then
+            continue
+        fi;
+        yaourt -Sa "${Deps[$cmd]}";
+    done;
+}
+
+# Clone an aur4 repo if it has not been cloned already.
+_VrfyCloned() {
+    if _q _isCloned; then
+        return;
+    fi;
+
+    local pkg="${1}";
+    if ! [ "${pkg}" ]; then
+        _gprint "Enter package name: ";
+        read -p "" pkg;
+    fi;
+    
+    _clone "${pkg}";
+    _err;
+    
+    _mvUp "${pkg}";
+    _err;
+    cd "${pkg}";
+    _err;
+
+}
+
+# Test whether the current directory is a cloned git/aur4 repository.
+_isCloned() {
+    if [ -d ".git" ] ; then
+        return 0;
+    fi;
+    return 1;
+}
+
+# Git clone aur4 repository.
+_clone() {
+    local -r repo="${1}";
+    local -r cmd="git clone ssh://aur@aur4.archlinux.org/${repo}.git";
+
+    _gecho "${cmd}";
+    eval "${cmd}";
+}
+
+# Move a directory up one level,
+#   move the contents of its [former] parent directory into it,
+#   and then delete the [former] parent directory.
+# E.g.: "/home/chucknorris/dir/dir" > "/home/chucknorris/dir"
+_mvUp() {
+    local target="${1}";
+    if ! [ -d "${target}" ]; then
+        return 1;
+    fi;
+    local parent="${PWD##*/}";
+    local delete="${parent}_tmp_deletethisdirectory";
+
+    _q pushd "..";
+
+    if [ -d "${delete}" ]; then
+        _q popd;
+        return 1;
+    fi;
+    if [ -d "${target}" ] && [[ "${target}" != "${parent}" ]]; then
+        _q popd;
+        return 1;
+    fi;
+
+    mv "${parent}" "${delete}" &&
+    mv "${delete}/${target}" "${target}" &&
+    cp -a "${delete}/." "${target}/" &&
+    rm -r "${delete}";
+    
+    _q popd;
+}
+
+# Upload local repository to its aur4 repository.
+_Upload() {
+    mksrcinfo;
+    _err;
+
+    git add .;
+    git add .SRCINFO -f;
+    _err;
+
+    git commit -m "$@";
+    _err;
+
+    git push origin master;
+}
+
+declare -a ARGS=( $@ );
+
+_gr23;
+
+_VrfyDeps;
+
+_VrfyArgs "Enter commit: ";
+
+declare COMMIT="${ARGS[*]}";
+if ! [ "${COMMIT[@]}" ]; then
+    _help;
+fi;
+
+_VrfyCloned;
+
+_Upload "${COMMIT}";
+
