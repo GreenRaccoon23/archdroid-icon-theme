@@ -253,8 +253,6 @@ _Upload() {
 
 declare -a ARGS=( $@ );
 
-_gr23;
-
 _VrfyDeps;
 
 _VrfyArgs "Enter commit: ";
