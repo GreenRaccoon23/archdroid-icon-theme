@@ -464,7 +464,7 @@ _AurUpdate() {
     local dir;
     for dir in "${Aurs[@]}"; do
         _q pushd "${dir}";
-        ../aur4 "$@";
+        ../../aur4 "$@";
         _aur3;
         _q popd;
     done;
