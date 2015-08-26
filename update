@@ -372,7 +372,8 @@ _Archive() {
     local ext="${file#*.}";
 
     local bak;
-    bak="${name}_$(date +%m-%d-%y).${ext}";
+    #bak="${name}_$(date +%m-%d-%y).${ext}";
+    bak="${name}_$(date +%Y-%m-%d).${ext}";
 
     cp -f "${file}" "${dest}${bak}";
 }
@@ -381,7 +382,7 @@ _Archive() {
 #   if it does not already have one.
 _fmtDir() {
     if [[ "${1%/*}" == "${1}" ]]; then
-            echo "${1}/";
+        echo "${1}/";
     fi;
     echo "${1}";
 }
@@ -398,9 +399,10 @@ _pause() {
     local -i seconds="${1}";
 
     local -i i;
-    for i in $(seq 1 "${seconds}"); do
-            printf "\r  %d/%d" "${i}" "${seconds}";
-            sleep 1;
+    #for i in $(seq 1 "${seconds}"); do
+    for ((i=1;i<=seconds;i++)); do
+        printf "\r  %d/%d" "${i}" "${seconds}";
+        sleep 1;
     done;
     printf "\n";
 }

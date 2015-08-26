@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s extglob;
 
 # Usage:
 # aur4 <commit-message>
@@ -10,10 +11,10 @@
 # If user requested help, print it.
 _chkHelp() {
     case "${1}" in        
-        -[hH] | --[hH] | -[hH][eE][lL][pP] | --[hH][eE][lL][pP])
+        +(-)[hH]*([eE][lL][pP]) )
             _help 0;
             ;;
-        *)
+        * )
             return
             ;;
     esac;
@@ -22,18 +23,14 @@ _chkHelp() {
 # Print help and exit.
 _help() {
     local path="$0";
-    local script=${path%/*};
-    local -a Usage=( 
-        "Usage:"
-        "  ${script} <commit-message>"
-        "Note:"
-        "  This ${script} command needs to run under the cloned (or soon to be cloned) directory of the package's aur4 repository."
-    );
-
-    local m;
-    for m in "${Usage[@]}"; do
-        echo "${m}";
-    done;
+    local script=${path##*/};
+    cat << EOH >&2
+Usage:
+  ${script} <commit-message>
+Note:
+  This ${script} script needs to run under the cloned (or soon 
+  to be cloned) directory of the package's aur4 repository.
+EOH
 
     if [ "${1}" ]; then
         exit "${1}";
@@ -168,7 +165,7 @@ _VrfyDeps() {
 
 # Clone an aur4 repo if it has not been cloned already.
 _VrfyCloned() {
-    if _q _isCloned; then
+    if _isCloned; then
         return;
     fi;
 
@@ -183,9 +180,6 @@ _VrfyCloned() {
     
     _mvUp "${pkg}";
     _err;
-    cd "${pkg}";
-    _err;
-
 }
 
 # Test whether the current directory is a cloned git/aur4 repository.
@@ -199,7 +193,7 @@ _isCloned() {
 # Git clone aur4 repository.
 _clone() {
     local -r repo="${1}";
-    local -r cmd="git clone ssh://aur@aur4.archlinux.org/${repo}.git";
+    local -r cmd="git clone ssh://aur@aur.archlinux.org/${repo}.git";
 
     _gecho "${cmd}";
     eval "${cmd}";
@@ -250,6 +244,8 @@ _Upload() {
 
     git push origin master;
 }
+
+_chkHelp "${1}";
 
 declare -a ARGS=( $@ );
 
