@@ -355,7 +355,7 @@ _Package() {
     local xz="${DIR}.tar.xz";
     
     if [ -e "${xz}" ]; then
-        rm "${xz}";
+        gvfs-trash "${xz}";
     fi;
     _Run ./xzz "${DIR}";
     _Run _Archive "${xz}" "bak/"
@@ -467,7 +467,7 @@ _AurUpdate() {
     for dir in "${Aurs[@]}"; do
         _q pushd "${dir}";
         ../../aur4 "$@";
-        _aur3;
+        #_aur3;
         _q popd;
     done;
 }
