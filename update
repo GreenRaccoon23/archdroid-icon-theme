@@ -557,7 +557,7 @@ _gr23;
 _gprint "Update local files?";
 _Yn && _Local;
 
-_gprint "Add commit?";
+_gprint "Add a new commit?";
 _Yn && _Commit;
 
 _gprint "Upload package to online repos?";
