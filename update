@@ -2,10 +2,8 @@
 
 # Set console color.
 _c() {
-    if (($# == 0)); then
-        tput sgr0;
-        return;
-    fi;
+    tput sgr0;
+    (($# == 0)) && return 0;
     
     local -A Codes=( 
         ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" 
@@ -22,20 +20,13 @@ _c() {
         c="${Codes["$k"]}";
     done;
 
-    if [ ! "${c}" ]; then
-        return;
-    fi;
-    tput setaf "${c}";
+    [ "${c}" ] && tput setaf "${c}";
 }
 
 # Set bold console color.
 _C() {
+    (($# > 0)) && _c "${1}";
     tput bold;
-
-    if (($# == 0)); then
-        return;
-    fi;
-    _c "${1}";
 }
 
 # Reset console color to normal.
@@ -134,41 +125,31 @@ _q() {
 
 # Run a command and exit if it fails.
 _Run() {
-    if ! eval "$@"; then
-        exit 1;
-    fi;
+    eval "$@" || exit $?;
 }
 
 # Ask user to answer a "yes or no" question.
 # Analyse the user's answer, with NO as the default.
 _yN() {
     local ans;
-    read -p " [y/N]: " ans;
+    read -p "$* [y/N]: " ans;
 
-    case "${ans}" in
-            [yY] | [yY][eE][sS])
-                    return 1;
-                    ;;
-            *)
-                    return 0;
-                    ;;
+    case "${ans}" in [yY] | [yY][eE][sS])
+        return 0;;
     esac;
+    return 1;
 }
 
 # Ask user to answer a "yes or no" question.
 # Analyse the user's answer, with YES as the default.
 _Yn() {
     local ans;
-    read -p " [Y/n]: " ans;
+    read -p "$* [Y/n]: " ans;
 
-    case "${ans}" in
-            [nN] | [nN][oO])
-                    return 1;
-                    ;;
-            *)
-                    return 0;
-                    ;;
+    case "${ans}" in [nN] | [nN][oO])
+        return 1;;
     esac;
+    return 0;
 }
 
 # Trim the suffix of a string.
@@ -197,9 +178,7 @@ _trimDirs() {
     local dir;
     for dir in "${SUBDIRS[@]}"; do
         _q pushd "${dir}";
-
         _rm "${Trash[@]}";
-
         _q popd;
     done;
 }
@@ -245,8 +224,8 @@ _CleanBase() {
      find . -type f -name "*.svg" -exec svgcleaner-cli {} {} &>/dev/null \;; 
     _recolor;
 }
-
-# Re-colorize certain icons:
+#
+ Re-colorize certain icons:
 #   those which lose their color after being cleaned by `svg-cleaner`.
 _recolor() {
     local -ar REDOS=( 
@@ -260,6 +239,8 @@ _recolor() {
         "mimetypes/scalable/text-x-sql.svg" 
         "places/scalable/folder-go.svg" 
     );
+    0123456789
+    {}[]$@%
 
     local r;
     for r in "${REDOS[@]}"; do
@@ -352,13 +333,13 @@ _colorize() {
 # Make a highly compressed xz archive of the icon theme.
 #   The xz archive is 10-15% the size of the uncompressed files.
 _Package() {
-    local xz="${DIR}.tar.xz";
+    local xz="${PKGNAME}.tar.xz";
     
     if [ -e "${xz}" ]; then
         gvfs-trash "${xz}";
     fi;
-    _Run ./xzz "${DIR}";
-    _Run _Archive "${xz}" "bak/"
+    _Run ./xzz "${PKGNAME}";
+    _Run _Archive "${xz}" "bak/";
 }
 
 # Make a copy of the compressed package
@@ -372,7 +353,10 @@ _Archive() {
     local ext="${file#*.}";
 
     local bak;
-    #bak="${name}_$(date +%m-%d-%y).${ext}";
+    # Older format:
+    # bak="${name}_$(date +%m-%d-%y).${ext}";
+
+    # New format:
     bak="${name}_$(date +%Y-%m-%d).${ext}";
 
     cp -f "${file}" "${dest}${bak}";
@@ -387,11 +371,23 @@ _fmtDir() {
     echo "${1}";
 }
 
-# Update git repo.
-_git() {
+# Add a new commit for all files in the repo.
+# Do not push to master (yet).
+_gitCm() {
     git add .;
-    git commit -m "$*";
-    git push origin master;
+    if [ "$*" ]; then
+        git commit -m "$*";
+    else
+        git commit;
+    fi;
+}
+
+# Push local changes to the master branch.
+# Add a new commit if necessary.
+_gitPush() {
+    git push origin master && return 0;
+    _gitCm;
+    _gitPush;
 }
 
 # Pause for a specified number of seconds.
@@ -412,11 +408,11 @@ _pause() {
 _PkgbuildUpdate() {
     local -r pkgver=$(_gitVer);
 
-    _q pushd "aur/${DIR}";
+    _q pushd "aur/${PKGNAME}";
     _pkgbuildAur "${pkgver}";
     _q popd;
 
-    _q pushd "aur-git/${DIR}-git";
+    _q pushd "aur-git/${PKGNAME}-git";
     _pkgbuildGit "${pkgver}";
     _q popd;
 }
@@ -429,8 +425,8 @@ _pkgbuildAur() {
     sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
     # Update md5sums.
-    local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${DIR}";
-    local -r xz="${repo}/master/${DIR}.tar.xz";
+    local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
+    local -r xz="${repo}/master/${PKGNAME}.tar.xz";
     local -r md=$(_gitmd5 "${xz}");
     sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
@@ -446,6 +442,10 @@ _pkgbuildGit() {
 _gitmd5() {
     md=$(curl "${1}" | md5sum);
     echo "${md%  *}";
+    [ -e "$(basename "${1}")" ] || return 0;
+
+    _Yn "Remove $(realpath "${1}")" &&
+        gvfs-trash "$(basename "${1}")";
 }
 
 # Return the git version of a locally cloned git repo.
@@ -466,8 +466,8 @@ _AurUpdate() {
     local dir;
     for dir in "${Aurs[@]}"; do
         _q pushd "${dir}";
+        # _aur3;
         ../../aur4 "$@";
-        #_aur3;
         _q popd;
     done;
 }
@@ -481,8 +481,10 @@ _aur3() {
 
 # Update package locally.
 _Local() {
-    _q pushd "${DIR}";
+    # pushd 1
+    _q pushd "${PKGNAME}";
 
+    # pushd 2
     _q pushd "${DEFAULT_THEME}";
 
     _glecho "Removing backups...";
@@ -493,27 +495,33 @@ _Local() {
     _Run _CleanBase;
     echo "Done.";
 
+    # popd 2
     _q popd;
 
     _glecho "Generating color variants...";
     _Run _ColorizeThemes;
     echo "Done.";
     
+    # popd 1
     _q popd;
 
     _glecho "Generating archive...";
-    _Run _Package "archdroid-icon-theme";
+    _Run _Package "${PKGNAME}";
+    echo "Done.";
+}
+
+# Add a new commit for any repo changes.
+# Don't push to master (yet).
+_Commit() {
+    _Run _gitCm "${COMMIT}";
+    COMMIT="$(git log -n1 --pretty=format:'%s')";
     echo "Done.";
 }
 
 # Update and upload the package to both git and the AUR.
 _Upload() {
-    if ! [ "${COMMIT}" ]; then
-        read -p "Enter commit message: " COMMIT;
-    fi;
-
     _glecho "Updating git repo...";
-    _Run _git "${COMMIT}";
+    _Run _gitPush "${COMMIT}";
     echo "Done.";
 
     _glecho "Waiting 120 seconds for git to update...";
@@ -535,7 +543,7 @@ _Upload() {
 
 declare COMMIT="$*";
 
-declare -r DIR="archdroid-icon-theme";
+declare -r PKGNAME="archdroid-icon-theme";
 declare -r A="Archdroid";
 declare -r DEFAULT_THEME="${A}-Green/";
 declare -ar SUBDIRS=( 
@@ -547,12 +555,10 @@ declare -ar SUBDIRS=(
 _gr23;
 
 _gprint "Update local files?";
-if _q _Yn; then
-    _Local;
-fi;
+_Yn && _Local;
+
+_gprint "Add commit?";
+_Yn && _Commit;
 
 _gprint "Upload package to online repos?";
-if _q _Yn; then
-    _Upload;
-fi;
-
+_Yn && _Upload;

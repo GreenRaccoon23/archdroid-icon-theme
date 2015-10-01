@@ -32,18 +32,15 @@ Note:
   to be cloned) directory of the package's aur4 repository.
 EOH
 
-    if [ "${1}" ]; then
-        exit "${1}";
-    fi;
+#'
+    [ "${1}" ] && exit "${1}";
     exit 1;
 }
 
 # Set font color in Terminal.
 _c() {
-    if (($# == 0)); then
-        tput sgr0;
-        return;
-    fi;
+    tput sgr0;
+    (($# == 0)) && return;
     
     local -Ar Codes=(
         ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" 
@@ -54,27 +51,18 @@ _c() {
 
     local k c;
     for k in "${!Codes[@]}"; do
-        if [[ "${k}" != "${1}" ]]; then
-            continue;
-        fi;
-        c="${Codes["$k"]}";
+        [[ "${k}" == "${1}" ]] && 
+            c="${Codes["$k"]}";
     done;
 
-    if [ ! "${c}" ]; then
-        return;
-    fi;
-    tput setaf "${c}";
+    [ "${c}" ] && tput setaf "${c}";
 }
 
 # Set bold font color in Terminal.
 # Optionally set a new font color as well.
 _C() {
+    (($#<1)) && _c "${1}";
     tput bold;
-
-    if (($#<1)); then
-        return;
-    fi;
-    _c "${1}";
 }
 
 # Reset font color in Terminal to normal.
@@ -98,6 +86,14 @@ _gprint() {
     _u;
 }
 
+# Echo a command in bold green and then run it.
+_gechval() {
+    _C green;
+    echo "$@";
+    eval "$@";
+    _u;
+}
+
 # Run a command silently.
 _q() {
     eval "$@" >/dev/null;
@@ -105,9 +101,7 @@ _q() {
 
 # Exit with error 1 if the previous command returned an error.
 _err() {
-    if [[ $? != 0 ]]; then
-        exit 1;
-    fi;
+    [[ $? == 0 ]] || exit 1;
 }
 
 # Obtain user input (command variant of `read -p`).
@@ -123,9 +117,7 @@ _inp() {
 
 # Rerun script if no arguments were passed.
 _VrfyArgs() {
-    if ((${#ARGS} > 0)); then
-        return;
-    fi;
+    ((${#ARGS} > 0)) && return;
 
     local msg;
     for msg; do
@@ -133,9 +125,7 @@ _VrfyArgs() {
         ARGS+=( "$(_inp)" );
     done;
 
-    if ((${#ARGS} == 0)) ; then
-        ARGS+=( "$(_inp)" );
-    fi;
+    ((${#ARGS} == 0)) && ARGS+=( "$(_inp)" );
 
     $0 "${ARGS[@]}";
     exit;
@@ -156,18 +146,14 @@ _VrfyDeps() {
 
     local cmd;
     for cmd in "${!Deps[@]}"; do
-        if _q command -v "${cmd}"; then
-            continue
-        fi;
-        yaourt -Sa "${Deps[$cmd]}";
+        _q command -v "${cmd}" ||
+            yaourt -Sa "${Deps[$cmd]}";
     done;
 }
 
 # Clone an aur4 repo if it has not been cloned already.
 _VrfyCloned() {
-    if _isCloned; then
-        return;
-    fi;
+    _isCloned && return 0;
 
     local pkg="${1}";
     if ! [ "${pkg}" ]; then
@@ -177,57 +163,20 @@ _VrfyCloned() {
     
     _clone "${pkg}";
     _err;
-    
-    _mvUp "${pkg}";
-    _err;
 }
 
 # Test whether the current directory is a cloned git/aur4 repository.
 _isCloned() {
-    if [ -d ".git" ] ; then
-        return 0;
-    fi;
+    [ -d ".git" ] && return 0;
     return 1;
 }
 
 # Git clone aur4 repository.
 _clone() {
     local -r repo="${1}";
-    local -r cmd="git clone ssh://aur@aur.archlinux.org/${repo}.git";
-
-    _gecho "${cmd}";
-    eval "${cmd}";
-}
-
-# Move a directory up one level,
-#   move the contents of its [former] parent directory into it,
-#   and then delete the [former] parent directory.
-# E.g.: "/home/chucknorris/dir/dir" > "/home/chucknorris/dir"
-_mvUp() {
-    local target="${1}";
-    if ! [ -d "${target}" ]; then
-        return 1;
-    fi;
-    local parent="${PWD##*/}";
-    local delete="${parent}_tmp_deletethisdirectory";
-
-    _q pushd "..";
-
-    if [ -d "${delete}" ]; then
-        _q popd;
-        return 1;
-    fi;
-    if [ -d "${target}" ] && [[ "${target}" != "${parent}" ]]; then
-        _q popd;
-        return 1;
-    fi;
-
-    mv "${parent}" "${delete}" &&
-    mv "${delete}/${target}" "${target}" &&
-    cp -a "${delete}/." "${target}/" &&
-    rm -r "${delete}";
-    
-    _q popd;
+    _gechval git init .;
+    _gechval git remote add -t \* -f origin "ssh://aur@aur.archlinux.org/${repo}.git";
+    _gechval git checkout master;
 }
 
 # Upload local repository to its aur4 repository.
@@ -249,14 +198,15 @@ _chkHelp "${1}";
 
 declare -a ARGS=( $@ );
 
+declare ROOT;
+ROOT="$(basename "${PWD}")";
+
 _VrfyDeps;
 
 _VrfyArgs "Enter commit: ";
 
 declare COMMIT="${ARGS[*]}";
-if ! [ "${COMMIT[@]}" ]; then
-    _help;
-fi;
+[ "${COMMIT[*]}" ] || _help;
 
 _VrfyCloned;
 
