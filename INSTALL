@@ -1,46 +1,86 @@
 #!/bin/bash
 
+# Run command silently.
+_q() {
+    eval "$@" &>/dev/null;
+}
+
+# If the distro is Arch (and yaourt is installed),
+#   use yaourt to install the package from the aur.
 _testDistro() {
-    if [[ "$(_distro)" == "Arch" ]]; then
-        makepkg -sic;
-        exit 0;
-    fi;
-}
-
-_distro() {
-    if [[ "$(ls /bin | grep lsb_release)" == "" ]] ; then
-        echo "Arch" ;
-    fi ;
-    echo "$(lsb_release -si)" ;
-}
-
-_verifyDownload() {
-    local pkg src;
-
-    pkg="archdroid-icon-theme";
-    src="https://raw.githubusercontent.com/GreenRaccoon23/${pkg}/master/${pkg}.tar.xz"
-
-    if [ -d "${pkg}" ]; then
-        pushd "${pkg}" >/dev/null;
-    fi;
-
-    if ls -d Archdroid* >& /dev/null; then
+    [[ "$(_distro)" == "Arch" ]] || 
         return;
-    fi;
-    
+    yaourt -Sa "${PKG}" &&
+        exit 0;
+}
+
+# Return distro name.
+# Arch is the default.
+# If running Fedora, make sure `lsb_release` or `redhat-lsb` is installed.
+_distro() {
+    if [[ "$(ls /bin | grep lsb_release)" == "" ]]; then
+        echo "Arch" ;
+    else
+        echo "$(lsb_release -si)" ;
+    fi ;
+}
+
+# Download the package
+#   (if it hasn't been downloaded already).
+_verifyDownload() {
+    # Move down into the package directory.
+    # pushd 1
+    [ -d "${PKG}" ] && 
+        _q pushd "${PKG}";
+
+    # Quit if the download and extraction was successful.
+    _q ls -d Archdroid* && 
+        return 0;    
+
+    # Otherwise, download it.
     _download;
     TEMP_DL=0;
 
+    # Loop back to top.
     _verifyDownload;
 }
 
+# Download xz package from github.
 _download() {
-    wget "${SRC}";
-    xz -dv "${PKG}.tar.xz";
-    tar -xf "${PKG}.tar";
-    rm "${PKG}.tar";
+    # Clean up any previous downloads
+    _q ls ${PKG}* &&
+        rm ${PKG}*;
+
+    # Make sure all commands run successfully.
+    # If they do, return.
+    (
+        wget "${SRC}" &&
+        xz -dv "${PKG}.tar.xz" &&
+        tar -xf "${PKG}.tar" &&
+        rm "${PKG}.tar";
+    ) && 
+        return 0;
+
+    # Otherwise, give up.
+    # Ask the user to download it instead.
+    local scriptDir;
+    scriptDir="$(dirname $0)";
+    [[ "${scriptDir}" == "." ]] &&
+        scriptDir="${PWD}";
+
+    cat << EOH >&2
+Failed to download the package.
+Try downloading it manually from here:
+${SRC}
+Then place ${PKG}.tar.xz in this folder:
+${scriptDir}
+Then rerun $0
+EOH
+
+    exit 1;
 }
 
+# Install the package locally.
 _install() {
     local -a Themes;
     local dest curr t;
@@ -49,47 +89,57 @@ _install() {
     dest="/usr/share/icons";
     curr="${PWD}";
 
-    for t in ${Themes[@]}; do
-        if ! [ -d "${t}" ]; then
-            continue;
-        fi;
-        sudo install -dm 755 "${dest}/${t}";
+    # Set up destination directories.
+    for t in "${Themes[@]}"; do
+        [ -d "${t}" ] &&
+            sudo install -dm 755 "${dest}/${t}";
     done ;
 
+    # Copy themes to the destination directories.
     sudo cp -drf --no-preserve='ownership' . "${dest}/";
 
-    pushd "${dest}" >/dev/null;
-    for t in ${Themes[@]}; do
+    # Update 'icon-theme.cache' for each of the themes.
+    # pushd 2
+    _q pushd "${dest}";
+    for t in "${Themes[@]}"; do
         echo "${t}";
-        sudo gtk-update-icon-cache -f "${t}";
+        sudo gtk-update-icon-cache -ftq "${t}";
     done;
-    popd >/dev/null;
+    # popd 2
+    _q popd;
 }
 
+# Remove any temporary files that this script downloaded.
 _cleanUp() {
 	cd "${ROOT}";
+    # popd all
 	dirs -c;
 
-	if ! [ "${TEMP_DL}" ]; then
-		return;
-	fi;
+    # If this script didn't download anything (i.e., the repo was git cloned),
+    #   don't remove anything.
+	[ "${TEMP_DL}" ] || 
+        return;
 
-	if ! [ -d "${THEME_DIR}" ]; then
-		return;
-	fi;
-	rm -R "${THEME_DIR}";
+	[ -d "${THEME_DIR}" ] &&
+	   rm -R "${THEME_DIR}";
 }
-
-_testDistro;
 
 declare -r ROOT="${PWD}";
 declare -r PKG="archdroid-icon-theme";
-declare -r SRC="https://raw.githubusercontent.com/GreenRaccoon23/${PKG}/master/${PKG}.tar.xz"
+declare -r REPO="https://raw.githubusercontent.com/GreenRaccoon23";
+declare -r SRC="${REPO}/${PKG}/master/${PKG}.tar.xz";
 
+# Install through the aur if running Arch.
+_testDistro;
+
+# Otherwise, install directy from the git repo.
+# Download the .xz package if it hasn't been yet.
 declare TEMP_DL;
 _verifyDownload;
 
+# At this point, $PWD should be 'archdroid-icon-theme/archdroid-icon-theme'.
 declare -r THEME_DIR="${PWD}";
 _install;
 
+# Remove any temporary files that this script downloaded.
 _cleanUp;
