@@ -224,8 +224,7 @@ _CleanBase() {
      find . -type f -name "*.svg" -exec svgcleaner-cli {} {} &>/dev/null \;; 
     _recolor;
 }
-#
- Re-colorize certain icons:
+# Re-colorize certain icons:
 #   those which lose their color after being cleaned by `svg-cleaner`.
 _recolor() {
     local -ar REDOS=( 
@@ -239,8 +238,6 @@ _recolor() {
         "mimetypes/scalable/text-x-sql.svg" 
         "places/scalable/folder-go.svg" 
     );
-    0123456789
-    {}[]$@%
 
     local r;
     for r in "${REDOS[@]}"; do
@@ -533,7 +530,7 @@ _Upload() {
     echo "Done.";
 
     _glecho "Uploading PKGBUILD to git...";
-    _Run _git "${COMMIT}";
+    _Run _gitPush "${COMMIT}";
     echo "Done.";
 
     _glecho "Uploading package to aur...";
