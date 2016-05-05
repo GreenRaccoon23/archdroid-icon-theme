@@ -327,6 +327,24 @@ _colorize() {
     ../svg-edit -r -Q -o "${oldColor}" -n "${newColor}" "${oldDir}" "${newDir}";
 }
 
+# Run `gtk-update-icon-cache` on all themes.
+_UpdateCache() {
+    pwd;
+    local -ar Themes=( 
+        Amber ArchBlue Blue BlueGrey Brown 
+        Cyan DeepOrange DeepPurple Grey Indigo 
+        KellyGreen LightBlue LightGreen Lime Orange
+        Pink Purple Red Shamrock Teal
+        Yellow
+    );
+
+    local theme;
+    for theme in "${Themes[@]}"; do
+        echo "${A}-${theme}";
+        gtk-update-icon-cache -ftq "${A}-${theme}";
+    done;
+}
+
 # Make a highly compressed xz archive of the icon theme.
 #   The xz archive is 10-15% the size of the uncompressed files.
 _Package() {
@@ -497,6 +515,10 @@ _Local() {
 
     _glecho "Generating color variants...";
     _Run _ColorizeThemes;
+    echo "Done.";
+
+    _glecho "Generating cache files...";
+    _Run _UpdateCache;
     echo "Done.";
     
     # popd 1
