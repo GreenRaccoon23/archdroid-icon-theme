@@ -545,33 +545,75 @@ declare -r PKGNAME="archdroid-icon-theme";
 declare -r A="Archdroid";
 declare -r DEFAULT_THEME="${A}-Green/";
 declare -ar SUBDIRS=( 
-    actions animations apps categories 
-    devices emblems mimetypes places 
-    status stock/io 
+    actions
+    animations
+    apps
+    categories 
+    devices
+    emblems
+    mimetypes
+    places 
+    status
+    stock/io 
 );
 
 declare -ar THEMES=( 
-    Amber ArchBlue Blue BlueGrey
-    BlueGreyDark Brown BrownDark Cyan
-    DeepOrange DeepOrangeDark DeepPurple Grey
-    Indigo KellyGreen LightBlue LightGreen
-    Lime Orange Pink Purple
-    Red Shamrock Teal Yellow
+    Amber
+    ArchBlue
+    Blue
+    BlueGrey
+    BlueGreyDark
+    Brown
+    BrownDark
+    Cyan
+    DeepOrange
+    DeepOrangeDark
+    DeepPurple
+    Grey
+    Indigo
+    KellyGreen
+    LightBlue
+    LightGreen
+    Lime
+    Orange
+    Pink
+    Purple
+    Red
+    Shamrock
+    Teal
+    Yellow
 );
 
 # Mark the themes for which the color of every icon needs to be changed.
 declare -ar THEMES_NORMAL=( 
-    ArchBlue Blue BlueGrey BlueGreyDark
-    Brown BrownDark Cyan DeepPurple
-    Grey Indigo KellyGreen LightBlue
-    LightGreen Lime Pink Purple
-    Shamrock Teal 
+    ArchBlue
+    Blue
+    BlueGrey
+    BlueGreyDark
+    Brown
+    BrownDark
+    Cyan
+    DeepPurple
+    Grey
+    Indigo
+    KellyGreen
+    LightBlue
+    LightGreen
+    Lime
+    Pink
+    Purple
+    Shamrock
+    Teal 
 );
 
 # Mark the themes for which need some icons to remain green.
 declare -ar THEMES_SPECIAL=( 
-    Amber DeepOrange DeepOrangeDark
-    Orange Red Yellow 
+    Amber
+    DeepOrange
+    DeepOrangeDark
+    Orange
+    Red
+    Yellow 
 );
 
 _gr23;
