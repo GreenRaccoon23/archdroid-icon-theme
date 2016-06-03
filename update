@@ -522,8 +522,8 @@ _Upload() {
     _Run _gitPush "${COMMIT}";
     echo "Done.";
 
-    _glecho "Waiting 120 seconds for GitHub to update...";
-    _pause 120;
+    _glecho "Waiting 30 seconds for GitHub to update...";
+    _pause 30;
     echo "Done.";
 
     _glecho "Updating PKGBUILD...";
