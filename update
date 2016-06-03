@@ -226,11 +226,12 @@ _CleanBase() {
 }
 # Re-colorize certain icons:
 #   those which lose their color after being cleaned by `svg-cleaner`.
+# todo: is this fixed?
 _recolor() {
     local -ar REDOS=( 
         "actions/scalable/media-eject.svg" 
-        "actions/scalable/selection-end-symbolic.svg" 
-        "actions/scalable/selection-start-symbolic.svg" 
+        "actions/scalable/selection-end-symbolic.svg" #why?
+        "actions/scalable/selection-start-symbolic.svg" #why?
         "animations/scalable/process-working.svg" 
         "apps/scalable/accessories-calculator.svg" 
         "apps/scalable/utilities-system-monitor.svg" 
