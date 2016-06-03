@@ -248,28 +248,14 @@ _recolor() {
 
 # Colorize all of the icon themes.
 _ColorizeThemes() {
-    # Mark the themes for which the color of every icon needs to be changed.
-    local -ar Normal=( 
-        ArchBlue Blue BlueGrey BlueGreyDark
-        Brown BrownDark Cyan DeepPurple
-        Grey Indigo KellyGreen LightBlue
-        LightGreen Lime Pink Purple
-        Shamrock Teal 
-    );
-
-    # Mark the themes which need some icons to remain green.
-    local -ar Special=( 
-        Amber DeepOrange DeepOrangeDark
-        Orange Red Yellow 
-    );
 
     local theme;
 
-    for theme in "${Normal[@]}"; do
+    for theme in "${THEMES_NORMAL[@]}"; do
         _colorizeAll "${theme}";
     done;
 
-    for theme in "${Special[@]}"; do
+    for theme in "${THEMES_SPECIAL[@]}"; do
         _colorizeMost "${theme}";
     done;
 }
@@ -331,18 +317,8 @@ _colorize() {
 
 # Run `gtk-update-icon-cache` on all themes.
 _UpdateCache() {
-    pwd;
-    local -ar Themes=( 
-        Amber ArchBlue Blue BlueGrey
-        BlueGreyDark Brown BrownDark Cyan
-        DeepOrange DeepOrangeDark DeepPurple Grey
-        Indigo KellyGreen LightBlue LightGreen
-        Lime Orange Pink Purple
-        Red Shamrock Teal Yellow
-    );
-
     local theme;
-    for theme in "${Themes[@]}"; do
+    for theme in "${THEMES[@]}"; do
         echo "${A}-${theme}";
         gtk-update-icon-cache -ftq "${A}-${theme}";
     done;
@@ -572,6 +548,30 @@ declare -ar SUBDIRS=(
     actions animations apps categories 
     devices emblems mimetypes places 
     status stock/io 
+);
+
+declare -ar THEMES=( 
+    Amber ArchBlue Blue BlueGrey
+    BlueGreyDark Brown BrownDark Cyan
+    DeepOrange DeepOrangeDark DeepPurple Grey
+    Indigo KellyGreen LightBlue LightGreen
+    Lime Orange Pink Purple
+    Red Shamrock Teal Yellow
+);
+
+# Mark the themes for which the color of every icon needs to be changed.
+declare -ar THEMES_NORMAL=( 
+    ArchBlue Blue BlueGrey BlueGreyDark
+    Brown BrownDark Cyan DeepPurple
+    Grey Indigo KellyGreen LightBlue
+    LightGreen Lime Pink Purple
+    Shamrock Teal 
+);
+
+# Mark the themes for which need some icons to remain green.
+declare -ar THEMES_SPECIAL=( 
+    Amber DeepOrange DeepOrangeDark
+    Orange Red Yellow 
 );
 
 _gr23;
