@@ -250,16 +250,17 @@ _recolor() {
 _ColorizeThemes() {
     # Mark the themes for which the color of every icon needs to be changed.
     local -ar Normal=( 
-        ArchBlue Blue BlueGrey Brown 
-        Cyan DeepPurple Grey Indigo 
-        KellyGreen LightBlue LightGreen Lime 
-        Pink Purple Shamrock Teal 
+        ArchBlue Blue BlueGrey BlueGreyDark
+        Brown BrownDark Cyan DeepPurple
+        Grey Indigo KellyGreen LightBlue
+        LightGreen Lime Pink Purple
+        Shamrock Teal 
     );
 
     # Mark the themes which need some icons to remain green.
     local -ar Special=( 
-        Amber DeepOrange Orange 
-        Red Yellow 
+        Amber DeepOrange DeepOrangeDark
+        Orange Red Yellow 
     );
 
     local theme;
@@ -332,11 +333,12 @@ _colorize() {
 _UpdateCache() {
     pwd;
     local -ar Themes=( 
-        Amber ArchBlue Blue BlueGrey Brown 
-        Cyan DeepOrange DeepPurple Grey Indigo 
-        KellyGreen LightBlue LightGreen Lime Orange
-        Pink Purple Red Shamrock Teal
-        Yellow
+        Amber ArchBlue Blue BlueGrey
+        BlueGreyDark Brown BrownDark Cyan
+        DeepOrange DeepOrangeDark DeepPurple Grey
+        Indigo KellyGreen LightBlue LightGreen
+        Lime Orange Pink Purple
+        Red Shamrock Teal Yellow
     );
 
     local theme;
