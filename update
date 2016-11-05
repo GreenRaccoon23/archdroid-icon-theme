@@ -4,12 +4,12 @@
 _c() {
     tput sgr0;
     (($# == 0)) && return 0;
-    
-    local -A Codes=( 
-        ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3" 
-        ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7" 
-        ["bk"]="0" ["r"]="1" ["g"]="2" ["y"]="3" 
-        ["bu"]="4" ["m"]="5" ["c"]="6" ["w"]="7" 
+
+    local -A Codes=(
+        ["black"]="0" ["red"]="1" ["green"]="2" ["yellow"]="3"
+        ["blue"]="4" ["magenta"]="5" ["cyan"]="6" ["white"]="7"
+        ["bk"]="0" ["r"]="1" ["g"]="2" ["y"]="3"
+        ["bu"]="4" ["m"]="5" ["c"]="6" ["w"]="7"
     );
 
     local k c;
@@ -58,7 +58,7 @@ _line() {
     fi;
 
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =;
-    
+
     if (($# > 0)); then
         _u;
     fi;
@@ -89,30 +89,30 @@ _specho() {
 
 # Print green raccoon ASCII image.
 _gr23() {
-    local -ar raccoon=( 
-        '         ///////                             //////' 
-        '       /////   ///                         //     /// ' 
-        '      ///   ##### //                      //  #####  //' 
-        '     //  ########## //                    /    ######  /' 
-        '    ///  ########### /    //////////////////////  ####  /' 
-        '    ///  #########    ////////////////////////////  #   //' 
-        '     ///    #  //////////////////////////////////////  //' 
-        '            /////////////////////////////////////////' 
-        '          /////////////////////////////////////////////' 
-        '        //////////////////////  /////////////  |||     /' 
-        '      /////////////////     ||||   ////////  ||||||||||' 
-        '     ////////////////  |||||||||||  //////  ||   ||||||||' 
-        '    //////////////   |||||||   ||||  //////  || ||||||||||' 
-        '   ////////////// ||||||||||  |||||  ///////  ||||||||||||' 
-        '  ////////////   |||||||||||||||||  ///////////  |||||||||' 
-        ' ////////////  ||||||||||||||||||  ////////////// ||||||||' 
-        '    ////////  ||||||||||||||||||| ////////////////  |||||' 
-        '    /////// |||||||||||||||||||  ////////    $$$  // ||' 
-        '       ///  ||||||||||||||||||  //////// $$$$$$$  ///' 
-        '           ||||||||||||||||||  ///////////       ///' 
-        '              ||||||||||||||  ////////////////////' 
-        '                      ||||||  ///////////////////' 
-        '                                     ////////' 
+    local -ar raccoon=(
+        '         ///////                             //////'
+        '       /////   ///                         //     /// '
+        '      ///   ##### //                      //  #####  //'
+        '     //  ########## //                    /    ######  /'
+        '    ///  ########### /    //////////////////////  ####  /'
+        '    ///  #########    ////////////////////////////  #   //'
+        '     ///    #  //////////////////////////////////////  //'
+        '            /////////////////////////////////////////'
+        '          /////////////////////////////////////////////'
+        '        //////////////////////  /////////////  |||     /'
+        '      /////////////////     ||||   ////////  ||||||||||'
+        '     ////////////////  |||||||||||  //////  ||   ||||||||'
+        '    //////////////   |||||||   ||||  //////  || ||||||||||'
+        '   ////////////// ||||||||||  |||||  ///////  ||||||||||||'
+        '  ////////////   |||||||||||||||||  ///////////  |||||||||'
+        ' ////////////  ||||||||||||||||||  ////////////// ||||||||'
+        '    ////////  ||||||||||||||||||| ////////////////  |||||'
+        '    /////// |||||||||||||||||||  ////////    $$$  // ||'
+        '       ///  ||||||||||||||||||  //////// $$$$$$$  ///'
+        '           ||||||||||||||||||  ///////////       ///'
+        '              ||||||||||||||  ////////////////////'
+        '                      ||||||  ///////////////////'
+        '                                     ////////'
     );
 
     _gecho "${raccoon[@]}";
@@ -170,9 +170,9 @@ _TrimBase() {
 
 # Remove backup directories from the base theme.
 _trimDirs() {
-    local -ar Trash=( 
-        "scalable/bak" 
-        "scaled" 
+    local -ar Trash=(
+        "scalable/bak"
+        "scaled"
     );
 
     local dir;
@@ -186,11 +186,11 @@ _trimDirs() {
 # Remove unnecessary/backup files from the base theme.
 _trimFiles() {
     local -r e="emblems/scalable";
-    local -ar Trash=( 
-        "scale" 
-        "index.theme.bak" 
-        "${e}/emblem-greenraccoon23.svg" 
-        "${e}/emblem-greenraccoon23-transparent.svg" 
+    local -ar Trash=(
+        "scale"
+        "index.theme.bak"
+        "${e}/emblem-greenraccoon23.svg"
+        "${e}/emblem-greenraccoon23-transparent.svg"
     );
 
     _rm "${Trash[@]}";
@@ -215,29 +215,30 @@ _rm() {
             continue;
 
         fi;
-        
+
     done;
 }
 
 # Run `svg-cleaner` on all of the icons in the base theme.
 _CleanBase() {
-     find . -type f -name "*.svg" -exec svgcleaner-cli {} {} &>/dev/null \;; 
+     find . -type f -name "*.svg" -exec svgcleaner {} {} &>/dev/null \;;
     _recolor;
 }
+
 # Re-colorize certain icons:
 #   those which lose their color after being cleaned by `svg-cleaner`.
 # todo: is this fixed?
 _recolor() {
-    local -ar REDOS=( 
-        "actions/scalable/media-eject.svg" 
+    local -ar REDOS=(
+        "actions/scalable/media-eject.svg"
         "actions/scalable/selection-end-symbolic.svg" #why?
         "actions/scalable/selection-start-symbolic.svg" #why?
-        "animations/scalable/process-working.svg" 
-        "apps/scalable/accessories-calculator.svg" 
-        "apps/scalable/utilities-system-monitor.svg" 
-        "categories/scalable/preferences-system-directory.svg" 
-        "mimetypes/scalable/text-x-sql.svg" 
-        "places/scalable/folder-go.svg" 
+        "animations/scalable/process-working.svg"
+        "apps/scalable/accessories-calculator.svg"
+        "apps/scalable/utilities-system-monitor.svg"
+        "categories/scalable/preferences-system-directory.svg"
+        "mimetypes/scalable/text-x-sql.svg"
+        "places/scalable/folder-go.svg"
     );
 
     local r;
@@ -269,7 +270,7 @@ _colorizeAll() {
     fi;
 
     _specho "${theme}...";
-    
+
     _copyTheme "${DEFAULT_THEME}" "${theme}";
     _colorize "green" "${color}" "${theme}" "${theme}";
     _colorize "#4caf50" "${color}" "${theme}" "${theme}";
@@ -328,7 +329,7 @@ _UpdateCache() {
 #   The xz archive is 10-15% the size of the uncompressed files.
 _Package() {
     local xz="${PKGNAME}.tar.xz";
-    
+
     if [ -e "${xz}" ]; then
         gvfs-trash "${xz}";
     fi;
@@ -452,9 +453,9 @@ _gitVer() {
 
 # Upload the package to the AUR (BOTH AUR 3 and AUR 4).
 _AurUpdate() {
-    local -ar Aurs=( 
-        "aur/archdroid-icon-theme" 
-        "aur-git/archdroid-icon-theme-git" 
+    local -ar Aurs=(
+        "aur/archdroid-icon-theme"
+        "aur-git/archdroid-icon-theme-git"
     );
 
     local dir;
@@ -499,7 +500,7 @@ _Local() {
     _glecho "Generating cache files...";
     _Run _UpdateCache;
     echo "Done.";
-    
+
     # popd 1
     _q popd;
 
@@ -544,20 +545,20 @@ declare COMMIT="$*";
 declare -r PKGNAME="archdroid-icon-theme";
 declare -r A="Archdroid";
 declare -r DEFAULT_THEME="${A}-Green/";
-declare -ar SUBDIRS=( 
+declare -ar SUBDIRS=(
     actions
     animations
     apps
-    categories 
+    categories
     devices
     emblems
     mimetypes
-    places 
+    places
     status
-    stock/io 
+    stock/io
 );
 
-declare -ar THEMES=( 
+declare -ar THEMES=(
     Amber
     ArchBlue
     Blue
@@ -585,7 +586,7 @@ declare -ar THEMES=(
 );
 
 # Mark the themes for which the color of every icon needs to be changed.
-declare -ar THEMES_NORMAL=( 
+declare -ar THEMES_NORMAL=(
     ArchBlue
     Blue
     BlueGrey
@@ -603,17 +604,17 @@ declare -ar THEMES_NORMAL=(
     Pink
     Purple
     Shamrock
-    Teal 
+    Teal
 );
 
 # Mark the themes for which need some icons to remain green.
-declare -ar THEMES_SPECIAL=( 
+declare -ar THEMES_SPECIAL=(
     Amber
     DeepOrange
     DeepOrangeDark
     Orange
     Red
-    Yellow 
+    Yellow
 );
 
 _gr23;
