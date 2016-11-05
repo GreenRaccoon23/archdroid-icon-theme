@@ -1,1 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#00BCD4" viewBox="0 0 48 48"><path d="m8 8c-2.21 0-3.98 1.79-3.98 4l-.02 24c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4v-20c0-2.21-1.79-4-4-4h-16l-4-4h-12m20.03711 8a10 10 0 0 1 9.201172 6.173828 10 10 0 0 1 -3.681641 12.140625 10 10 0 0 1 -12.626953 -1.244141l1.416-1.416a8 8 0 0 0 5.654297 2.345703 8 8 0 0 0 8 -8 8 8 0 0 0 -8 -8 8 8 0 0 0 -8 8h3l-4 4-4-4h3a10 10 0 0 1 8.04883 -9.808594 10 10 0 0 1 1.988281 -.191406m-1.037 6h2v4.664l4.309 1.785-.766 1.848-5.543-2.297v-6"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#00BCD4"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="folder-recent.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="2.7444524226891"
+     inkscape:cx="-26.83342145574875"
+     inkscape:cy="-36.54238431152646"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:bbox-nodes="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-nodes="true" />
+  <path
+     d="M 8 8 C 5.79 8 4.019531250000001 9.789999999999999 4.01953125 12 L 4 36 C 4 38.21 5.789999999999999 40 8 40 L 40 40 C 42.21 40 44 38.21 44 36 L 44 16 C 44 13.79 42.21 12 40 12 L 24 12 L 20 8 L 8 8 z M 28.037109375 16 A 10 10 0 0 1 37.23828125 22.173828125 A 10 10 0 0 1 33.556640625 34.314453125 A 10 10 0 0 1 20.9296875 33.0703125 L 22.345703125 31.654296875 A 8 8 0 0 0 28 34 A 8 8 0 0 0 36 26 A 8 8 0 0 0 28 18 A 8 8 0 0 0 20 26 L 23 26 L 19 30 L 15 26 L 18 26 A 10 10 0 0 1 26.048828125 16.19140625 A 10 10 0 0 1 28.037109375 16 z M 27 22 L 29 22 L 29 26.6640625 L 33.30859375 28.44921875 L 32.54296875 30.296875 L 27 28 L 27 22 z "
+     id="path4137" />
+</svg>

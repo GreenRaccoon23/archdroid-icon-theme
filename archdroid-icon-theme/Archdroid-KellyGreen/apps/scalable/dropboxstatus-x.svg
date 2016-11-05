@@ -1,1 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m19.217 16.03l-5.945-4.933-2.544 1.661v-1.862l8.489-5.091 8.489 5.091v1.862l-2.544-1.661-5.946 4.933m14.383 11.03l-8.472 5.532-5.928-4.948 8.542-5.275 5.858 4.691m-14.4-9.965l5.928-4.948 8.472 5.532-5.858 4.691-8.542-5.275m-14.4.583l8.472-5.532 5.928 4.948-8.542 5.275-5.858-4.691m8.472 14.914l-8.472-5.532 5.858-4.691 8.542 5.275-5.928 4.948" fill="#f44336" transform="matrix(1.25 0 0-1.25 0 48)"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="48"
+   height="48"
+   xml:space="preserve"
+   sodipodi:docname="dropboxstatus-x1.svg"><metadata
+     id="metadata2991"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs2989" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview2987"
+     showgrid="false"
+     inkscape:zoom="4.231253186241476"
+     inkscape:cx="-58.84781629492539"
+     inkscape:cy="56.67227715489258"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g2993" /><g
+     id="g2993"
+     inkscape:groupmode="layer"
+     inkscape:label="dropbox-logos_dropbox-logotype-blue"
+     transform="matrix(1.25,0,0,-1.25,0,48)"><g
+       id="g2995"
+       transform="matrix(0.2859278806489373,0,0,0.2859278806489371,13.27204310362801,32.59351956372169)" /><g
+       id="g2999"
+       transform="matrix(0.2859278806489373,0,0,0.2859278806489371,4.80002859278806,17.67989301531798)" /><g
+       id="g3003"
+       transform="matrix(0.2859278806489373,0,0,0.2859278806489371,19.20001429639404,17.09660013879415)" /><g
+       id="g3007"
+       transform="matrix(0.2859278806489373,0,0,0.2859278806489371,33.60000000000002,27.06204456305155)" /><path
+       inkscape:connector-curvature="0"
+       d="m 19.21734152596136,16.03203345356202 -5.94529842233335,-4.93339965271676 -2.5439003541336,1.66095505868967 0,-1.86224828666652 8.48919877646695,-5.090945914954328 8.48948470434759,5.090945914954328 0,1.86224828666652 -2.54361442625294,-1.66095505868967 -5.94587027809465,4.93339965271676 z m 14.38265847403866,11.03001110948953 -8.47175717574737,5.53156077903434 -5.92814274949441,-4.94798197462986 8.542095434387,-5.27451161433094 5.85780449085478,4.69093280992646 z m -14.39998570360598,-9.9654444242574 5.92814274949442,-4.9482679025105 8.47175717574736,5.53156077903433 -5.85780449085478,4.69121873780711 -8.542095434387,-5.27451161433094 z m -14.399985703605981,0.58329287652383 8.47204310362801,-5.53156077903434 5.92785682161377,4.94826790251051 -8.542095434387,5.27451161433094 -5.857804490854778,-4.69121873780711 z m 8.472014510839949,14.91362654840371 -8.47204310362801,-5.53156077903434 5.857804490854781,-4.69093280992646 8.542095434387,5.27451161433095 -5.92785682161377,4.94798197462985 z"
+       style="fill:#f44336;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path3013" /></g></svg>

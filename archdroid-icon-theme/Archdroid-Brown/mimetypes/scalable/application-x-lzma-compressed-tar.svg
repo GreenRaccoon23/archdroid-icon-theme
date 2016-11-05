@@ -1,1 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#795548" viewBox="0 0 48 48"><path d="m41.09 10.45l-2.77-3.36c-.56-.66-1.39-1.09-2.32-1.09h-24c-.93 0-1.76.43-2.31 1.09l-2.77 3.36c-.58.7-.92 1.58-.92 2.55v25c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4v-25c0-.97-.34-1.85-.91-2.55"/><g fill="#fff"><text x="23.872" y="35.652" font-family="Roboto" letter-spacing="0" word-spacing="0" text-anchor="middle" text-align="center" line-height="100%" font-size="12.5"><tspan x="23.872" y="35.652">lzma</tspan></text><path d="m10.25 10l1.63-2h24l1.87 2h-27.5"/><text x="24.476" y="23.652" font-family="Roboto" letter-spacing="0" word-spacing="0" text-anchor="middle" text-align="center" line-height="100%" font-size="12.5"><tspan x="24.476" y="23.652">tar.</tspan></text></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#795548"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="application-x-lzma-compressed-tar.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="5.512044289728468"
+     inkscape:cx="-16.75958642565978"
+     inkscape:cy="10.8979513677633"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true" />
+  <path
+     d="M 41.09,10.45 38.32,7.09 C 37.76,6.43 36.93,6 36,6 L 12,6 C 11.07,6 10.24,6.43 9.69,7.09 L 6.92,10.45 C 6.34,11.15 6,12.03 6,13 l 0,25 c 0,2.21 1.79,4 4,4 l 28,0 c 2.21,0 4,-1.79 4,-4 l 0,-25 c 0,-0.97 -0.34,-1.85 -0.91,-2.55 z"
+     id="path4188" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="23.871826"
+     y="35.651611"
+     id="text4162"
+     sodipodi:linespacing="100%"><tspan
+       id="tspan4166"
+       sodipodi:role="line"
+       x="23.871826"
+       y="35.651611">lzma</tspan></text>
+  <path
+     d="m 10.25,10 1.63,-2 24,0 1.87,2 -27.5,0 z"
+     id="path4"
+     style="fill:#ffffff;fill-opacity:1" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="24.476074"
+     y="23.651611"
+     id="text4154"
+     sodipodi:linespacing="100%"><tspan
+       id="tspan4158"
+       sodipodi:role="line"
+       x="24.476074"
+       y="23.651611">tar.</tspan></text>
+</svg>

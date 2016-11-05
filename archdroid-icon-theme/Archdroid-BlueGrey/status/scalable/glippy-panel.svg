@@ -1,1 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#607D8B" viewBox="0 0 48 48"><path d="m24 0c-2.61 0-4.811 1.68-5.631 4h-8.369c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4h-8.369c-.82-2.32-3.02-4-5.631-4m0 4c1.1 0 2 .89 2 2 0 1.11-.9 2-2 2-1.1 0-2-.89-2-2 0-1.11.9-2 2-2m-14 4h4v6h20v-6h4v32h-28v-32"/><text x="24.09" y="35.744" font-family="Roboto" letter-spacing="0" word-spacing="0" text-anchor="middle" text-align="center" font-weight="bold" line-height="125%" font-size="20"><tspan x="24.09" y="35.744" text-align="center" line-height="125%" font-size="25">G</tspan></text></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#607D8B"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="glippy-panel.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
+     inkscape:zoom="5.368001320484693"
+     inkscape:cx="-24.42229923193283"
+     inkscape:cy="17.75234127431405"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-page="true" />
+  <path
+     d="M 24 0 C 21.39 0 19.189140625 1.68 18.369140625 4 L 10 4 C 7.79 4 6.000000000000001 5.790000000000001 6 8 L 6 40 C 6 42.21 7.790000000000001 44 10 44 L 38 44 C 40.21 44 42 42.21 42 40 L 42 8 C 42 5.79 40.21 4.000000000000001 38 4 L 29.630859375 4 C 28.810859375 1.68 26.61 0 24 0 z M 24 4 C 25.1 4 26 4.89 26 6 C 26 7.110000000000002 25.1 7.999999999999999 24 8 C 22.9 8 22 7.11 22 6 C 22 4.89 22.9 4.000000000000003 24 4 z M 10 8 L 14 8 L 14 14 L 34 14 L 34 8 L 38 8 L 38 40 L 10 40 L 10 8 z "
+     id="path4157" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#607D8B;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="24.091553"
+     y="35.743652"
+     id="text4142"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4144"
+       x="24.091553"
+       y="35.743652"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold';text-align:center;writing-mode:lr-tb;text-anchor:middle">G</tspan></text>
+</svg>

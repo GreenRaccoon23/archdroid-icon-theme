@@ -1,1 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#8BC34A" viewBox="0 0 48 48"><path d="m28 4h-16c-2.21 0-3.98 1.79-3.98 4l-.02 32c0 2.21 1.77 4 3.98 4h24.02c2.21 0 4-1.79 4-4v-24l-12-12m4 32h-16v-4h16v4zm0-8h-16v-4h16v4m-6-10v-11l11 11h-11" fill="#6ad7e5"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#8BC34A"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="text-x-go.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="7.79520767265625"
+     inkscape:cx="4.852046263359224"
+     inkscape:cy="10.79380405717118"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:snap-object-midpoints="false"
+     inkscape:snap-others="false"
+     inkscape:snap-nodes="false"
+     inkscape:object-nodes="false"
+     inkscape:object-paths="false" />
+  <path
+     style="fill:#6ad7e5;fill-opacity:1"
+     d="M 28,4 12,4 c -2.210000000000001,0 -3.98,1.79 -3.98,4 L 8,40 c 0,2.21 1.77,4 3.98,4 L 36,44 c 2.21,0 4,-1.79 4,-4 L 40,16 28,4 Z m 4,32 -16,0 0,-4 16,0 0,4 z m 0,-8 -16,0 0,-4 16,0 0,4 z M 26,18 26,7 37,18 26,18 Z"
+     id="path4"
+     inkscape:connector-curvature="0" />
+</svg>

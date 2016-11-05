@@ -1,1 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="85.5 210.272 47.9999990620498 48.00000030981306" enable-background="new 85.5 210.272 437.29 491.728"><g transform="matrix(.08135 0 0 .08135 84.61 233.26)"><g transform="translate(0-443.73)"><path fill="#1572b6" d="m305.74 702l-177.07-49.15-39.46-442.58h433.58l-39.5 442.5z"/><path fill="#33a9dc" d="m449.47 624.6l33.76-378.14h-177.23v417.92z"/></g><path d="m167.74-150.16l-.308 54.766h222.91l-.08 35.38h-223.06l-.161 54.766h222.91l-.293 62.46-84.06 29.75-83.64-29.75.063-27.09h-54.765l-.251 65.719 138.35 49.29 138.88-49.29.467-98.87.141-19.834.568-127.29-277.67-.002" fill="#fff"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="48"
+   height="48"
+   viewBox="85.5 210.272 47.9999990620498 48.00000030981306"
+   enable-background="new 85.5 210.272 437.29 491.728"
+   xml:space="preserve"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="emblem-css3.svg"><metadata
+     id="metadata15"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title>CSS3 Logo</dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs13" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="1.081740064493494"
+     inkscape:cx="218.6450042724611"
+     inkscape:cy="245.8639984130861"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" /><title
+     id="title3">CSS3 Logo</title><g
+     id="g4143"
+     transform="matrix(0.0813457846614389,0,0,0.0813457846614389,84.6081898935997,233.2626644195715)"><polygon
+       transform="translate(0,-443.7279968261719)"
+       style="fill:#1572b6"
+       id="polygon5"
+       points="305.735,702 128.668,652.845 89.20999999999999,210.272 522.79,210.272 483.29,652.775 " /><polygon
+       transform="translate(0,-443.7279968261719)"
+       style="fill:#33a9dc"
+       id="polygon7"
+       points="449.474,624.599 483.229,246.459 306,246.459 306,664.375 " /><path
+       style="fill:#ffffff"
+       inkscape:connector-curvature="0"
+       id="path9"
+       d="m 167.739,-150.1589968261719 -0.308,54.76600000000006 222.909,0 -0.08,35.375 -223.057,0 -0.161,54.76600000000009 222.9089999999999,0 -0.293,62.462000000000003 -84.061,29.74999999999996 -83.639,-29.75 0.063,-27.08699999999998 -54.765,0 -0.251,65.71899999999992 L 305.358,145.1310031738283 444.235,95.84200317382817 444.7019999999999,-3.030996826171759 444.843,-22.86499682617165 l 0.568,-127.29200000000025 -277.672,-0.002 0,0 z" /></g></svg>

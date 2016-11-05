@@ -1,1 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#bdbdbd" viewBox="0 0 48 48"><path d="m24.909 31.863h-4.772l-1.78 10.137h-4.525l1.78-10.137h-5.613v-4.253h6.354l1.236-7.02h-5.736v-4.302h6.503l1.805-10.286h4.5l-1.805 10.286h4.797l1.805-10.286h4.525l-1.805 10.286h5.415v4.302h-6.181l-1.236 7.02h5.538v4.253h-6.28l-1.78 10.137h-4.525l1.78-10.137m-4.03-4.253h4.772l1.236-7.02h-4.797l-1.212 7.02z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#bdbdbd"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="emblem-root.svg">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview6"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-page="true"
+     inkscape:zoom="4.415373763398263"
+     inkscape:cx="-23.42557530804855"
+     inkscape:cy="-4.925225508722807"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:23.6307697296px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#bdbdbd;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     id="text4138">
+    <path
+       d="m 24.90934068150818,31.86263720318675 -4.77197809703648,0 L 18.35714277625084,42 l -4.52472534589469,0 1.78021980822086,-10.13736279681325 -5.612637450918559,0 0,-4.25274731963873 6.354395704343921,0 1.23626375570893,-7.02197813242674 -5.73626382648945,0 0,-4.30219786986709 6.50274735502899,0 1.80494508333504,-10.285714447498314 4.50000007078052,0 -1.80494508333505,10.285714447498314 4.79670337215066,0 1.80494508333505,-10.285714447498314 4.52472534589469,0 -1.80494508333504,10.285714447498314 5.41483525000513,0 0,4.30219786986709 -6.18131877854467,0 -1.23626375570893,7.02197813242674 5.53846162557602,0 0,4.25274731963873 -6.28021987900138,0 L 27.65384621918201,42 23.12912087328732,42 24.90934068150818,31.86263720318675 Z m -4.03021984361112,-4.25274731963873 4.77197809703648,0 1.23626375570893,-7.02197813242674 -4.79670337215065,0 -1.21153848059476,7.02197813242674 z"
+       style="font-size:50.6373634338px;fill:#bdbdbd;fill-opacity:1"
+       id="path4135" />
+  </g>
+</svg>
