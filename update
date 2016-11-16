@@ -403,9 +403,10 @@ _pause() {
 _PkgbuildUpdate() {
 
     local -r pkgver=$(_gitVer);
+    local -r commit=$(_lastCommit);
 
     _q pushd "aur/${PKGNAME}";
-    _pkgbuildAur "${pkgver}";
+    _pkgbuildAur "${pkgver}" "${commit}";
     _q popd;
 
     _q pushd "aur-git/${PKGNAME}-git";
@@ -417,7 +418,7 @@ _PkgbuildUpdate() {
 _pkgbuildAur() {
 
     local -r pkgver="${1}";
-    local -r commit=$(_lastCommit);
+    local -r commit="${2}";
     local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
     local -r xz="${repo}/"${commit}"/${PKGNAME}.tar.xz";
     local -r md=$(_gitmd5 "${xz}");
