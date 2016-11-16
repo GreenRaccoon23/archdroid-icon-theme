@@ -248,11 +248,7 @@ _Archive() {
 # Add a new commit for any repo changes.
 # Don't push (yet).
 _Commit() {
-
     _gitCommit;
-
-    COMMIT="$(git log -n1 --pretty=format:'%s')";
-
     echo "Done.";
 };
 
@@ -271,6 +267,8 @@ _gitCommit() {
 
 # Update and upload the package to both git and the AUR.
 _Upload() {
+
+    COMMIT="$(git log -n1 --pretty=format:'%s')";
 
     _glecho "Updating remote repo...";
     _gitPush;
