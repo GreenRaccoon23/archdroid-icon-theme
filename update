@@ -11,6 +11,7 @@ declare -r PKGDIR_GIT="aur-git/${PKGNAME_GIT}";
 declare -r A="Archdroid";
 declare -r THEME_DEFAULT="${A}-Green/";
 
+declare CHECKSUM_LOCAL;
 declare LAST_COMMIT;
 declare PKGVER;
 
@@ -272,6 +273,9 @@ _gitCommit() {
 _Upload() {
 
     COMMIT="$(git log -n1 --pretty=format:'%s')";
+    PKGVER=$(_gitVer);
+    LAST_COMMIT=$(_lastCommit);
+    CHECKSUM_LOCAL="$(md5sum "${PKGNAME}.tar.xz")";
 
     _glecho "Updating remote repo...";
     _gitPush;
@@ -281,9 +285,6 @@ _Upload() {
     _pause 10;
     echo "Done.";
 
-    PKGVER=$(_gitVer);
-    LAST_COMMIT=$(_lastCommit);
-
     _glecho "Updating '${PKGNAME}'...";
     _UpdateAur;
     echo "Done.";
@@ -291,11 +292,13 @@ _Upload() {
     _glecho "Updating '${PKGNAME_GIT}'...";
     _UpdateAurGit;
     echo "Done.";
+};
 
-    _glecho "Uploading PKGBUILDs to git...";
-    _gitCommit;
-    _gitPush;
-    echo "Done.";
+_gitVer() {
+    ( set -o pipefail;
+      git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)";
+    );
 };
 
 _gitPush() {
@@ -320,6 +323,7 @@ _UpdateAur() {
     _q pushd "${PKGDIR}";
 
     _pkgbuildAur;
+
     ../../aur4 "${COMMIT}";
     _ifErr "Failed to update '${PKGNAME}'";
 
@@ -331,6 +335,7 @@ _pkgbuildAur() {
     local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
     local -r xz="${repo}/"${LAST_COMMIT}"/${PKGNAME}.tar.xz";
     local -r checksum=$(_md5sumRemote "${xz}");
+    [ "${checksum}" != "${CHECKSUM_LOCAL}" ] && _err "Local and remote checksums do not match";
 
     sed -i "s/pkgver=.*/pkgver=${PKGVER}/" PKGBUILD;
     _ifErr "Failed to update pkgver for '${PKGNAME}'";
@@ -345,19 +350,16 @@ _pkgbuildAur() {
 _md5sumRemote() {
 
     local remote="${1}";
+    local httpStatus;
     local checksum;
+
+    httpStatus="$(curl -LI "${remote}" 2>/dev/null | head -n 1 | cut -d$' ' -f2)";
+    [ "${httpStatus}" != 200 ] && _err "'${remote}' does not exist";
 
     checksum=$(curl "${remote}" | md5sum);
     _ifErr "Failed to get md5sum of '${remote}'";
 
     echo "${checksum%  *}";
-};
-
-_gitVer() {
-    ( set -o pipefail;
-      git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)";
-    );
 };
 
 _lastCommit() {
@@ -369,6 +371,7 @@ _UpdateAurGit() {
     _q pushd "${PKGDIR_GIT}";
 
     _pkgbuildAurGit;
+
     ../../aur4 "${COMMIT}";
     _ifErr "Failed to update '${PKGNAME_GIT}'";
 
