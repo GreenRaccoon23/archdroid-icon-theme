@@ -401,6 +401,7 @@ _pause() {
 # Update the AUR PKGBUILD files
 #   for the regular and '-git' variants of this package.
 _PkgbuildUpdate() {
+
     local -r pkgver=$(_gitVer);
 
     _q pushd "aur/${PKGNAME}";
@@ -412,22 +413,21 @@ _PkgbuildUpdate() {
     _q popd;
 }
 
-# Update the PKGBUILD for the regular AUR version of this package
-#   (update both the 'pkgver' and 'md5sums' in the PKGBUILD).
+# Update the PKGBUILD for the regular AUR version of this package.
 _pkgbuildAur() {
-    # Update pkgver.
-    local -r pkgver="${1}";
-    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
 
-    # Update md5sums.
+    local -r pkgver="${1}";
+    local -r commit=$(_lastCommit);
     local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
-    local -r xz="${repo}/master/${PKGNAME}.tar.xz";
+    local -r xz="${repo}/"${commit}"/${PKGNAME}.tar.xz";
     local -r md=$(_gitmd5 "${xz}");
+
+    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    sed -i "s/_commit=.*/_commit=\"${commit}\"/" PKGBUILD;
     sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
 }
 
-# Update the PKGBUILD for the '-git' variant of this package in the AUR
-#   (update the 'pkgver' only in the PKGBUILD).
+# Update the PKGBUILD for the '-git' variant of this package in the AUR.
 _pkgbuildGit() {
     local -r pkgver="${1}";
     sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
@@ -449,7 +449,11 @@ _gitVer() {
       git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
       printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     )
-}
+};
+
+_lastCommit() {
+    git log --pretty=format:'%H' | head -n 1;
+};
 
 # Upload the package to the AUR (BOTH AUR 3 and AUR 4).
 _AurUpdate() {
