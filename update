@@ -1,5 +1,399 @@
 #!/bin/bash
 
+declare COMMIT="$*";
+
+declare -r PKGNAME="archdroid-icon-theme";
+declare -r PKGNAME_GIT="archdroid-icon-theme-git";
+
+declare -r PKGDIR="aur/${PKGNAME}";
+declare -r PKGDIR_GIT="aur-git/${PKGNAME_GIT}";
+
+declare -r A="Archdroid";
+declare -r THEME_DEFAULT="${A}-Green/";
+
+# map `[color]isSuccessSame`
+declare -Ar THEMES=(
+    ["ArchBlue"]=1
+    ["Blue"]=1
+    ["BlueGrey"]=1
+    ["BlueGreyDark"]=1
+    ["Brown"]=1
+    ["BrownDark"]=1
+    ["Cyan"]=1
+    ["DeepPurple"]=1
+    # ["Green"]=1
+    ["Grey"]=1
+    ["Indigo"]=1
+    ["KellyGreen"]=1
+    ["LightBlue"]=1
+    ["LightGreen"]=1
+    ["Lime"]=1
+    ["Pink"]=1
+    ["Purple"]=1
+    ["Shamrock"]=1
+    ["Teal"]=1
+
+    ["Amber"]=0
+    ["DeepOrange"]=0
+    ["DeepOrangeDark"]=0
+    ["Orange"]=0
+    ["Red"]=0
+    ["Yellow"]=0
+);
+
+_main() {
+
+    _gr23;
+
+    _gprint "Update local files?" && _Yn && _Build;
+    _gprint "Add a new commit?" && _Yn && _Commit;
+    _gprint "Upload package to online repos?" && _Yn && _Upload;
+};
+
+# Update package locally.
+_Build() {
+    # pushd 1
+    _q pushd "${PKGNAME}";
+
+    # pushd 2
+    _q pushd "${THEME_DEFAULT}";
+
+    _glecho "Removing extra files...";
+    _RmExtraFiles;
+    echo "Done.";
+
+    _glecho "Minifying svg files...";
+    _Minify;
+    echo "Done.";
+
+    # popd 2
+    _q popd;
+
+    _glecho "Creating themes...";
+    _CreateThemes;
+    echo "Done.";
+
+    _glecho "Colorizing themes...";
+    _ColorizeThemes;
+    echo "Done.";
+
+    _glecho "Update theme caches...";
+    _UpdateCache;
+    echo "Done.";
+
+    # popd 1
+    _q popd;
+
+    _glecho "Building archive...";
+    _Package;
+    echo "Done.";
+};
+
+# Remove all unnecessary and backup files from the base theme.
+_RmExtraFiles() {
+
+    local -a extra=(
+        "scale"
+        "index.theme.bak"
+        "emblems/scalable/emblem-greenraccoon23.svg"
+        "emblems/scalable/emblem-greenraccoon23-transparent.svg"
+    );
+    local -ar subdirs=(
+        "actions"
+        "animations"
+        "apps"
+        "categories"
+        "devices"
+        "emblems"
+        "mimetypes"
+        "places"
+        "status"
+        "stock/io"
+    );
+    local dir;
+    local filepath;
+
+    for dir in "${subdirs[@]}"; do
+        extra+=("${dir}/scalable/bak");
+        extra+=("${dir}/scaled");
+    done;
+
+    for filepath in "${extra[@]}"; do
+        [ -e "${filepath}" ] || continue;
+        _rm "${filepath}";
+        _ifErr "Failed to remove '${filepath}'";
+        echo "    Removed ${filepath}";
+    done;
+};
+
+_Minify() {
+
+    local cmd="svgcleaner";
+
+    command -v "${cmd}" >/dev/null 2>&1;
+    _ifErr "'${cmd}' is not installed";
+
+    find . -type f -name "*.svg" -exec "${cmd}" {} {} &>/dev/null \;;
+    _ifErr "Failed to minify images with '${cmd}'";
+};
+
+_CreateThemes() {
+
+    local color;
+    local name;
+
+    for color in "${!THEMES[@]}"; do
+        name="${A}-${color}";
+
+        echo "  ${name}...";
+
+        _cpHard "${THEME_DEFAULT}" "${name}";
+        _ifErr "Failed to copy '${THEME_DEFAULT}' to '${name}'";
+
+        _nameTheme "${name}";
+        _ifErr "Failed to name theme '${name}'";
+    done;
+};
+
+_nameTheme() {
+    local -r name="${1}";
+    sed -i "s/Name=.*/Name=${name}/" "${name}/index.theme";
+};
+
+_ColorizeThemes() {
+
+    local -r successTmp="#4caf51";
+    local -r successDefault="green"; # #4CAF50
+    local color;
+    local isSuccessSame;
+    local name;
+    local success;
+
+    for color in "${!THEMES[@]}"; do
+        isSuccessSame="${THEMES[$color]}";
+        name="${A}-${color}";
+        success="${successDefault}";
+        [ "${isSuccessSame}" -eq 1 ] && success="${color}";
+
+        echo "  ${name}...";
+
+        _colorize "green" "${color}" "${name}" "${name}";
+        _ifErr "Failed to colorize '${name}'";
+
+        _colorize '#4caf50' "${color}" "${name}" "${name}"; # todo: add `-i` flag to `svg-edit`
+        _ifErr "Failed to colorize '${name}'";
+
+        _colorize "${successTmp}" "${success}" "${name}" "${name}";
+        _ifErr "Failed to colorize '${name}'";
+    done;
+};
+
+# Run the `svg-edit` binary
+#   to colorize all svg images under the specified directory.
+# Change color $1 to color $2,
+#   for all svg images under directory $3,
+#   and place the edited images in directory $4.
+_colorize() {
+    local colOld="${1}";
+    local colNew="${2}";
+    local dirOld="${3}";
+    local dirNew="${4}";
+
+    ../svg-edit -r -Q -o "${colOld}" -n "${colNew}" "${dirOld}" "${dirNew}";
+};
+
+_UpdateCache() {
+
+    local color;
+    local name;
+
+    for color in "${!THEMES[@]}"; do
+        name="${A}-${color}";
+
+        echo "  ${name}...";
+
+        gtk-update-icon-cache -ftq "${name}";
+        _ifErr "Failed to update icon cache for '${name}'";
+    done;
+};
+
+# Make a highly compressed xz archive of the icon theme.
+#   The xz archive is 10-15% the size of the uncompressed files.
+_Package() {
+
+    local xz="${PKGNAME}.tar.xz";
+
+    [ -e "${xz}" ] && rm "${xz}";
+
+    ./xzz "${PKGNAME}";
+    _ifErr "Failed to compress '${PKGNAME}'";
+
+    _Archive "${xz}" "bak";
+    _ifErr "Failed to archive '${xz}'";
+};
+
+_Archive() {
+
+    local src="${1}";
+    local dst="${2}";
+
+    local name="${src%%.*}";
+    local ext="${src#*.}";
+
+    dst="${dst}/${name}_$(date +%Y-%m-%d).${ext}";
+
+    cp -f "${src}" "${dst}";
+};
+
+# Add a new commit for any repo changes.
+# Don't push (yet).
+_Commit() {
+
+    _gitCommit;
+
+    COMMIT="$(git log -n1 --pretty=format:'%s')";
+
+    echo "Done.";
+};
+
+_gitCommit() {
+
+    git add .;
+    _ifErr "Failed to stage files for git";
+
+    if [ -n "${COMMIT}" ]; then
+        git commit -m "${COMMIT}";
+    else
+        git commit;
+    fi;
+    _ifErr "No commit received";
+};
+
+# Update and upload the package to both git and the AUR.
+_Upload() {
+
+    _glecho "Updating remote repo...";
+    _gitPush;
+    echo "Done.";
+
+    _glecho "Waiting 10 seconds for GitHub to update...";
+    _pause 10;
+    echo "Done.";
+
+    _glecho "Updating '${PKGNAME}'...";
+    _UpdateAur;
+    _q popd;
+
+    _glecho "Updating '${PKGNAME_GIT}'...";
+    _UpdateAurGit;
+    echo "Done.";
+
+    _glecho "Uploading PKGBUILDs to git...";
+    _gitPush;
+    echo "Done.";
+};
+
+_gitPush() {
+    git push origin master;
+    _ifErr "Failed to push to github";
+};
+
+_pause() {
+
+    local -i seconds="${1}";
+    local -i i;
+
+    for i in $(seq 1 "${seconds}"); do
+        printf "\r  %d/%d" "${i}" "${seconds}";
+        sleep 1;
+    done;
+    printf "\n";
+};
+
+_UpdateAur() {
+
+    _q pushd "${PKGDIR}";
+
+    _pkgbuildAur;
+    ../../aur4 "${COMMIT}";
+    _ifErr "Failed to update '${PKGNAME}'";
+
+    _q popd;
+};
+
+_pkgbuildAur() {
+
+    local -r pkgver=$(_gitVer);
+    local -r commit=$(_lastCommit);
+    local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
+    local -r xz="${repo}/"${commit}"/${PKGNAME}.tar.xz";
+    local -r checksum=$(_md5sumRemote "${xz}");
+
+    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    _ifErr "Failed to update pkgver for '${PKGNAME}'";
+
+    sed -i "s/_commit=.*/_commit=\"${commit}\"/" PKGBUILD;
+    _ifErr "Failed to update _commit for '${PKGNAME}'";
+
+    sed -i "s/md5sums=.*/md5sums=(\"${checksum}\")/" PKGBUILD;
+    _ifErr "Failed to update md5sums for '${PKGNAME}'";
+};
+
+_md5sumRemote() {
+
+    local remote="${1}";
+    local checksum;
+
+    checksum=$(curl "${remote}" | md5sum);
+    _ifErr "Failed to get md5sum of '${remote}'";
+
+    echo "${checksum%  *}";
+};
+
+_gitVer() {
+    ( set -o pipefail;
+      git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)";
+    );
+};
+
+_lastCommit() {
+    git log --pretty=format:'%H' | head -n 1;
+};
+
+_UpdateAurGit() {
+
+    _q pushd "${PKGDIR_GIT}";
+
+    _pkgbuildAurGit;
+    ../../aur4 "${COMMIT}";
+    _ifErr "Failed to update '${PKGNAME_GIT}'";
+
+    _q popd;
+};
+
+_pkgbuildAurGit() {
+
+    local -r pkgver=$(_gitVer);
+
+    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    _ifErr "Failed to update pkgver for '${PKGNAME_GIT}'";
+};
+
+_AurUpdate() {
+    local -ar Aurs=(
+        "aur/archdroid-icon-theme"
+        "aur-git/archdroid-icon-theme-git"
+    );
+
+    local dir;
+    for dir in "${Aurs[@]}"; do
+        _q pushd "${dir}";
+        ../../aur4 "$@";
+        _q popd;
+    done;
+};
+
 # Set console color.
 _c() {
     tput sgr0;
@@ -21,18 +415,18 @@ _c() {
     done;
 
     [ "${c}" ] && tput setaf "${c}";
-}
+};
 
 # Set bold console color.
 _C() {
     (($# > 0)) && _c "${1}";
     tput bold;
-}
+};
 
 # Reset console color to normal.
 _u() {
     tput sgr0;
-}
+};
 
 # Print any number of messages in bold green.
 _gecho() {
@@ -41,14 +435,14 @@ _gecho() {
         echo "${line}";
     done;
     _u;
-}
+};
 
 # Print a message in bold green WITHOUT appending a new line.
 _gprint() {
     _C green
     printf "%s" "$*";
     _u;
-}
+};
 
 # Print a line break.
 # Optionally, run a command first in order to colorize it.
@@ -62,7 +456,7 @@ _line() {
     if (($# > 0)); then
         _u;
     fi;
-}
+};
 
 # Print a bold white line break,
 #   followed by any number of messages in bold green.
@@ -76,7 +470,7 @@ _glecho() {
     done;
 
     _u;
-}
+};
 
 # Print any number of messages, indenting each by two spaces.
 _specho() {
@@ -85,7 +479,7 @@ _specho() {
         printf '  ';
         echo "${m}";
     done;
-}
+};
 
 # Print green raccoon ASCII image.
 _gr23() {
@@ -116,17 +510,27 @@ _gr23() {
     );
 
     _gecho "${raccoon[@]}";
-}
+};
 
 # Run a command silently.
 _q() {
     eval "$@" >/dev/null;
-}
+};
 
-# Run a command and exit if it fails.
-_Run() {
-    eval "$@" || exit $?;
-}
+_err() {
+    local msg="${1}";
+    local code="${2}";
+    [ -z "${code}" ] && code=1;
+    _c red;
+    >&2 echo "${1}";
+    _u;
+    exit "${code}";
+};
+
+_ifErr() {
+    local msg="${1}";
+    [ $? -ne 0 ] && _err "${msg}" $?;
+};
 
 # Ask user to answer a "yes or no" question.
 # Analyse the user's answer, with NO as the default.
@@ -138,7 +542,7 @@ _yN() {
         return 0;;
     esac;
     return 1;
-}
+};
 
 # Ask user to answer a "yes or no" question.
 # Analyse the user's answer, with YES as the default.
@@ -150,485 +554,38 @@ _Yn() {
         return 1;;
     esac;
     return 0;
-}
+};
 
 # Trim the suffix of a string.
 _trSfx() {
     echo "${1%${2}*}";
-}
+};
 
 # Trim the prefix of a string.
 _trPfx() {
     echo "${1#*${2}}";
-}
+};
 
-# Remove all unnecessary and backup files from the base theme.
-_TrimBase() {
-    _trimDirs;
-    _trimFiles;
-}
-
-# Remove backup directories from the base theme.
-_trimDirs() {
-    local -ar Trash=(
-        "scalable/bak"
-        "scaled"
-    );
-
-    local dir;
-    for dir in "${SUBDIRS[@]}"; do
-        _q pushd "${dir}";
-        _rm "${Trash[@]}";
-        _q popd;
-    done;
-}
-
-# Remove unnecessary/backup files from the base theme.
-_trimFiles() {
-    local -r e="emblems/scalable";
-    local -ar Trash=(
-        "scale"
-        "index.theme.bak"
-        "${e}/emblem-greenraccoon23.svg"
-        "${e}/emblem-greenraccoon23-transparent.svg"
-    );
-
-    _rm "${Trash[@]}";
-}
-
-# Remove files and/or directories.
+# Remove file or directory if it exists.
 _rm() {
-    local file;
-    for file; do
-
-        if [ -d "${file}" ]; then
-            rm -R "${file}";
-            echo "    Removed ${file}";
-            continue;
-
-        elif [ -e "${file}" ]; then
-            rm "${file}";
-            echo "    Removed ${file}";
-            continue;
-
-        else
-            continue;
-
-        fi;
-
-    done;
-}
-
-# Run `svg-cleaner` on all of the icons in the base theme.
-_CleanBase() {
-     find . -type f -name "*.svg" -exec svgcleaner {} {} &>/dev/null \;;
-    _recolor;
-}
-
-# Re-colorize certain icons:
-#   those which lose their color after being cleaned by `svg-cleaner`.
-# todo: is this fixed?
-_recolor() {
-    local -ar REDOS=(
-        "actions/scalable/media-eject.svg"
-        "actions/scalable/selection-end-symbolic.svg" #why?
-        "actions/scalable/selection-start-symbolic.svg" #why?
-        "animations/scalable/process-working.svg"
-        "apps/scalable/accessories-calculator.svg"
-        "apps/scalable/utilities-system-monitor.svg"
-        "categories/scalable/preferences-system-directory.svg"
-        "mimetypes/scalable/text-x-sql.svg"
-        "places/scalable/folder-go.svg"
-    );
-
-    local r;
-    for r in "${REDOS[@]}"; do
-        ../../svg-edit -Q -o "#4caf50" -n green "${r}";
-    done;
-}
-
-# Colorize all of the icon themes.
-_ColorizeThemes() {
-
-    local theme;
-
-    for theme in "${THEMES_NORMAL[@]}"; do
-        _colorizeAll "${theme}";
-    done;
-
-    for theme in "${THEMES_SPECIAL[@]}"; do
-        _colorizeMost "${theme}";
-    done;
-}
-
-# Colorize every icon in the theme.
-_colorizeAll() {
-    local color="${1}";
-    local theme="${A}-${1}";
-    if [[ "${1}" == "ArchBlue" ]]; then
-        color="#1793D1";
+    local filepath="${1}";
+    if [ -d "${filepath}" ]; then
+        rm -R "${filepath}";
+    elif [ -e "${filepath}" ]; then
+        rm "${filepath}";
+    else
+        return 0;
     fi;
+};
 
-    _specho "${theme}...";
+_cpHard() {
 
-    _copyTheme "${DEFAULT_THEME}" "${theme}";
-    _colorize "green" "${color}" "${theme}" "${theme}";
-    _colorize "#4caf50" "${color}" "${theme}" "${theme}";
-}
-
-# Colorize all but a select few icons in the theme.
-_colorizeMost() {
-    local color="$1";
-    local theme="${A}-${1}";
-
-    _specho "${theme}...";
-
-    _copyTheme "${DEFAULT_THEME}" "${theme}";
-    _colorize "green" "${color}" "${theme}" "${theme}";
-}
-
-# Create a copy of theme $1, naming the copy as $2.
-# Then, update the new theme's name within its "index.theme" file.
-_copyTheme() {
     local orig="${1}";
     local copy="${2}";
 
-    if [ -e "${copy}" ]; then
-        rm -R "${copy}";
-    fi;
+    [ -d "${copy}" ] && _rm "${copy}";
 
-    cp -R "${orig}" "${copy}";
-
-    sed -i "s/Name=.*/Name=${copy}/" "${copy}/index.theme";
-}
-
-# Run the `svg-edit` binary
-#   to colorize all svg images under the specified directory.
-# Change color $1 to color $2,
-#   for all svg images under directory $3,
-#   and place the edited images in directory $4.
-_colorize() {
-    local oldColor="${1}";
-    local newColor="${2}";
-    local oldDir="${3}";
-    local newDir="${4}";
-
-    ../svg-edit -r -Q -o "${oldColor}" -n "${newColor}" "${oldDir}" "${newDir}";
-}
-
-# Run `gtk-update-icon-cache` on all themes.
-_UpdateCache() {
-    local theme;
-    for theme in "${THEMES[@]}"; do
-        echo "${A}-${theme}";
-        gtk-update-icon-cache -ftq "${A}-${theme}";
-    done;
-}
-
-# Make a highly compressed xz archive of the icon theme.
-#   The xz archive is 10-15% the size of the uncompressed files.
-_Package() {
-    local xz="${PKGNAME}.tar.xz";
-
-    if [ -e "${xz}" ]; then
-        gvfs-trash "${xz}";
-    fi;
-    _Run ./xzz "${PKGNAME}";
-    _Run _Archive "${xz}" "bak/";
-}
-
-# Make a copy of the compressed package
-#   and place the new copy into the folder of archived packages.
-_Archive() {
-    local file="${1}";
-    local dest="${2}";
-    dest="$(_fmtDir "${2}")";
-
-    local name="${file%%.*}";
-    local ext="${file#*.}";
-
-    local bak;
-    # Older format:
-    # bak="${name}_$(date +%m-%d-%y).${ext}";
-
-    # New format:
-    bak="${name}_$(date +%Y-%m-%d).${ext}";
-
-    cp -f "${file}" "${dest}${bak}";
-}
-
-# Append a trailing '/' to a string [directory]
-#   if it does not already have one.
-_fmtDir() {
-    if [[ "${1%/*}" == "${1}" ]]; then
-        echo "${1}/";
-    fi;
-    echo "${1}";
-}
-
-# Add a new commit for all files in the repo.
-# Do not push to master (yet).
-_gitCm() {
-    git add .;
-    if [ "$*" ]; then
-        git commit -m "$*";
-    else
-        git commit;
-    fi;
-}
-
-# Push local changes to the master branch.
-# Add a new commit if necessary.
-_gitPush() {
-    git push origin master && return 0;
-    _gitCm;
-    _gitPush;
-}
-
-# Pause for a specified number of seconds.
-_pause() {
-    local -i seconds="${1}";
-
-    local -i i;
-    #for i in $(seq 1 "${seconds}"); do
-    for ((i=1;i<=seconds;i++)); do
-        printf "\r  %d/%d" "${i}" "${seconds}";
-        sleep 1;
-    done;
-    printf "\n";
-}
-
-# Update the AUR PKGBUILD files
-#   for the regular and '-git' variants of this package.
-_PkgbuildUpdate() {
-
-    local -r pkgver=$(_gitVer);
-    local -r commit=$(_lastCommit);
-
-    _q pushd "aur/${PKGNAME}";
-    _pkgbuildAur "${pkgver}" "${commit}";
-    _q popd;
-
-    _q pushd "aur-git/${PKGNAME}-git";
-    _pkgbuildGit "${pkgver}";
-    _q popd;
-}
-
-# Update the PKGBUILD for the regular AUR version of this package.
-_pkgbuildAur() {
-
-    local -r pkgver="${1}";
-    local -r commit="${2}";
-    local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
-    local -r xz="${repo}/"${commit}"/${PKGNAME}.tar.xz";
-    local -r md=$(_gitmd5 "${xz}");
-
-    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
-    sed -i "s/_commit=.*/_commit=\"${commit}\"/" PKGBUILD;
-    sed -i "s/md5sums=.*/md5sums=(\"${md}\")/" PKGBUILD;
-}
-
-# Update the PKGBUILD for the '-git' variant of this package in the AUR.
-_pkgbuildGit() {
-    local -r pkgver="${1}";
-    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
-}
-
-# Fetch the md5sums of an online file.
-_gitmd5() {
-    md=$(curl "${1}" | md5sum);
-    echo "${md%  *}";
-    [ -e "$(basename "${1}")" ] || return 0;
-
-    _Yn "Remove $(realpath "${1}")" &&
-        gvfs-trash "$(basename "${1}")";
-}
-
-# Return the git version of a locally cloned git repo.
-_gitVer() {
-    ( set -o pipefail
-      git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-      printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-    )
+    cp -a "${orig}" "${copy}";
 };
 
-_lastCommit() {
-    git log --pretty=format:'%H' | head -n 1;
-};
-
-# Upload the package to the AUR (BOTH AUR 3 and AUR 4).
-_AurUpdate() {
-    local -ar Aurs=(
-        "aur/archdroid-icon-theme"
-        "aur-git/archdroid-icon-theme-git"
-    );
-
-    local dir;
-    for dir in "${Aurs[@]}"; do
-        _q pushd "${dir}";
-        # _aur3;
-        ../../aur4 "$@";
-        _q popd;
-    done;
-}
-
-# Upload the package to the AUR (AUR 3 only, NOT AUR 4).
-_aur3() {
-    mkaurball;
-    burp -c x11 ./*gz;
-    rm ./*gz;
-}
-
-# Update package locally.
-_Local() {
-    # pushd 1
-    _q pushd "${PKGNAME}";
-
-    # pushd 2
-    _q pushd "${DEFAULT_THEME}";
-
-    _glecho "Removing backups...";
-    _Run _TrimBase;
-    echo "Done.";
-
-    _glecho "Cleaning svg files...";
-    _Run _CleanBase;
-    echo "Done.";
-
-    # popd 2
-    _q popd;
-
-    _glecho "Generating color variants...";
-    _Run _ColorizeThemes;
-    echo "Done.";
-
-    _glecho "Generating cache files...";
-    _Run _UpdateCache;
-    echo "Done.";
-
-    # popd 1
-    _q popd;
-
-    _glecho "Generating archive...";
-    _Run _Package "${PKGNAME}";
-    echo "Done.";
-}
-
-# Add a new commit for any repo changes.
-# Don't push to master (yet).
-_Commit() {
-    _Run _gitCm "${COMMIT}";
-    COMMIT="$(git log -n1 --pretty=format:'%s')";
-    echo "Done.";
-}
-
-# Update and upload the package to both git and the AUR.
-_Upload() {
-    _glecho "Updating git repo...";
-    _Run _gitPush "${COMMIT}";
-    echo "Done.";
-
-    _glecho "Waiting 30 seconds for GitHub to update...";
-    _pause 30;
-    echo "Done.";
-
-    _glecho "Updating PKGBUILD...";
-    _Run _PkgbuildUpdate;
-    echo "Done.";
-
-    _glecho "Uploading PKGBUILD to git...";
-    _Run _gitPush "${COMMIT}";
-    echo "Done.";
-
-    _glecho "Uploading package to aur...";
-    _Run _AurUpdate "${COMMIT}";
-    echo "Done.";
-}
-
-declare COMMIT="$*";
-
-declare -r PKGNAME="archdroid-icon-theme";
-declare -r A="Archdroid";
-declare -r DEFAULT_THEME="${A}-Green/";
-declare -ar SUBDIRS=(
-    actions
-    animations
-    apps
-    categories
-    devices
-    emblems
-    mimetypes
-    places
-    status
-    stock/io
-);
-
-declare -ar THEMES=(
-    Amber
-    ArchBlue
-    Blue
-    BlueGrey
-    BlueGreyDark
-    Brown
-    BrownDark
-    Cyan
-    DeepOrange
-    DeepOrangeDark
-    DeepPurple
-    Grey
-    Indigo
-    KellyGreen
-    LightBlue
-    LightGreen
-    Lime
-    Orange
-    Pink
-    Purple
-    Red
-    Shamrock
-    Teal
-    Yellow
-);
-
-# Mark the themes for which the color of every icon needs to be changed.
-declare -ar THEMES_NORMAL=(
-    ArchBlue
-    Blue
-    BlueGrey
-    BlueGreyDark
-    Brown
-    BrownDark
-    Cyan
-    DeepPurple
-    Grey
-    Indigo
-    KellyGreen
-    LightBlue
-    LightGreen
-    Lime
-    Pink
-    Purple
-    Shamrock
-    Teal
-);
-
-# Mark the themes for which need some icons to remain green.
-declare -ar THEMES_SPECIAL=(
-    Amber
-    DeepOrange
-    DeepOrangeDark
-    Orange
-    Red
-    Yellow
-);
-
-_gr23;
-
-_gprint "Update local files?";
-_Yn && _Local;
-
-_gprint "Add a new commit?";
-_Yn && _Commit;
-
-_gprint "Upload package to online repos?";
-_Yn && _Upload;
+_main;
