@@ -280,7 +280,7 @@ _Upload() {
 
     _glecho "Updating '${PKGNAME}'...";
     _UpdateAur;
-    _q popd;
+    echo "Done.";
 
     _glecho "Updating '${PKGNAME_GIT}'...";
     _UpdateAurGit;
