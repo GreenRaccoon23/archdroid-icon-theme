@@ -12,6 +12,7 @@ declare -r A="Archdroid";
 declare -r THEME_DEFAULT="${A}-Green/";
 
 declare LAST_COMMIT;
+declare PKGVER;
 
 # map `[color]isSuccessSame`
 declare -Ar THEMES=(
@@ -280,6 +281,7 @@ _Upload() {
     _pause 10;
     echo "Done.";
 
+    PKGVER=$(_gitVer);
     LAST_COMMIT=$(_lastCommit);
 
     _glecho "Updating '${PKGNAME}'...";
@@ -326,12 +328,11 @@ _UpdateAur() {
 
 _pkgbuildAur() {
 
-    local -r pkgver=$(_gitVer);
     local -r repo="https://raw.githubusercontent.com/GreenRaccoon23/${PKGNAME}";
     local -r xz="${repo}/"${LAST_COMMIT}"/${PKGNAME}.tar.xz";
     local -r checksum=$(_md5sumRemote "${xz}");
 
-    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    sed -i "s/pkgver=.*/pkgver=${PKGVER}/" PKGBUILD;
     _ifErr "Failed to update pkgver for '${PKGNAME}'";
 
     sed -i "s/_commit=.*/_commit=\"${LAST_COMMIT}\"/" PKGBUILD;
@@ -375,10 +376,7 @@ _UpdateAurGit() {
 };
 
 _pkgbuildAurGit() {
-
-    local -r pkgver=$(_gitVer);
-
-    sed -i "s/pkgver=.*/pkgver=${pkgver}/" PKGBUILD;
+    sed -i "s/pkgver=.*/pkgver=${PKGVER}/" PKGBUILD;
     _ifErr "Failed to update pkgver for '${PKGNAME_GIT}'";
 };
 
