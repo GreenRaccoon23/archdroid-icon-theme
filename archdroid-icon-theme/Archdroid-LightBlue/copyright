@@ -1,3 +1,16 @@
 The sources of this package are the official Arch Linux logos and the official GNOME, Mint-X, Ubuntu-Mono-Dark, and Humanity icon themes. The Arch Linux logos are permitted for non-commercial use. The GNOME and Mint-X, Ubuntu-Mono-Dark, and Humanity icon themes are open source.
 
+Credits:
+https://www.archlinux.org/art
+https://github.com/linuxmint/mint-x-icons
+http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/wily/ubuntu-mono/wily/files
+http://design.ubuntu.com/brand/ubuntu-logo
+https://xubuntu.org/resources/
+https://developer.android.com/distribute/marketing-tools/brand-guidelines.html
+https://github.com/dart-lang/logos
+https://www.python.org/community/logos/
+https://www.ruby-lang.org/en/about/logo/
+https://github.com/logos
+https://www.dash.org/promotional-graphics/
+
 Feel free to modify and distribute this package as long as you respect the sources' conditions. :)
