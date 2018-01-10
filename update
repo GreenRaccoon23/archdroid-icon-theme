@@ -356,7 +356,7 @@ _md5sumRemote() {
     httpStatus="$(curl -LI "${remote}" 2>/dev/null | head -n 1 | cut -d$' ' -f2)";
     [ "${httpStatus}" != 200 ] && _err "'${remote}' does not exist";
 
-    checksum=$(curl "${remote}" | md5sum);
+    checksum=$(curl -s "${remote}" | md5sum);
     _ifErr "Failed to get md5sum of '${remote}'";
 
     echo "${checksum%  *}";
