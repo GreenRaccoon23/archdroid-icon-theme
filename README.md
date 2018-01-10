@@ -1,21 +1,45 @@
-    git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git
+# Download
+
+```bash
+git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git;
+```
+
 Or, for just the icons:  
 
-    wget https://raw.githubusercontent.com/GreenRaccoon23/archdroid-icon-theme/master/archdroid-icon-theme.tar.xz
-    xz -dv archdroid-icon-theme.tar.xz
-    tar -xf archdroid-icon-theme.tar
-    rm archdroid-icon-theme.tar
+```bash
+wget https://raw.githubusercontent.com/GreenRaccoon23/archdroid-icon-theme/master/archdroid-icon-theme.tar.xz;
+xz -dv archdroid-icon-theme.tar.xz;
+tar -xf archdroid-icon-theme.tar;
+rm archdroid-icon-theme.tar;
+```
+
+# Install
+
+- Arch Linux:  
+```bash
+yaourt -Sa archdroid-icon-theme;
+```
+- Other Linux distributions (Ubuntu, etc.):  
+```bash
+git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git && cd archdroid-icon-theme && chmod +x INSTALL && ./INSTALL
+```
+
+# Description
 
 Port of [Google's material design icons for Android Lollipop 5.0](https://github.com/google/material-design-icons "Material Design Icons") to Linux. The 21 different colors come from the [material design color palette](http://www.google.com/design/spec/style/color.html#color-color-palette "Material Design Color Palette")  
 
-Some of these icons (i.e., the ones that did not have an equivalent in the material design icon set) have been created manually (through [Inkscape](https://www.archlinux.org/packages/extra/x86_64/inkscape/ "Inkscape for Arch Linux")). These missing icons were influenced in part by [Ubuntu Mono](http://packages.ubuntu.com/vivid/ubuntu-mono "Ubuntu Mono Icon Package"), [Mint-X](https://github.com/linuxmint/mint-x-icons "Linux Mint Icons") and [Numix](https://github.com/numixproject/numix-icon-theme "Numix Icons").  
+Some of these icons (i.e., the ones that did not have an equivalent in the material design icon set) have been created manually (through [Inkscape](https://www.archlinux.org/packages/extra/x86_64/inkscape/ "Inkscape for Arch Linux")). These missing icons were influenced in part by [Ubuntu Mono](http://packages.ubuntu.com/vivid/ubuntu-mono "Ubuntu Mono Icon Package"), [Mint-X](https://github.com/linuxmint/mint-x-icons "Linux Mint Icons") and [Numix](https://github.com/numixproject/numix-icon-theme "Numix Icons").
+
+# License  
 
 Google's material design icons are totally [open-source to edit and distribute non-commercially](https://github.com/google/material-design-icons/blob/master/LICENSE "Material Design Icons - License"), and so is this project. Do whatever you want with these. :smile:  
-***
-##Note:
+
+# Requests
+
 If you like one of the [Material Design Colors](http://www.google.com/design/spec/style/color.html#color-color-palette "Material Design Color Palette"), but it is not included in this theme, by all means **please request it** [here](https://github.com/GreenRaccoon23/archdroid-icon-theme/issues "Archdroid Icon Theme Issues"). I'll almost definitely make it for you. It's ridiculously easy for me to create new color sets because I wrote that `svg-edit` file myself (in Go/Golang). Plus, I compress the images down a ton, so adding a new set only adds 5MB to the full package's size (and almost nothing to the compressed [archdroid-icon-theme.tar.xz](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/archdroid-icon-theme.tar.xz) file).  
-***
-##Screenshots:  
+
+# Screenshots:  
+
 Archdroid-Amber  
 ![Archdroid-Amber](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_Amber.png)  
 Archdroid-ArchBlue  
@@ -60,14 +84,13 @@ Archdroid-Teal
 ![Archdroid-Teal](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_Teal.png)  
 Archdroid-Yellow  
 ![Archdroid-Yellow](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/screenshots/screenshot_Yellow.png)  
-***
-##To Install:  
-- For Arch Linux:  
-```yaourt -Sa archdroid-icon-theme```
-- For other Linux distributions (Ubuntu, etc.):  
-```git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git && cd archdroid-icon-theme && chmod +x INSTALL && ./INSTALL```  
 
 ***
+
+# Status
+
 This theme is pretty much complete, though I may continue to add a few more icons periodically. If you look closely, some of the icons are blurry when scaled down to 22 and 32 pixels, but in order to fix it, I'd have to go through and recreate each icon individually. :weary: That would take a ridiculous amount of time as well as double the size of the package, so I will leave them how they are. If anyone else knows an easier way to fix it, please let me know on the [issues page](https://github.com/GreenRaccoon23/archdroid-icon-theme/issues "Archdroid Icon Theme Issues") or feel free to fix it yourself. :smile:  
-***
+
+# Resources
+
 As an additional resource, I've colorized Google's stock material design icons according to the material design palette and uploaded them [here](https://github.com/GreenRaccoon23/material-design-icons-colors "Material Design Icons - Colors").  
