@@ -39,7 +39,7 @@ Google's material design icons are totally [open-source to edit and distribute n
 
 # Requests
 
-If you like one of the [Material Design Colors](http://www.google.com/design/spec/style/color.html#color-color-palette "Material Design Color Palette"), but it is not included in this theme, by all means **please request it** [here](https://github.com/GreenRaccoon23/archdroid-icon-theme/issues "Archdroid Icon Theme Issues"). I'll almost definitely make it for you. It's ridiculously easy for me to create new color sets because I wrote that `svg-edit` file myself (in Go/Golang). Plus, I compress the images down a ton, so adding a new set only adds 5MB to the full package's size (and almost nothing to the compressed [archdroid-icon-theme.tar.xz](https://github.com/GreenRaccoon23/archdroid-icon-theme/blob/master/archdroid-icon-theme.tar.xz) file).
+If you like one of the [Material Design Colors](http://www.google.com/design/spec/style/color.html#color-color-palette "Material Design Color Palette"), but it is not included in this theme, by all means **please request it** [here](https://github.com/GreenRaccoon23/archdroid-icon-theme/issues "Archdroid Icon Theme Issues"). I'll almost definitely make it for you. It's ridiculously easy for me to create new color sets because I wrote that `svg-edit` file myself (in Go/Golang). Plus, I compress the images down a ton, so adding a new set only adds 5MB to the full package's size (and almost nothing to the compressed [archdroid-icon-theme.tar.xz](./archdroid-icon-theme.tar.xz) file).
 
 # Screenshots
 
