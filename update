@@ -282,7 +282,7 @@ _Upload() {
     echo "Done.";
 
     _glecho "Waiting 10 seconds for GitHub to update...";
-    _pause 10;
+    _pause 2;
     echo "Done.";
 
     _glecho "Updating '${PKGNAME}'...";
