@@ -276,6 +276,7 @@ _Upload() {
     PKGVER=$(_gitVer);
     LAST_COMMIT=$(_lastCommit);
     CHECKSUM_LOCAL="$(md5sum "${PKGNAME}.tar.xz")";
+    CHECKSUM_LOCAL="${CHECKSUM_LOCAL%  *}";
 
     _glecho "Updating remote repo...";
     _gitPush;
