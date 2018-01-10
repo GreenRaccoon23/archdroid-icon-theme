@@ -21,7 +21,10 @@ yaourt -Sa archdroid-icon-theme;
 ```
 - Other Linux distributions (Ubuntu, etc.):
 ```bash
-git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git && cd archdroid-icon-theme && chmod +x INSTALL && ./INSTALL
+git clone https://github.com/GreenRaccoon23/archdroid-icon-theme.git;
+cd archdroid-icon-theme;
+chmod +x INSTALL;
+./INSTALL;
 ```
 
 # Description
